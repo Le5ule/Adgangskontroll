@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            TB_Kode = new TextBox();
+            TB_Mottak = new TextBox();
             BTN0 = new Button();
             BTN9 = new Button();
             BTN8 = new Button();
@@ -42,15 +42,16 @@
             BTN_LesKort = new Button();
             TB_KortInput = new TextBox();
             UgyldigLabel = new Label();
+            BW_SendKvittering = new System.ComponentModel.BackgroundWorker();
             SuspendLayout();
             // 
-            // TB_Kode
+            // TB_Mottak
             // 
-            TB_Kode.Location = new Point(246, 74);
-            TB_Kode.Name = "TB_Kode";
-            TB_Kode.ReadOnly = true;
-            TB_Kode.Size = new Size(77, 27);
-            TB_Kode.TabIndex = 37;
+            TB_Mottak.Location = new Point(246, 74);
+            TB_Mottak.Name = "TB_Mottak";
+            TB_Mottak.ReadOnly = true;
+            TB_Mottak.Size = new Size(77, 27);
+            TB_Mottak.TabIndex = 37;
             // 
             // BTN0
             // 
@@ -60,6 +61,7 @@
             BTN0.TabIndex = 36;
             BTN0.Text = "0";
             BTN0.UseVisualStyleBackColor = true;
+            BTN0.Click += BTN0_Click;
             // 
             // BTN9
             // 
@@ -69,6 +71,7 @@
             BTN9.TabIndex = 35;
             BTN9.Text = "9";
             BTN9.UseVisualStyleBackColor = true;
+            BTN9.Click += BTN9_Click;
             // 
             // BTN8
             // 
@@ -78,6 +81,7 @@
             BTN8.TabIndex = 34;
             BTN8.Text = "8";
             BTN8.UseVisualStyleBackColor = true;
+            BTN8.Click += BTN8_Click;
             // 
             // BTN7
             // 
@@ -87,6 +91,7 @@
             BTN7.TabIndex = 33;
             BTN7.Text = "7";
             BTN7.UseVisualStyleBackColor = true;
+            BTN7.Click += BTN7_Click;
             // 
             // BTN6
             // 
@@ -96,6 +101,7 @@
             BTN6.TabIndex = 32;
             BTN6.Text = "6";
             BTN6.UseVisualStyleBackColor = true;
+            BTN6.Click += BTN6_Click;
             // 
             // BTN5
             // 
@@ -105,6 +111,7 @@
             BTN5.TabIndex = 31;
             BTN5.Text = "5";
             BTN5.UseVisualStyleBackColor = true;
+            BTN5.Click += BTN5_Click;
             // 
             // BTN4
             // 
@@ -114,6 +121,7 @@
             BTN4.TabIndex = 30;
             BTN4.Text = "4";
             BTN4.UseVisualStyleBackColor = true;
+            BTN4.Click += BTN4_Click;
             // 
             // BTN3
             // 
@@ -123,6 +131,7 @@
             BTN3.TabIndex = 29;
             BTN3.Text = "3";
             BTN3.UseVisualStyleBackColor = true;
+            BTN3.Click += BTN3_Click;
             // 
             // BTN2
             // 
@@ -132,6 +141,7 @@
             BTN2.TabIndex = 28;
             BTN2.Text = "2";
             BTN2.UseVisualStyleBackColor = true;
+            BTN2.Click += BTN2_Click;
             // 
             // BTN1
             // 
@@ -172,6 +182,11 @@
             UgyldigLabel.Text = "Ugyldig input,\r\nprøv igjen";
             UgyldigLabel.Visible = false;
             // 
+            // BW_SendKvittering
+            // 
+            BW_SendKvittering.DoWork += BW_SendKvittering_DoWork;
+            BW_SendKvittering.RunWorkerCompleted += BW_SendKvittering_RunWorkerCompleted;
+            // 
             // Kortleser
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -180,7 +195,7 @@
             Controls.Add(TB_KortInput);
             Controls.Add(UgyldigLabel);
             Controls.Add(BTN_LesKort);
-            Controls.Add(TB_Kode);
+            Controls.Add(TB_Mottak);
             Controls.Add(BTN0);
             Controls.Add(BTN9);
             Controls.Add(BTN8);
@@ -200,7 +215,7 @@
 
         #endregion
 
-        private TextBox TB_Kode;
+        private TextBox TB_Mottak;
         private Button BTN0;
         private Button BTN9;
         private Button BTN8;
@@ -214,5 +229,6 @@
         private Button BTN_LesKort;
         private TextBox TB_KortInput;
         private Label UgyldigLabel;
+        private System.ComponentModel.BackgroundWorker BW_SendKvittering;
     }
 }

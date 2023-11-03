@@ -43,7 +43,7 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 29;
             dataGridView1.Size = new Size(824, 281);
-            dataGridView1.TabIndex = 2;
+            dataGridView1.TabIndex = 1;
             // 
             // button1
             // 
@@ -53,6 +53,7 @@
             button1.TabIndex = 3;
             button1.Text = "Les DB";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // TB_Kombo
             // 
