@@ -105,6 +105,7 @@ namespace Adgangskontroll_Kortleser
         {
             klientSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
+            BTN_LesKort.Select();
 
             // les ipadresse og port fra fil(config) kanskje??????
             try

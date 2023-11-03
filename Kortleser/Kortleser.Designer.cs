@@ -43,14 +43,15 @@
             TB_KortInput = new TextBox();
             UgyldigLabel = new Label();
             BW_SendKvittering = new System.ComponentModel.BackgroundWorker();
+            listBox1 = new ListBox();
             SuspendLayout();
             // 
             // TB_Mottak
             // 
-            TB_Mottak.Location = new Point(246, 74);
+            TB_Mottak.Location = new Point(217, 75);
             TB_Mottak.Name = "TB_Mottak";
             TB_Mottak.ReadOnly = true;
-            TB_Mottak.Size = new Size(77, 27);
+            TB_Mottak.Size = new Size(141, 27);
             TB_Mottak.TabIndex = 37;
             // 
             // BTN0
@@ -175,6 +176,8 @@
             // UgyldigLabel
             // 
             UgyldigLabel.AutoSize = true;
+            UgyldigLabel.BackColor = SystemColors.ControlText;
+            UgyldigLabel.ForeColor = SystemColors.ButtonHighlight;
             UgyldigLabel.Location = new Point(38, 16);
             UgyldigLabel.Name = "UgyldigLabel";
             UgyldigLabel.Size = new Size(102, 40);
@@ -187,11 +190,21 @@
             BW_SendKvittering.DoWork += BW_SendKvittering_DoWork;
             BW_SendKvittering.RunWorkerCompleted += BW_SendKvittering_RunWorkerCompleted;
             // 
+            // listBox1
+            // 
+            listBox1.BackColor = SystemColors.InfoText;
+            listBox1.FormattingEnabled = true;
+            listBox1.ItemHeight = 20;
+            listBox1.Location = new Point(12, 12);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(158, 264);
+            listBox1.TabIndex = 41;
+            // 
             // Kortleser
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(414, 276);
+            ClientSize = new Size(435, 290);
             Controls.Add(TB_KortInput);
             Controls.Add(UgyldigLabel);
             Controls.Add(BTN_LesKort);
@@ -206,6 +219,7 @@
             Controls.Add(BTN3);
             Controls.Add(BTN2);
             Controls.Add(BTN1);
+            Controls.Add(listBox1);
             Name = "Kortleser";
             Text = "Kortleser";
             Load += Kortleser_Load;
@@ -230,5 +244,6 @@
         private TextBox TB_KortInput;
         private Label UgyldigLabel;
         private System.ComponentModel.BackgroundWorker BW_SendKvittering;
+        private ListBox listBox1;
     }
 }

@@ -38,7 +38,7 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(86, 201);
+            dataGridView1.Location = new Point(21, 268);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 29;
@@ -47,7 +47,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(86, 148);
+            button1.Location = new Point(21, 224);
             button1.Name = "button1";
             button1.Size = new Size(94, 29);
             button1.TabIndex = 3;
@@ -57,7 +57,7 @@
             // 
             // TB_Kombo
             // 
-            TB_Kombo.Location = new Point(402, 81);
+            TB_Kombo.Location = new Point(15, 45);
             TB_Kombo.Name = "TB_Kombo";
             TB_Kombo.ReadOnly = true;
             TB_Kombo.Size = new Size(125, 27);
@@ -65,7 +65,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(275, 79);
+            button2.Location = new Point(15, 10);
             button2.Name = "button2";
             button2.Size = new Size(94, 29);
             button2.TabIndex = 5;

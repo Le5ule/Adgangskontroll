@@ -37,14 +37,14 @@ namespace Adgangskontroll_Sentral
 
             //while (false)
             //{
-                //Console.WriteLine("Venter på en klient ...");
-                Socket kommSokkel = lytteSokkel.Accept(); // blokkerende metode
+            //Console.WriteLine("Venter på en klient ...");
+            Socket kommSokkel = lytteSokkel.Accept(); // blokkerende metode
 
-                //VisKommunikasjonsinfo(kommSokkel.LocalEndPoint as IPEndPoint, kommSokkel.RemoteEndPoint as IPEndPoint);
-                IPEndPoint klientEP = (IPEndPoint)kommSokkel.RemoteEndPoint;
+            //VisKommunikasjonsinfo(kommSokkel.LocalEndPoint as IPEndPoint, kommSokkel.RemoteEndPoint as IPEndPoint);
+            IPEndPoint klientEP = (IPEndPoint)kommSokkel.RemoteEndPoint;
 
-                Thread ht = new Thread(Klientkommunikasjon);
-                ht.Start(kommSokkel);
+            Thread ht = new Thread(Klientkommunikasjon);
+            ht.Start(kommSokkel);
 
             //}
             //lytteSokkel.Close();
@@ -61,7 +61,7 @@ namespace Adgangskontroll_Sentral
         }
         private void Sentral_Load(object sender, EventArgs e)
         {
-            
+
         }
         public DataTable getData(string sql)
         {
@@ -98,10 +98,10 @@ namespace Adgangskontroll_Sentral
 
                 if (harForbindelse)
                 {
-                    
+
                     MessageBox.Show(dataFraKortleser);
 
-                    dataTilKortleser = "mottatt";
+                    dataTilKortleser = "mottatt fra sentral";
                     SendData(kommSokkel, dataTilKortleser, out harForbindelse);
                 }
             }
