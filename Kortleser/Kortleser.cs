@@ -9,7 +9,8 @@ namespace Adgangskontroll_Kortleser
     {
         byte[] data = new byte[1024];
         bool comMedSentral = false;
-        string dataTilSentral, dataFraSentral;
+        string dataTilSentral;
+        string dataFraSentral;
         static int kortID;
         string pin = "1";
         static int kortleserID = 0;
@@ -54,24 +55,38 @@ namespace Adgangskontroll_Kortleser
         }
         static string MottaData(Socket s, out bool gjennomført)
         {
-            string svar = "";
+            byte[] data = new byte[1024];
+            string svar = " ";
+            gjennomført = false;
             try
             {
-                //byte[] dataSomBytes = new byte[1024];
-                //int recv = s.Receive(dataSomBytes);
-                //if (recv > 0)
-                //{
-                //    svar = Encoding.ASCII.GetString(dataSomBytes, 0, recv);
-                //    gjennomført = true;
-                //}
-                //else
-                    gjennomført = false;
+                int antallMottatt = s.Receive(data);
+                svar = Encoding.ASCII.GetString(data, 0, antallMottatt);
+
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                MessageBox.Show("Feil" + e.Message);
             }
             return svar;
+            //string svar = "";
+            //try
+            //{
+            //    byte[] dataSomBytes = new byte[1024];
+            //    int recv = s.Receive(dataSomBytes);
+            //    if (recv >= 0)
+            //    {
+            //        svar = Encoding.ASCII.GetString(dataSomBytes, 0, recv);
+            //        gjennomført = true;
+            //    }
+            //    else
+            //        gjennomført = false;
+            //}
+            //catch (Exception)
+            //{
+            //    throw;
+            //}
+            //return svar;
         }
         static void SendData(Socket s, string data, out bool gjennomført)
         {
@@ -103,12 +118,12 @@ namespace Adgangskontroll_Kortleser
                 comMedSentral = false;
             }
 
-            if (comMedSentral)//==true)
-            {
-                dataFraSentral = MottaData(klientSokkel, out comMedSentral);
-                //MessageBox.Show(dataFraSentral);
-                TB_Mottak.Text = dataFraSentral;
-            }
+            //if (comMedSentral)//==true)
+            //{
+            //    dataFraSentral = MottaData(klientSokkel, out comMedSentral);
+            //    //MessageBox.Show(dataFraSentral);
+            //    //TB_Mottak.Text = dataFraSentral;
+            //}
             //noe som gir false
         }
         private void TB_KortInput_KeyPress(object sender, KeyPressEventArgs e)
@@ -178,7 +193,7 @@ namespace Adgangskontroll_Kortleser
         private void BW_SendKvittering_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             SendData(klientSokkel, dataTilSentral, out comMedSentral);
-            if (comMedSentral)
+            if (comMedSentral) //her er den true
             {
                 dataFraSentral = MottaData(klientSokkel, out comMedSentral);
             }
@@ -186,7 +201,7 @@ namespace Adgangskontroll_Kortleser
 
         private void BW_SendKvittering_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            if (comMedSentral)
+            if (true)//comMedSentral)       // denne har blitt endret til false et sted, tydeligvis, for dette funker 
             {
                 TB_Mottak.Text = dataFraSentral;
             }
