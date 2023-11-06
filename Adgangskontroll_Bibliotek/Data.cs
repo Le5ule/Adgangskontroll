@@ -4,20 +4,21 @@
     {
         List<int> kodeinput = new List<int>();
         int lestKort = 0000; 
-        public static string pin = "";
+        public static string pinString = "";
+        public static int pin;
         public static int kortID = 0000;
 
-        public bool godkjenning(string user)
+        public bool godkjenning(int BrukerPin)
         {
             bool svar = false;
             if (svar == false)
             {
-                pin = kodeinput[0].ToString() + kodeinput[1].ToString() + kodeinput[2].ToString() + kodeinput[3].ToString();
+                pinString = kodeinput[0].ToString() + kodeinput[1].ToString() + kodeinput[2].ToString() + kodeinput[3].ToString();
+                           pin = int.Parse(pinString);
                 svar = true;
             }
             else
             {
-                //MessageBox.Show("Feil kode, skriv inn på nytt");      //funker ikke siden dette er klassebibliotek
                 kodeinput.Clear();
             }
             return svar;
@@ -42,7 +43,7 @@
         {
             return kodeinput;
         }
-        public string Pin()
+        public int Pin()
         {
             return pin;
         }

@@ -43,20 +43,20 @@
             TB_KortInput = new TextBox();
             UgyldigLabel = new Label();
             BW_SendKvittering = new System.ComponentModel.BackgroundWorker();
-            listBox1 = new ListBox();
+            panel1 = new Panel();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // TB_Mottak
             // 
-            TB_Mottak.Location = new Point(217, 75);
+            TB_Mottak.Location = new Point(216, 74);
             TB_Mottak.Name = "TB_Mottak";
-            TB_Mottak.ReadOnly = true;
             TB_Mottak.Size = new Size(141, 27);
             TB_Mottak.TabIndex = 37;
             // 
             // BTN0
             // 
-            BTN0.Location = new Point(74, 228);
+            BTN0.Location = new Point(61, 216);
             BTN0.Name = "BTN0";
             BTN0.Size = new Size(23, 25);
             BTN0.TabIndex = 36;
@@ -66,7 +66,7 @@
             // 
             // BTN9
             // 
-            BTN9.Location = new Point(101, 200);
+            BTN9.Location = new Point(88, 188);
             BTN9.Name = "BTN9";
             BTN9.Size = new Size(23, 25);
             BTN9.TabIndex = 35;
@@ -76,7 +76,7 @@
             // 
             // BTN8
             // 
-            BTN8.Location = new Point(74, 200);
+            BTN8.Location = new Point(61, 188);
             BTN8.Name = "BTN8";
             BTN8.Size = new Size(23, 25);
             BTN8.TabIndex = 34;
@@ -86,7 +86,7 @@
             // 
             // BTN7
             // 
-            BTN7.Location = new Point(47, 200);
+            BTN7.Location = new Point(34, 188);
             BTN7.Name = "BTN7";
             BTN7.Size = new Size(23, 25);
             BTN7.TabIndex = 33;
@@ -96,7 +96,7 @@
             // 
             // BTN6
             // 
-            BTN6.Location = new Point(101, 171);
+            BTN6.Location = new Point(88, 159);
             BTN6.Name = "BTN6";
             BTN6.Size = new Size(23, 25);
             BTN6.TabIndex = 32;
@@ -106,7 +106,7 @@
             // 
             // BTN5
             // 
-            BTN5.Location = new Point(74, 171);
+            BTN5.Location = new Point(61, 159);
             BTN5.Name = "BTN5";
             BTN5.Size = new Size(23, 25);
             BTN5.TabIndex = 31;
@@ -116,7 +116,7 @@
             // 
             // BTN4
             // 
-            BTN4.Location = new Point(47, 171);
+            BTN4.Location = new Point(34, 159);
             BTN4.Name = "BTN4";
             BTN4.Size = new Size(23, 25);
             BTN4.TabIndex = 30;
@@ -126,7 +126,7 @@
             // 
             // BTN3
             // 
-            BTN3.Location = new Point(101, 142);
+            BTN3.Location = new Point(88, 130);
             BTN3.Name = "BTN3";
             BTN3.Size = new Size(23, 25);
             BTN3.TabIndex = 29;
@@ -136,7 +136,7 @@
             // 
             // BTN2
             // 
-            BTN2.Location = new Point(74, 142);
+            BTN2.Location = new Point(61, 130);
             BTN2.Name = "BTN2";
             BTN2.Size = new Size(23, 25);
             BTN2.TabIndex = 28;
@@ -146,7 +146,7 @@
             // 
             // BTN1
             // 
-            BTN1.Location = new Point(47, 142);
+            BTN1.Location = new Point(34, 130);
             BTN1.Name = "BTN1";
             BTN1.Size = new Size(23, 25);
             BTN1.TabIndex = 27;
@@ -156,7 +156,7 @@
             // 
             // BTN_LesKort
             // 
-            BTN_LesKort.Location = new Point(47, 74);
+            BTN_LesKort.Location = new Point(34, 61);
             BTN_LesKort.Name = "BTN_LesKort";
             BTN_LesKort.Size = new Size(77, 29);
             BTN_LesKort.TabIndex = 38;
@@ -166,7 +166,7 @@
             // 
             // TB_KortInput
             // 
-            TB_KortInput.Location = new Point(47, 109);
+            TB_KortInput.Location = new Point(34, 97);
             TB_KortInput.Name = "TB_KortInput";
             TB_KortInput.Size = new Size(77, 27);
             TB_KortInput.TabIndex = 40;
@@ -176,9 +176,9 @@
             // UgyldigLabel
             // 
             UgyldigLabel.AutoSize = true;
-            UgyldigLabel.BackColor = SystemColors.ControlText;
-            UgyldigLabel.ForeColor = SystemColors.ButtonHighlight;
-            UgyldigLabel.Location = new Point(38, 16);
+            UgyldigLabel.BackColor = Color.Transparent;
+            UgyldigLabel.ForeColor = SystemColors.ActiveCaptionText;
+            UgyldigLabel.Location = new Point(23, 14);
             UgyldigLabel.Name = "UgyldigLabel";
             UgyldigLabel.Size = new Size(102, 40);
             UgyldigLabel.TabIndex = 39;
@@ -190,39 +190,39 @@
             BW_SendKvittering.DoWork += BW_SendKvittering_DoWork;
             BW_SendKvittering.RunWorkerCompleted += BW_SendKvittering_RunWorkerCompleted;
             // 
-            // listBox1
+            // panel1
             // 
-            listBox1.BackColor = SystemColors.InfoText;
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 20;
-            listBox1.Location = new Point(12, 12);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(158, 264);
-            listBox1.TabIndex = 41;
+            panel1.BackColor = SystemColors.WindowFrame;
+            panel1.Controls.Add(TB_KortInput);
+            panel1.Controls.Add(UgyldigLabel);
+            panel1.Controls.Add(BTN_LesKort);
+            panel1.Controls.Add(BTN0);
+            panel1.Controls.Add(BTN9);
+            panel1.Controls.Add(BTN8);
+            panel1.Controls.Add(BTN7);
+            panel1.Controls.Add(BTN6);
+            panel1.Controls.Add(BTN5);
+            panel1.Controls.Add(BTN4);
+            panel1.Controls.Add(BTN3);
+            panel1.Controls.Add(BTN2);
+            panel1.Controls.Add(BTN1);
+            panel1.Location = new Point(12, 12);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(153, 265);
+            panel1.TabIndex = 41;
             // 
             // Kortleser
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(435, 290);
-            Controls.Add(TB_KortInput);
-            Controls.Add(UgyldigLabel);
-            Controls.Add(BTN_LesKort);
+            ClientSize = new Size(426, 291);
+            Controls.Add(panel1);
             Controls.Add(TB_Mottak);
-            Controls.Add(BTN0);
-            Controls.Add(BTN9);
-            Controls.Add(BTN8);
-            Controls.Add(BTN7);
-            Controls.Add(BTN6);
-            Controls.Add(BTN5);
-            Controls.Add(BTN4);
-            Controls.Add(BTN3);
-            Controls.Add(BTN2);
-            Controls.Add(BTN1);
-            Controls.Add(listBox1);
             Name = "Kortleser";
             Text = "Kortleser";
             Load += Kortleser_Load;
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -244,6 +244,6 @@
         private TextBox TB_KortInput;
         private Label UgyldigLabel;
         private System.ComponentModel.BackgroundWorker BW_SendKvittering;
-        private ListBox listBox1;
+        private Panel panel1;
     }
 }

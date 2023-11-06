@@ -1,5 +1,4 @@
 using Npgsql;
-using Adgangskontroll_Bibliotek;
 using System.Data;
 using System.Net;
 using System.Net.Sockets;
@@ -10,15 +9,17 @@ namespace Adgangskontroll_Sentral
 {
     public partial class Sentral : Form
     {
-        Data terminal = new Data();
+        //List<Panel> panels = new List<Panel>();
+        //int index;
+        DataTable dtgetData = new DataTable();
 
         byte[] data = new byte[1024];       //eehhhhh
-        static string dataFraKlient;               // trenger dette endring?
-        static string dataTilKlient;               // trenger dette endring?
+        static string dataFraKlient;
+        static string dataTilKlient;
 
         string vstrConnection = "server=129.151.221.119 ; port=5432 ; user id=596237 ; password=Ha1FinDagIDag! ; database=596237 ;";
-        NpgsqlConnection vCon;
-        NpgsqlCommand vCmd;
+        NpgsqlConnection vCon = new NpgsqlConnection();
+        NpgsqlCommand vCmd = new NpgsqlCommand();
 
         // VelgerTCP/IP og adresser + portnummer
         Socket lytteSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -61,7 +62,16 @@ namespace Adgangskontroll_Sentral
         }
         private void Sentral_Load(object sender, EventArgs e)
         {
+            panel1.Hide();
+            panel2.Hide();
+            panel3.Hide();
+            panel4.Hide();
 
+            // frem og tilbake-opplegg
+            //panels.Add(panel1);
+            //panels.Add(panel2);
+            //panels.Add(panel3);
+            //panels[index].BringToFront();
         }
         public DataTable getData(string sql)
         {
@@ -99,9 +109,9 @@ namespace Adgangskontroll_Sentral
                 if (harForbindelse)
                 {
 
-                    MessageBox.Show(dataFraKortleser);
+                    MessageBox.Show("Sentral:" + dataFraKortleser);
 
-                    dataTilKortleser = "mottatt fra sentral";
+                    dataTilKortleser = dataFraKortleser;
                     SendData(kommSokkel, dataTilKortleser, out harForbindelse);
                 }
             }
@@ -126,7 +136,7 @@ namespace Adgangskontroll_Sentral
             }
             catch (Exception)
             {
-                throw;
+                throw;      // Trenger noe bedre enn dette
             }
             return svar;
         }
@@ -145,17 +155,94 @@ namespace Adgangskontroll_Sentral
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            DataTable dtgetData = new DataTable();
             dtgetData = getData("select * from ansatt0;");
-
             dataGridView1.DataSource = dtgetData;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void BTN_LeggTil_Click(object sender, EventArgs e)
         {
-            //TB_Kombo.Text = terminal.Kombo();
-            //TB_Kombo.Text = MottaData(lytteSokkel, out harforbindelse);
+            string id = TB_ID.Text;
+            string navn = TB_Navn.Text;
+            string identitet = $"INSERT INTO Brukere values({id}, '{navn}')";
+            dtgetData = getData(identitet);
 
+            TB_ID.Clear();
+            TB_Navn.Clear();
+        }
+        private void BTN_VisTab_Click(object sender, EventArgs e)
+        {
+            dtgetData = getData("select * from Brukere_test;");
+            dataGridView2.DataSource = dtgetData;
+
+        }
+
+        // Paneler og dems menyer
+        private void BTN_LesAnsatt_Click(object sender, EventArgs e)
+        {
+            panel1.Show();
+            panel4.Hide();
+            panel3.Hide();
+            panel2.Hide();
+            panel1.BringToFront();
+
+            // tror panel2 og 3 ligger inni panel1???
+
+            //if (index < panels.Count-1)
+            //{
+            //    panels[++index].BringToFront();
+            //}
+        }
+
+        private void BTN_Brukere_Click(object sender, EventArgs e)
+        {
+            panel2.Show();
+            panel1.Hide();
+            panel3.Hide();
+            panel4.Hide();
+            panel2.BringToFront();
+
+            //if (index > 0)
+            //{
+            //    panels[-- index].BringToFront();
+            //}
+        }
+
+        private void BTN_info_Click(object sender, EventArgs e)
+        {
+            panel3.Show();
+            panel1.Hide();
+            panel2.Hide();
+            panel4.Hide();
+            panel3.BringToFront();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            panel4.Show();
+            panel1.Hide();
+            panel2.Hide();
+            panel3.Hide();
+            panel4.BringToFront();
+        }
+        
+        //  Eksempel innlogging
+        private void BTN_LoggInn_Click(object sender, EventArgs e)
+        {
+            string LoggID = TB_LoggID.Text;
+            string LoggNavn = TB_LoggNavn.Text;
+
+            string query = ($"select * from Brukere_test where bruker_id='{LoggID}' and navn = '{LoggNavn}';"); //endre
+            NpgsqlCommand vCmd = new NpgsqlCommand(query, vCon);
+
+            using NpgsqlDataReader reader = vCmd.ExecuteReader();
+            if (reader.Read())
+            {
+                TB_suksess.Text = "korrekt";
+            }
+            else
+            {
+                TB_suksess.Text = "feil";
+            }
         }
     }
 }
