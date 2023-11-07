@@ -1,4 +1,5 @@
 using Npgsql;
+using Sentral;
 using System.Data;
 using System.Net;
 using System.Net.Sockets;
@@ -11,17 +12,20 @@ namespace Adgangskontroll_Sentral
     {
         //List<Panel> panels = new List<Panel>();
         //int index;
-        DataTable dtgetData = new DataTable();
+
+        //DataTable dtgetData = new DataTable();
+        Database db = new Database();
 
         byte[] data = new byte[1024];       //eehhhhh
         static string dataFraKlient;
         static string dataTilKlient;
 
-        string vstrConnection = "server=129.151.221.119 ; port=5432 ; user id=596237 ; password=Ha1FinDagIDag! ; database=596237 ;";
-        NpgsqlConnection vCon = new NpgsqlConnection();
-        NpgsqlCommand vCmd = new NpgsqlCommand();
+
+        //NpgsqlConnection vCon = Database.VCon;
+        //NpgsqlCommand vCmd = Database.VCmd;
 
         // VelgerTCP/IP og adresser + portnummer
+        // men kan bruke udp og rtp...
         Socket lytteSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
         // Oppgir server sin IP adresse og portnummer
@@ -32,10 +36,15 @@ namespace Adgangskontroll_Sentral
         public Sentral()
         {
             InitializeComponent();
-            connection();
+            db.Connection();
+            
             lytteSokkel.Bind(serverEP);
             lytteSokkel.Listen(10);
 
+            KobleTilKortleser();
+        }
+        private void KobleTilKortleser()//object o)
+        {
             //while (false)
             //{
             //Console.WriteLine("Venter på en klient ...");
@@ -50,16 +59,6 @@ namespace Adgangskontroll_Sentral
             //}
             //lytteSokkel.Close();
         }
-        private void connection()
-        {
-            vCon = new NpgsqlConnection();
-            vCon.ConnectionString = vstrConnection;
-
-            if (vCon.State == ConnectionState.Closed)
-            {
-                vCon.Open();
-            }
-        }
         private void Sentral_Load(object sender, EventArgs e)
         {
             panel1.Hide();
@@ -72,18 +71,6 @@ namespace Adgangskontroll_Sentral
             //panels.Add(panel2);
             //panels.Add(panel3);
             //panels[index].BringToFront();
-        }
-        public DataTable getData(string sql)
-        {
-            DataTable dt = new DataTable();
-            vCmd = new NpgsqlCommand();
-            vCmd.Connection = vCon;
-            vCmd.CommandText = sql;
-
-            NpgsqlDataReader dr = vCmd.ExecuteReader();
-            dt.Load(dr);
-
-            return dt;
         }
         static void VisKommunikasjonsinfo(IPEndPoint l, IPEndPoint r)
         {
@@ -155,8 +142,8 @@ namespace Adgangskontroll_Sentral
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            dtgetData = getData("select * from ansatt0;");
-            dataGridView1.DataSource = dtgetData;
+            Database.DtgetData = db.getData("select * from ansatt0;");
+            dataGridView1.DataSource = Database.DtgetData;
         }
 
         private void BTN_LeggTil_Click(object sender, EventArgs e)
@@ -164,15 +151,15 @@ namespace Adgangskontroll_Sentral
             string id = TB_ID.Text;
             string navn = TB_Navn.Text;
             string identitet = $"INSERT INTO Brukere values({id}, '{navn}')";
-            dtgetData = getData(identitet);
+            Database.DtgetData = db.getData(identitet);
 
             TB_ID.Clear();
             TB_Navn.Clear();
         }
         private void BTN_VisTab_Click(object sender, EventArgs e)
         {
-            dtgetData = getData("select * from Brukere_test;");
-            dataGridView2.DataSource = dtgetData;
+            Database.DtgetData = db.getData("select * from Brukere_test;");
+            dataGridView2.DataSource = Database.DtgetData;
 
         }
 
@@ -226,13 +213,14 @@ namespace Adgangskontroll_Sentral
         }
         
         //  Eksempel innlogging
+        // selve koden må implementeres i klassen Database
         private void BTN_LoggInn_Click(object sender, EventArgs e)
         {
             string LoggID = TB_LoggID.Text;
             string LoggNavn = TB_LoggNavn.Text;
 
             string query = ($"select * from Brukere_test where bruker_id='{LoggID}' and navn = '{LoggNavn}';"); //endre
-            NpgsqlCommand vCmd = new NpgsqlCommand(query, vCon);
+            NpgsqlCommand vCmd = new NpgsqlCommand(query, Database.VCon);
 
             using NpgsqlDataReader reader = vCmd.ExecuteReader();
             if (reader.Read())
