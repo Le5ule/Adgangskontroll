@@ -63,7 +63,7 @@ namespace Adgangskontroll_Kortleser
                 if (comMedSentral == true)
                 {
                     BW_SendKvittering.RunWorkerAsync();
-                    MessageBox.Show("Kortleser:" + dataTilSentral);
+                    MessageBox.Show("Kortleser:" + dataTilSentral);     //debug
                 }
                 kortID = 0;
                 pin = 0;
