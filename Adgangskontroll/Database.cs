@@ -15,7 +15,8 @@ namespace Sentral
         private static DataTable dtgetData = new DataTable();
         private static NpgsqlConnection vCon;
         private static NpgsqlCommand vCmd;
-        static string kobling = "server=129.151.221.119 ; port=5432 ; user id=596237 ; password=Ha1FinDagIDag! ; database=596237 ;";
+              // legg inn din informasjon her for kobling mot din database
+        static string kobling = "server=129.151.221.119 ; port=5432 ; user id=id ; password=pass ; database=data ;";
 
         public static NpgsqlCommand VCmd
         {

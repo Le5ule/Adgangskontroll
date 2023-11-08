@@ -27,7 +27,7 @@ namespace Adgangskontroll_Sentral
         public Sentral()
         {
             InitializeComponent();
-            db.Connection();
+            db.Connection();    //skal endre dette til enten her eller i Database.cs at man setter inn egenefinerte parametre for tilkobling
 
             lytteSokkel.Bind(serverEP);
             lytteSokkel.Listen(10);
