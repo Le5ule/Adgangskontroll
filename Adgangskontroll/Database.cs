@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Npgsql;
 
 namespace Sentral
@@ -12,8 +13,8 @@ namespace Sentral
     internal class Database
     {
         private static DataTable dtgetData = new DataTable();
-        private static NpgsqlConnection vCon;// = new NpgsqlConnection();
-        private static NpgsqlCommand vCmd;// = new NpgsqlCommand();
+        private static NpgsqlConnection vCon;
+        private static NpgsqlCommand vCmd;
         static string kobling = "server=129.151.221.119 ; port=5432 ; user id=596237 ; password=Ha1FinDagIDag! ; database=596237 ;";
 
         public static NpgsqlCommand VCmd
@@ -38,13 +39,12 @@ namespace Sentral
         public NpgsqlConnection Connection()
         {
             vCon = new NpgsqlConnection(kobling);
-            //vCon.ConnectionString = vstrConnection;
             try
             {
                 if (vCon.State == ConnectionState.Closed)
                 {
                     vCon.Open();
-                }//vCon.Open();
+                }
             }
             catch (Exception)
             {
@@ -65,13 +65,43 @@ namespace Sentral
 
             return dt;
         }
-        public NpgsqlConnection Con()
+        public string Innlogging(string id, string pin)
         {
-            return vCon;
+            string suksess;
+            string query = ($"select * from Brukere where Kort_ID ='{id}' and Pin = '{pin}';");
+            VCmd = new NpgsqlCommand(query, VCon);
+
+            using NpgsqlDataReader reader = VCmd.ExecuteReader();
+            if (reader.Read())
+            {
+                suksess = "korrekt";
+            }
+            else
+            {
+                suksess = "feil";
+            }
+            return suksess;
         }
-        public NpgsqlCommand Cmd()
+        public DataTable VisAnsatt()
         {
-            return vCmd;
+            dtgetData = getData("select * from ansatt0;");
+            DataTable dt = Database.DtgetData;
+
+            return dt;
+        }
+        public DataTable VisBrukere()
+        {
+            dtgetData = getData("select * from Brukere;");
+            DataTable dt = Database.DtgetData;
+
+            return dt;
+        }
+        public DataTable LeggTilNyBruker(string id, string pin)
+        {
+            dtgetData = getData($"INSERT INTO Brukere values('{id}', '{pin}');");
+            DataTable dt = dtgetData;
+
+            return dt;
         }
     }
 }

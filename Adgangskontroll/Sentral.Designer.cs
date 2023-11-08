@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Sentral));
             dataGridView1 = new DataGridView();
             BTN_LesDB = new Button();
             TB_ID = new TextBox();
@@ -36,28 +37,29 @@
             BTN_LesAnsatt = new Button();
             BTN_Brukere = new Button();
             BTN_info = new Button();
-            button4 = new Button();
-            npgsqlCommandBuilder1 = new Npgsql.NpgsqlCommandBuilder();
+            BTN_Innlogg = new Button();
             panel1 = new Panel();
+            panel3 = new Panel();
             panel2 = new Panel();
+            label6 = new Label();
             label3 = new Label();
             label2 = new Label();
             dataGridView2 = new DataGridView();
             button5 = new Button();
             TB_Navn = new TextBox();
-            panel3 = new Panel();
             panel4 = new Panel();
             TB_suksess = new TextBox();
             label4 = new Label();
             label5 = new Label();
-            TB_LoggNavn = new TextBox();
+            TB_LoggPin = new TextBox();
             TB_LoggID = new TextBox();
             BTN_LoggInn = new Button();
+            label7 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
+            panel3.SuspendLayout();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
-            panel3.SuspendLayout();
             panel4.SuspendLayout();
             SuspendLayout();
             // 
@@ -68,7 +70,7 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 29;
-            dataGridView1.Size = new Size(528, 223);
+            dataGridView1.Size = new Size(779, 347);
             dataGridView1.TabIndex = 1;
             // 
             // BTN_LesDB
@@ -79,18 +81,18 @@
             BTN_LesDB.TabIndex = 3;
             BTN_LesDB.Text = "Les DB";
             BTN_LesDB.UseVisualStyleBackColor = true;
-            BTN_LesDB.Click += button1_Click;
+            BTN_LesDB.Click += BTN_VisAnsatte_Click;
             // 
             // TB_ID
             // 
-            TB_ID.Location = new Point(24, 37);
+            TB_ID.Location = new Point(24, 36);
             TB_ID.Name = "TB_ID";
             TB_ID.Size = new Size(125, 27);
             TB_ID.TabIndex = 4;
             // 
             // BTN_VisKode
             // 
-            BTN_VisKode.Location = new Point(315, 37);
+            BTN_VisKode.Location = new Point(315, 35);
             BTN_VisKode.Name = "BTN_VisKode";
             BTN_VisKode.Size = new Size(94, 29);
             BTN_VisKode.TabIndex = 5;
@@ -101,11 +103,11 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(24, 43);
+            label1.Location = new Point(44, 32);
             label1.Name = "label1";
-            label1.Size = new Size(430, 100);
+            label1.Size = new Size(570, 320);
             label1.TabIndex = 6;
-            label1.Text = "Skal legge til paneler og knapper for å lage forskjellige menyer.\r\n-info kortlesere\r\n-info brukere\r\n-logg\r\n    -alarmer(eller egen tab)";
+            label1.Text = resources.GetString("label1.Text");
             // 
             // BTN_LesAnsatt
             // 
@@ -129,7 +131,7 @@
             // 
             // BTN_info
             // 
-            BTN_info.Location = new Point(29, 135);
+            BTN_info.Location = new Point(29, 170);
             BTN_info.Name = "BTN_info";
             BTN_info.Size = new Size(94, 29);
             BTN_info.TabIndex = 10;
@@ -137,32 +139,36 @@
             BTN_info.UseVisualStyleBackColor = true;
             BTN_info.Click += BTN_info_Click;
             // 
-            // button4
+            // BTN_Innlogg
             // 
-            button4.Location = new Point(29, 170);
-            button4.Name = "button4";
-            button4.Size = new Size(94, 29);
-            button4.TabIndex = 11;
-            button4.Text = "innlogging";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
-            // 
-            // npgsqlCommandBuilder1
-            // 
-            npgsqlCommandBuilder1.QuotePrefix = "\"";
-            npgsqlCommandBuilder1.QuoteSuffix = "\"";
+            BTN_Innlogg.Location = new Point(29, 135);
+            BTN_Innlogg.Name = "BTN_Innlogg";
+            BTN_Innlogg.Size = new Size(94, 29);
+            BTN_Innlogg.TabIndex = 11;
+            BTN_Innlogg.Text = "innlogging";
+            BTN_Innlogg.UseVisualStyleBackColor = true;
+            BTN_Innlogg.Click += BTN_Innlogg_Click;
             // 
             // panel1
             // 
             panel1.Controls.Add(dataGridView1);
             panel1.Controls.Add(BTN_LesDB);
-            panel1.Location = new Point(238, 65);
+            panel1.Location = new Point(162, 41);
             panel1.Name = "panel1";
-            panel1.Size = new Size(574, 298);
+            panel1.Size = new Size(897, 436);
             panel1.TabIndex = 12;
+            // 
+            // panel3
+            // 
+            panel3.Controls.Add(label1);
+            panel3.Location = new Point(162, 39);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(897, 438);
+            panel3.TabIndex = 13;
             // 
             // panel2
             // 
+            panel2.Controls.Add(label6);
             panel2.Controls.Add(label3);
             panel2.Controls.Add(label2);
             panel2.Controls.Add(dataGridView2);
@@ -170,28 +176,37 @@
             panel2.Controls.Add(TB_Navn);
             panel2.Controls.Add(TB_ID);
             panel2.Controls.Add(BTN_VisKode);
-            panel2.Location = new Point(238, 65);
+            panel2.Location = new Point(162, 29);
             panel2.Name = "panel2";
-            panel2.Size = new Size(574, 298);
+            panel2.Size = new Size(897, 433);
             panel2.TabIndex = 13;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(590, 75);
+            label6.Name = "label6";
+            label6.Size = new Size(280, 180);
+            label6.TabIndex = 11;
+            label6.Text = resources.GetString("label6.Text");
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Location = new Point(165, 9);
             label3.Name = "label3";
-            label3.Size = new Size(40, 20);
+            label3.Size = new Size(29, 20);
             label3.TabIndex = 10;
-            label3.Text = "navn";
+            label3.Text = "Pin";
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Location = new Point(26, 9);
             label2.Name = "label2";
-            label2.Size = new Size(22, 20);
+            label2.Size = new Size(58, 20);
             label2.TabIndex = 9;
-            label2.Text = "id";
+            label2.Text = "Kort-ID";
             // 
             // dataGridView2
             // 
@@ -200,7 +215,7 @@
             dataGridView2.Name = "dataGridView2";
             dataGridView2.RowHeadersWidth = 51;
             dataGridView2.RowTemplate.Height = 29;
-            dataGridView2.Size = new Size(530, 209);
+            dataGridView2.Size = new Size(530, 328);
             dataGridView2.TabIndex = 8;
             // 
             // button5
@@ -215,37 +230,29 @@
             // 
             // TB_Navn
             // 
-            TB_Navn.Location = new Point(165, 38);
+            TB_Navn.Location = new Point(165, 36);
             TB_Navn.Name = "TB_Navn";
             TB_Navn.Size = new Size(125, 27);
             TB_Navn.TabIndex = 6;
-            // 
-            // panel3
-            // 
-            panel3.Controls.Add(label1);
-            panel3.Location = new Point(238, 65);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(574, 298);
-            panel3.TabIndex = 13;
             // 
             // panel4
             // 
             panel4.Controls.Add(TB_suksess);
             panel4.Controls.Add(label4);
             panel4.Controls.Add(label5);
-            panel4.Controls.Add(TB_LoggNavn);
+            panel4.Controls.Add(TB_LoggPin);
             panel4.Controls.Add(TB_LoggID);
             panel4.Controls.Add(BTN_LoggInn);
-            panel4.Location = new Point(238, 65);
+            panel4.Location = new Point(162, 29);
             panel4.Name = "panel4";
-            panel4.Size = new Size(574, 298);
+            panel4.Size = new Size(902, 439);
             panel4.TabIndex = 14;
             // 
             // TB_suksess
             // 
             TB_suksess.Location = new Point(315, 106);
             TB_suksess.Name = "TB_suksess";
-            TB_suksess.Size = new Size(125, 27);
+            TB_suksess.Size = new Size(94, 27);
             TB_suksess.TabIndex = 11;
             // 
             // label4
@@ -253,9 +260,9 @@
             label4.AutoSize = true;
             label4.Location = new Point(165, 9);
             label4.Name = "label4";
-            label4.Size = new Size(40, 20);
+            label4.Size = new Size(30, 20);
             label4.TabIndex = 10;
-            label4.Text = "navn";
+            label4.Text = "pin";
             // 
             // label5
             // 
@@ -266,12 +273,12 @@
             label5.TabIndex = 9;
             label5.Text = "id";
             // 
-            // TB_LoggNavn
+            // TB_LoggPin
             // 
-            TB_LoggNavn.Location = new Point(165, 38);
-            TB_LoggNavn.Name = "TB_LoggNavn";
-            TB_LoggNavn.Size = new Size(125, 27);
-            TB_LoggNavn.TabIndex = 6;
+            TB_LoggPin.Location = new Point(165, 38);
+            TB_LoggPin.Name = "TB_LoggPin";
+            TB_LoggPin.Size = new Size(125, 27);
+            TB_LoggPin.TabIndex = 6;
             // 
             // TB_LoggID
             // 
@@ -290,32 +297,43 @@
             BTN_LoggInn.UseVisualStyleBackColor = true;
             BTN_LoggInn.Click += BTN_LoggInn_Click;
             // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(21, 512);
+            label7.Name = "label7";
+            label7.Size = new Size(189, 120);
+            label7.TabIndex = 15;
+            label7.Text = "Vil også ha en form for\r\nenkel statusrapport her i\r\nhovedvinduet(ikke i panel)\r\nmed umiddelbar info om\r\naktiv/inaktiv alarm\r\n    -evt x/y online kortlesere";
+            // 
             // Sentral
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1122, 672);
-            Controls.Add(panel2);
-            Controls.Add(panel4);
-            Controls.Add(panel1);
-            Controls.Add(panel3);
-            Controls.Add(button4);
+            ClientSize = new Size(1071, 678);
+            Controls.Add(label7);
+            Controls.Add(BTN_Innlogg);
             Controls.Add(BTN_info);
             Controls.Add(BTN_Brukere);
             Controls.Add(BTN_LesAnsatt);
+            Controls.Add(panel4);
+            Controls.Add(panel2);
+            Controls.Add(panel1);
+            Controls.Add(panel3);
             Name = "Sentral";
             Text = "Sentral";
             Load += Sentral_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panel1.ResumeLayout(false);
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -328,8 +346,7 @@
         private Button BTN_LesAnsatt;
         private Button BTN_Brukere;
         private Button BTN_info;
-        private Button button4;
-        private Npgsql.NpgsqlCommandBuilder npgsqlCommandBuilder1;
+        private Button BTN_Innlogg;
         private Panel panel1;
         private Panel panel2;
         private Panel panel3;
@@ -342,8 +359,10 @@
         private TextBox TB_suksess;
         private Label label4;
         private Label label5;
-        private TextBox TB_LoggNavn;
+        private TextBox TB_LoggPin;
         private TextBox TB_LoggID;
         private Button BTN_LoggInn;
+        private Label label6;
+        private Label label7;
     }
 }

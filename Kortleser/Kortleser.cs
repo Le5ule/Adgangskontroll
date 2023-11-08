@@ -10,10 +10,9 @@ namespace Adgangskontroll_Kortleser
         bool comMedSentral = false;
         static string dataTilSentral;
         static string dataFraSentral;
-        static string pinString;
-        static int pin;
-        static int kortID;
-        static int kortleserID = 0;
+        static string pin;
+        static string kortID;
+        static string kortleserID = "0";
         List<int> kodeinput = new List<int>();
 
         Socket klientSokkel;
@@ -27,8 +26,6 @@ namespace Adgangskontroll_Kortleser
             klientSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
             BTN_LesKort.Select();
-
-            // les ipadresse og port fra fil(config) kanskje??????
 
             try
             {
@@ -53,21 +50,25 @@ namespace Adgangskontroll_Kortleser
         {
             kodeinput.Add(inn);
 
-            if (kodeinput.Count == 4)
+            if (kodeinput.Count == 4 && comMedSentral == true)
             {
-                comMedSentral = true;
-                pinString = kodeinput[0].ToString() + kodeinput[1].ToString() + kodeinput[2].ToString() + kodeinput[3].ToString();
-                pin = int.Parse(pinString);
+                // her kan vi også ta å laste inn kortID uten å måtte trykke på enter-tasten, kanskje mer brukervennlig, slipper å forklare "trykk enter";
+                kortID = TB_KortInput.Text;
+                TB_KortInput.Clear();
+                TB_KortInput.Visible = false;
+                //
+                //comMedSentral = true;
+                pin = kodeinput[0].ToString() + kodeinput[1].ToString() + kodeinput[2].ToString() + kodeinput[3].ToString();
                 kodeinput.Clear();
                 dataTilSentral = $" K:{kortID} P:{pin} L:{kortleserID}";
                 if (comMedSentral == true)
                 {
                     BW_SendKvittering.RunWorkerAsync();
-                    MessageBox.Show("Kortleser:" + dataTilSentral);     //debug
+                    MessageBox.Show("Lokal info i kortleser:\n" + dataTilSentral);     //debug
                 }
-                kortID = 0;
-                pin = 0;
-                pinString = "";
+                BTN_LesKort.Select();
+                kortID = "";
+                pin = "";
             }
         }
         public bool godkjenning(int BrukerPin)
@@ -75,8 +76,8 @@ namespace Adgangskontroll_Kortleser
             bool svar = false;
             if (svar == false)
             {
-                pinString = kodeinput[0].ToString() + kodeinput[1].ToString() + kodeinput[2].ToString() + kodeinput[3].ToString();
-                pin = int.Parse(pinString);
+                pin = kodeinput[0].ToString() + kodeinput[1].ToString() + kodeinput[2].ToString() + kodeinput[3].ToString();
+                //pin = int.Parse(pinString);
                 svar = true;
             }
             else
@@ -88,38 +89,24 @@ namespace Adgangskontroll_Kortleser
         // Denne funker, men bool gjennomfjørt endres ikke slik som den bler brukt i server-klient i kommentert felt under
         static string MottaData(Socket s, out bool gjennomført)
         {
-            byte[] data = new byte[1024];
-            string svar = " ";
-            gjennomført = false;
+            string svar = "";
             try
             {
-                int antallMottatt = s.Receive(data);
-                svar = Encoding.ASCII.GetString(data, 0, antallMottatt);
-
+                byte[] dataSomBytes = new byte[1024];
+                int recv = s.Receive(dataSomBytes);
+                if (recv > 0)
+                {
+                    svar = Encoding.ASCII.GetString(dataSomBytes, 0, recv);
+                    gjennomført = true;
+                }
+                else
+                    gjennomført = false;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                MessageBox.Show("Feil" + e.Message);
+                throw;
             }
             return svar;
-            //string svar = "";
-            //try
-            //{
-            //    byte[] dataSomBytes = new byte[1024];
-            //    int recv = s.Receive(dataSomBytes);
-            //    if (recv >= 0)
-            //    {
-            //        svar = Encoding.ASCII.GetString(dataSomBytes, 0, recv);
-            //        gjennomført = true;
-            //    }
-            //    else
-            //        gjennomført = false;
-            //}
-            //catch (Exception)
-            //{
-            //    throw;
-            //}
-            //return svar;
         }
         static void SendData(Socket s, string data, out bool gjennomført)
         {
@@ -136,11 +123,14 @@ namespace Adgangskontroll_Kortleser
         }
         private void TB_KortInput_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)13)
+            if (e.KeyChar == (char)13)  // samme som enter
             {
-                if (TB_KortInput.Text.Length == 4 && Int32.TryParse(TB_KortInput.Text, out kortID))
+                // Trenger bare å håndtere lengden. Hvis ID oppgis f.eks: "abcd" så er dette "feil" id, men godkjent input i databasen
+                // Siden Kode() nå leser av TB_KortInput uten enter, så vil ikke dette leses ved å trykke enter.
+                // Detaljene om implementasjonen kan diskuteres senere når design er mer kritisk.
+                if (TB_KortInput.Text.Length == 4)
                 {
-                    kortID = Convert.ToInt32(TB_KortInput.Text);
+                    kortID = TB_KortInput.Text;
                     TB_KortInput.Visible = false;
                     UgyldigLabel.Visible = false;
                     TB_KortInput.Clear();
@@ -164,7 +154,7 @@ namespace Adgangskontroll_Kortleser
         {
             if (comMedSentral)
             {
-                TB_Mottak.Text = dataFraSentral;
+                TB_MottakFraSentral.Text = dataFraSentral;
             }
             //else //Application.Exit();
         }

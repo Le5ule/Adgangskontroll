@@ -117,7 +117,33 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="npgsqlCommandBuilder1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Dette panelet skal være for å hente ut logg
+
+Skal legge til paneler og knapper for å lage forskjellige menyer. i de andre knappene
+Dermed endre "les ansatt", "brukere", "innlogging" og "info"
+     - Disse er kun for testing at funkjsonene fungere før alt er implementert
+Nye knapper:
+-kortlesere
+    -starte, legg til og endre
+-brukere
+    -legge til og endre
+-logg
+    -velge fra kortlesere eller brukere, også samlet logg for hele systemet
+    -velge hvilken type informasjon vi vil hente ut(alarm, forsøk, etc.)
+ -statusrapport
+    -detaljert om status for kortleserene(online/offline)
+    -detaljert info om alarmer</value>
+  </data>
+  <data name="label6.Text" xml:space="preserve">
+    <value>Har endret fra navn til pin for å teste 
+en betaversjon av brukerdatabasen som
+skal inneholde de 4 forhåndsdefinerte
+brukerene.
+Ved reell "legg til nye brukere" skal man 
+ikke generere de med verken ID eller pin,
+men med andre opplysninger
+
+Må endres totalt</value>
+  </data>
 </root>

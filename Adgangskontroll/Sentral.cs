@@ -37,7 +37,7 @@ namespace Adgangskontroll_Sentral
         {
             InitializeComponent();
             db.Connection();
-            
+
             lytteSokkel.Bind(serverEP);
             lytteSokkel.Listen(10);
 
@@ -49,14 +49,14 @@ namespace Adgangskontroll_Sentral
             {
                 //while (false)
                 //{
-                    //Console.WriteLine("Venter på en klient ...");
-                    Socket kommSokkel = lytteSokkel.Accept(); // blokkerende metode
+                //Console.WriteLine("Venter på en klient ...");
+                Socket kommSokkel = lytteSokkel.Accept(); // blokkerende metode
 
-                    //VisKommunikasjonsinfo(kommSokkel.LocalEndPoint as IPEndPoint, kommSokkel.RemoteEndPoint as IPEndPoint);
-                    IPEndPoint klientEP = (IPEndPoint)kommSokkel.RemoteEndPoint;
+                //VisKommunikasjonsinfo(kommSokkel.LocalEndPoint as IPEndPoint, kommSokkel.RemoteEndPoint as IPEndPoint);
+                IPEndPoint klientEP = (IPEndPoint)kommSokkel.RemoteEndPoint;
 
-                    Thread ht = new Thread(Klientkommunikasjon);
-                    ht.Start(kommSokkel);
+                Thread ht = new Thread(Klientkommunikasjon);
+                ht.Start(kommSokkel);
 
                 //}
             }
@@ -65,7 +65,7 @@ namespace Adgangskontroll_Sentral
 
                 throw;
             }
-            
+
             //lytteSokkel.Close();
         }
         private void Sentral_Load(object sender, EventArgs e)
@@ -83,6 +83,8 @@ namespace Adgangskontroll_Sentral
         }
         static void VisKommunikasjonsinfo(IPEndPoint l, IPEndPoint r)
         {
+            // Noe som samsvarer med at kommunikasjon eksisterer, slags godkjenning... spørs nødvendig med egen metode...
+            // en slags løggføring at sentral er koblet til kortleser
             //Console.WriteLine("Serverinfo; {0}:{1}, Klientinfo: {2}:{3}", l.Address, l.Port, r.Address, r.Port);
         }
         public void Klientkommunikasjon(object o)
@@ -96,7 +98,7 @@ namespace Adgangskontroll_Sentral
 
             bool harForbindelse = true;
 
-            //SendData(kommSokkel, "Velkommen til en enkel testserver", out harForbindelse);
+            //SendData(kommSokkel, "Velkommen til en enkel testserver", out harForbindelse);    // fra server-klient
 
             while (harForbindelse)
             {
@@ -105,9 +107,9 @@ namespace Adgangskontroll_Sentral
                 if (harForbindelse)
                 {
 
-                    MessageBox.Show("Sentral:" + dataFraKortleser); //debug
+                    MessageBox.Show("Mottatt fra kortleser\n" + dataFraKortleser); //debug
 
-                    dataTilKortleser = dataFraKortleser;
+                    dataTilKortleser = "Retur: " + dataFraKortleser;
                     SendData(kommSokkel, dataTilKortleser, out harForbindelse);
                 }
             }
@@ -167,7 +169,18 @@ namespace Adgangskontroll_Sentral
             dataGridView2.DataSource = db.VisBrukere();
         }
 
-        // Paneler og dems menyer
+        //  Eksempel innlogging
+        private void BTN_LoggInn_Click(object sender, EventArgs e)
+        {
+            // dersom feltene er tomme så returneres bare "", altså tom strengverdi, som ikke finnes i databasen, men godtas som input
+            string LoggID = TB_LoggID.Text;
+            string LoggPin = TB_LoggPin.Text;
+            TB_LoggID.Clear();
+            TB_LoggPin.Clear();
+            TB_suksess.Text = db.Innlogging(LoggID, LoggPin);  //debug, returnerer tekst: "korrekt" / "feil"
+        }
+
+        // Paneler og visning av dems menyer
         private void BTN_LesAnsatt_Click(object sender, EventArgs e)
         {
             panel1.Show();
@@ -207,7 +220,7 @@ namespace Adgangskontroll_Sentral
             panel3.BringToFront();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void BTN_Innlogg_Click(object sender, EventArgs e)
         {
             panel4.Show();
             panel1.Hide();
@@ -215,15 +228,6 @@ namespace Adgangskontroll_Sentral
             panel3.Hide();
             panel4.BringToFront();
         }
-        
-        //  Eksempel innlogging
-        //  Det skal ikke være noen tb her, kun for debug, så går fint
-        private void BTN_LoggInn_Click(object sender, EventArgs e)
-        {
-            string LoggID = TB_LoggID.Text;
-            string LoggNavn = TB_LoggNavn.Text;
 
-            TB_suksess.Text = db.Innlogging(LoggID, LoggNavn);  //returnerer tekst som er "korrekt" eller "feil"
-        }
     }
 }

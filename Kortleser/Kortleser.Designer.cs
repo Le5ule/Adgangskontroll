@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            TB_Mottak = new TextBox();
+            TB_MottakFraSentral = new TextBox();
             BTN0 = new Button();
             BTN9 = new Button();
             BTN8 = new Button();
@@ -44,15 +44,17 @@
             UgyldigLabel = new Label();
             BW_SendKvittering = new System.ComponentModel.BackgroundWorker();
             panel1 = new Panel();
+            label1 = new Label();
+            label2 = new Label();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
-            // TB_Mottak
+            // TB_MottakFraSentral
             // 
-            TB_Mottak.Location = new Point(216, 74);
-            TB_Mottak.Name = "TB_Mottak";
-            TB_Mottak.Size = new Size(141, 27);
-            TB_Mottak.TabIndex = 37;
+            TB_MottakFraSentral.Location = new Point(199, 73);
+            TB_MottakFraSentral.Name = "TB_MottakFraSentral";
+            TB_MottakFraSentral.Size = new Size(253, 27);
+            TB_MottakFraSentral.TabIndex = 37;
             // 
             // BTN0
             // 
@@ -211,13 +213,33 @@
             panel1.Size = new Size(153, 265);
             panel1.TabIndex = 41;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(199, 173);
+            label1.Name = "label1";
+            label1.Size = new Size(394, 80);
+            label1.TabIndex = 42;
+            label1.Text = "\"Dør åpen\"\r\nLabel skal vises når døren åpnes. Simulere virtuell dør elns.\r\nSammen med knapp som fungerer som håndtak.\r\nUtfordring: bryte opp her\r\n";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(199, 12);
+            label2.Name = "label2";
+            label2.Size = new Size(281, 60);
+            label2.TabIndex = 43;
+            label2.Text = "(debug)Her hentes data fra sentralen.\r\nIllustrerer bare at informasjon kan sendes\r\nfrem og tilbake";
+            // 
             // Kortleser
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(426, 291);
+            ClientSize = new Size(614, 291);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(panel1);
-            Controls.Add(TB_Mottak);
+            Controls.Add(TB_MottakFraSentral);
             Name = "Kortleser";
             Text = "Kortleser";
             Load += Kortleser_Load;
@@ -229,7 +251,7 @@
 
         #endregion
 
-        private TextBox TB_Mottak;
+        private TextBox TB_MottakFraSentral;
         private Button BTN0;
         private Button BTN9;
         private Button BTN8;
@@ -245,5 +267,7 @@
         private Label UgyldigLabel;
         private System.ComponentModel.BackgroundWorker BW_SendKvittering;
         private Panel panel1;
+        private Label label1;
+        private Label label2;
     }
 }
