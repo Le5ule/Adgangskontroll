@@ -45,18 +45,27 @@ namespace Adgangskontroll_Sentral
         }
         private void KobleTilKortleser()//object o)
         {
-            //while (false)
-            //{
-            //Console.WriteLine("Venter på en klient ...");
-            Socket kommSokkel = lytteSokkel.Accept(); // blokkerende metode
+            try
+            {
+                //while (false)
+                //{
+                    //Console.WriteLine("Venter på en klient ...");
+                    Socket kommSokkel = lytteSokkel.Accept(); // blokkerende metode
 
-            //VisKommunikasjonsinfo(kommSokkel.LocalEndPoint as IPEndPoint, kommSokkel.RemoteEndPoint as IPEndPoint);
-            IPEndPoint klientEP = (IPEndPoint)kommSokkel.RemoteEndPoint;
+                    //VisKommunikasjonsinfo(kommSokkel.LocalEndPoint as IPEndPoint, kommSokkel.RemoteEndPoint as IPEndPoint);
+                    IPEndPoint klientEP = (IPEndPoint)kommSokkel.RemoteEndPoint;
 
-            Thread ht = new Thread(Klientkommunikasjon);
-            ht.Start(kommSokkel);
+                    Thread ht = new Thread(Klientkommunikasjon);
+                    ht.Start(kommSokkel);
 
-            //}
+                //}
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
             //lytteSokkel.Close();
         }
         private void Sentral_Load(object sender, EventArgs e)
@@ -96,7 +105,7 @@ namespace Adgangskontroll_Sentral
                 if (harForbindelse)
                 {
 
-                    MessageBox.Show("Sentral:" + dataFraKortleser);
+                    MessageBox.Show("Sentral:" + dataFraKortleser); //debug
 
                     dataTilKortleser = dataFraKortleser;
                     SendData(kommSokkel, dataTilKortleser, out harForbindelse);
@@ -140,27 +149,22 @@ namespace Adgangskontroll_Sentral
                 gjennomført = false;
             }
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void BTN_VisAnsatte_Click(object sender, EventArgs e)
         {
-            Database.DtgetData = db.getData("select * from ansatt0;");
-            dataGridView1.DataSource = Database.DtgetData;
+            dataGridView1.DataSource = db.VisAnsatt();
         }
 
         private void BTN_LeggTil_Click(object sender, EventArgs e)
         {
             string id = TB_ID.Text;
             string navn = TB_Navn.Text;
-            string identitet = $"INSERT INTO Brukere values({id}, '{navn}')";
-            Database.DtgetData = db.getData(identitet);
-
+            db.LeggTilNyBruker(id, navn);
             TB_ID.Clear();
             TB_Navn.Clear();
         }
         private void BTN_VisTab_Click(object sender, EventArgs e)
         {
-            Database.DtgetData = db.getData("select * from Brukere_test;");
-            dataGridView2.DataSource = Database.DtgetData;
-
+            dataGridView2.DataSource = db.VisBrukere();
         }
 
         // Paneler og dems menyer
@@ -213,24 +217,13 @@ namespace Adgangskontroll_Sentral
         }
         
         //  Eksempel innlogging
-        // selve koden må implementeres i klassen Database
+        //  Det skal ikke være noen tb her, kun for debug, så går fint
         private void BTN_LoggInn_Click(object sender, EventArgs e)
         {
             string LoggID = TB_LoggID.Text;
             string LoggNavn = TB_LoggNavn.Text;
 
-            string query = ($"select * from Brukere_test where bruker_id='{LoggID}' and navn = '{LoggNavn}';"); //endre
-            NpgsqlCommand vCmd = new NpgsqlCommand(query, Database.VCon);
-
-            using NpgsqlDataReader reader = vCmd.ExecuteReader();
-            if (reader.Read())
-            {
-                TB_suksess.Text = "korrekt";
-            }
-            else
-            {
-                TB_suksess.Text = "feil";
-            }
+            TB_suksess.Text = db.Innlogging(LoggID, LoggNavn);  //returnerer tekst som er "korrekt" eller "feil"
         }
     }
 }
