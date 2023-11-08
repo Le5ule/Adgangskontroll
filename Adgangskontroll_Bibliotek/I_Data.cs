@@ -9,9 +9,9 @@ namespace Adgangskontroll_Bibliotek
 {
     public interface I_Data
     {
-        public bool godkjenning(string user);
+        public bool godkjenning(int BrukerPin);
         public List<int> Kodeinput();
-        public string Pin();
-        public int KortID();
+        public int Pin();
+        //public int KortID();
     }
 }

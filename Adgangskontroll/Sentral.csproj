@@ -12,8 +12,4 @@
     <PackageReference Include="Npgsql" Version="7.0.6" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Adgangskontroll_Bibliotek\Adgangskontroll_Bibliotek.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kortleser", "Kortleser\Kort
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimSim", "..\Tilleggsfiler\Tilleggsfiler\SimSim-v2\SimSim\SimSim\SimSim\SimSim.csproj", "{EFFD0286-1335-40AE-B4BD-90151B9F7667}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adgangskontroll_Bibliotek", "Adgangskontroll_Bibliotek\Adgangskontroll_Bibliotek.csproj", "{D24DEE6E-F528-4321-8955-5099CEBDCA17}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,14 +41,6 @@ Global
 		{EFFD0286-1335-40AE-B4BD-90151B9F7667}.Release|Any CPU.Build.0 = Release|x86
 		{EFFD0286-1335-40AE-B4BD-90151B9F7667}.Release|x86.ActiveCfg = Release|x86
 		{EFFD0286-1335-40AE-B4BD-90151B9F7667}.Release|x86.Build.0 = Release|x86
-		{D24DEE6E-F528-4321-8955-5099CEBDCA17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D24DEE6E-F528-4321-8955-5099CEBDCA17}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D24DEE6E-F528-4321-8955-5099CEBDCA17}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D24DEE6E-F528-4321-8955-5099CEBDCA17}.Debug|x86.Build.0 = Debug|Any CPU
-		{D24DEE6E-F528-4321-8955-5099CEBDCA17}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D24DEE6E-F528-4321-8955-5099CEBDCA17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D24DEE6E-F528-4321-8955-5099CEBDCA17}.Release|x86.ActiveCfg = Release|Any CPU
-		{D24DEE6E-F528-4321-8955-5099CEBDCA17}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

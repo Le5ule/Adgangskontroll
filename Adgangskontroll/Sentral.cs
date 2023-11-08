@@ -1,5 +1,5 @@
 using Npgsql;
-using Adgangskontroll_Bibliotek;
+using Sentral;
 using System.Data;
 using System.Net;
 using System.Net.Sockets;
@@ -10,17 +10,22 @@ namespace Adgangskontroll_Sentral
 {
     public partial class Sentral : Form
     {
-        Data terminal = new Data();
+        //List<Panel> panels = new List<Panel>();
+        //int index;
+
+        //DataTable dtgetData = new DataTable();
+        Database db = new Database();
 
         byte[] data = new byte[1024];       //eehhhhh
-        static string dataFraKlient;               // trenger dette endring?
-        static string dataTilKlient;               // trenger dette endring?
+        static string dataFraKlient;
+        static string dataTilKlient;
 
-        string vstrConnection = "server=129.151.221.119 ; port=5432 ; user id=596237 ; password=Ha1FinDagIDag! ; database=596237 ;";
-        NpgsqlConnection vCon;
-        NpgsqlCommand vCmd;
+
+        //NpgsqlConnection vCon = Database.VCon;
+        //NpgsqlCommand vCmd = Database.VCmd;
 
         // VelgerTCP/IP og adresser + portnummer
+        // men kan bruke udp og rtp...
         Socket lytteSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
         // Oppgir server sin IP adresse og portnummer
@@ -31,52 +36,55 @@ namespace Adgangskontroll_Sentral
         public Sentral()
         {
             InitializeComponent();
-            connection();
+            db.Connection();
+
             lytteSokkel.Bind(serverEP);
             lytteSokkel.Listen(10);
 
-            //while (false)
-            //{
-            //Console.WriteLine("Venter på en klient ...");
-            Socket kommSokkel = lytteSokkel.Accept(); // blokkerende metode
-
-            //VisKommunikasjonsinfo(kommSokkel.LocalEndPoint as IPEndPoint, kommSokkel.RemoteEndPoint as IPEndPoint);
-            IPEndPoint klientEP = (IPEndPoint)kommSokkel.RemoteEndPoint;
-
-            Thread ht = new Thread(Klientkommunikasjon);
-            ht.Start(kommSokkel);
-
-            //}
-            //lytteSokkel.Close();
+            KobleTilKortleser();
         }
-        private void connection()
+        private void KobleTilKortleser()//object o)
         {
-            vCon = new NpgsqlConnection();
-            vCon.ConnectionString = vstrConnection;
-
-            if (vCon.State == ConnectionState.Closed)
+            try
             {
-                vCon.Open();
+                //while (false)
+                //{
+                //Console.WriteLine("Venter på en klient ...");
+                Socket kommSokkel = lytteSokkel.Accept(); // blokkerende metode
+
+                //VisKommunikasjonsinfo(kommSokkel.LocalEndPoint as IPEndPoint, kommSokkel.RemoteEndPoint as IPEndPoint);
+                IPEndPoint klientEP = (IPEndPoint)kommSokkel.RemoteEndPoint;
+
+                Thread ht = new Thread(Klientkommunikasjon);
+                ht.Start(kommSokkel);
+
+                //}
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            //lytteSokkel.Close();
         }
         private void Sentral_Load(object sender, EventArgs e)
         {
+            panel1.Hide();
+            panel2.Hide();
+            panel3.Hide();
+            panel4.Hide();
 
-        }
-        public DataTable getData(string sql)
-        {
-            DataTable dt = new DataTable();
-            vCmd = new NpgsqlCommand();
-            vCmd.Connection = vCon;
-            vCmd.CommandText = sql;
-
-            NpgsqlDataReader dr = vCmd.ExecuteReader();
-            dt.Load(dr);
-
-            return dt;
+            // frem og tilbake-opplegg
+            //panels.Add(panel1);
+            //panels.Add(panel2);
+            //panels.Add(panel3);
+            //panels[index].BringToFront();
         }
         static void VisKommunikasjonsinfo(IPEndPoint l, IPEndPoint r)
         {
+            // Noe som samsvarer med at kommunikasjon eksisterer, slags godkjenning... spørs nødvendig med egen metode...
+            // en slags løggføring at sentral er koblet til kortleser
             //Console.WriteLine("Serverinfo; {0}:{1}, Klientinfo: {2}:{3}", l.Address, l.Port, r.Address, r.Port);
         }
         public void Klientkommunikasjon(object o)
@@ -90,7 +98,7 @@ namespace Adgangskontroll_Sentral
 
             bool harForbindelse = true;
 
-            //SendData(kommSokkel, "Velkommen til en enkel testserver", out harForbindelse);
+            //SendData(kommSokkel, "Velkommen til en enkel testserver", out harForbindelse);    // fra server-klient
 
             while (harForbindelse)
             {
@@ -99,9 +107,9 @@ namespace Adgangskontroll_Sentral
                 if (harForbindelse)
                 {
 
-                    MessageBox.Show(dataFraKortleser);
+                    MessageBox.Show("Mottatt fra kortleser\n" + dataFraKortleser); //debug
 
-                    dataTilKortleser = "mottatt fra sentral";
+                    dataTilKortleser = "Retur: " + dataFraKortleser;
                     SendData(kommSokkel, dataTilKortleser, out harForbindelse);
                 }
             }
@@ -126,7 +134,7 @@ namespace Adgangskontroll_Sentral
             }
             catch (Exception)
             {
-                throw;
+                throw;      // Trenger noe bedre enn dette
             }
             return svar;
         }
@@ -143,19 +151,83 @@ namespace Adgangskontroll_Sentral
                 gjennomført = false;
             }
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void BTN_VisAnsatte_Click(object sender, EventArgs e)
         {
-            DataTable dtgetData = new DataTable();
-            dtgetData = getData("select * from ansatt0;");
-
-            dataGridView1.DataSource = dtgetData;
+            dataGridView1.DataSource = db.VisAnsatt();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void BTN_LeggTil_Click(object sender, EventArgs e)
         {
-            //TB_Kombo.Text = terminal.Kombo();
-            //TB_Kombo.Text = MottaData(lytteSokkel, out harforbindelse);
-
+            string id = TB_ID.Text;
+            string navn = TB_Navn.Text;
+            db.LeggTilNyBruker(id, navn);
+            TB_ID.Clear();
+            TB_Navn.Clear();
         }
+        private void BTN_VisTab_Click(object sender, EventArgs e)
+        {
+            dataGridView2.DataSource = db.VisBrukere();
+        }
+
+        //  Eksempel innlogging
+        private void BTN_LoggInn_Click(object sender, EventArgs e)
+        {
+            // dersom feltene er tomme så returneres bare "", altså tom strengverdi, som ikke finnes i databasen, men godtas som input
+            string LoggID = TB_LoggID.Text;
+            string LoggPin = TB_LoggPin.Text;
+            TB_LoggID.Clear();
+            TB_LoggPin.Clear();
+            TB_suksess.Text = db.Innlogging(LoggID, LoggPin);  //debug, returnerer tekst: "korrekt" / "feil"
+        }
+
+        // Paneler og visning av dems menyer
+        private void BTN_LesAnsatt_Click(object sender, EventArgs e)
+        {
+            panel1.Show();
+            panel4.Hide();
+            panel3.Hide();
+            panel2.Hide();
+            panel1.BringToFront();
+
+            // tror panel2 og 3 ligger inni panel1???
+
+            //if (index < panels.Count-1)
+            //{
+            //    panels[++index].BringToFront();
+            //}
+        }
+
+        private void BTN_Brukere_Click(object sender, EventArgs e)
+        {
+            panel2.Show();
+            panel1.Hide();
+            panel3.Hide();
+            panel4.Hide();
+            panel2.BringToFront();
+
+            //if (index > 0)
+            //{
+            //    panels[-- index].BringToFront();
+            //}
+        }
+
+        private void BTN_info_Click(object sender, EventArgs e)
+        {
+            panel3.Show();
+            panel1.Hide();
+            panel2.Hide();
+            panel4.Hide();
+            panel3.BringToFront();
+        }
+
+        private void BTN_Innlogg_Click(object sender, EventArgs e)
+        {
+            panel4.Show();
+            panel1.Hide();
+            panel2.Hide();
+            panel3.Hide();
+            panel4.BringToFront();
+        }
+
     }
 }

@@ -1,4 +1,3 @@
-using Adgangskontroll_Bibliotek;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -7,86 +6,107 @@ namespace Adgangskontroll_Kortleser
 {
     public partial class Kortleser : Form
     {
-        byte[] data = new byte[1024];
+        //byte[] data = new byte[1024];     // Denne blir ikke brukt noen steder...
         bool comMedSentral = false;
-        string dataTilSentral;
-        string dataFraSentral;
-        static int kortID;
-        string pin = "1";
-        static int kortleserID = 0;
+        static string dataTilSentral;
+        static string dataFraSentral;
+        static string pin;
+        static string kortID;
+        static string kortleserID = "0";
+        List<int> kodeinput = new List<int>();
 
         Socket klientSokkel;
-        Data autentisering = new Data();
 
         public Kortleser()
         {
             InitializeComponent();
         }
-
-        public void access(int inn)
+        private void Kortleser_Load(object sender, EventArgs e)
         {
-            autentisering.Kodeinput().Add(inn);
-            //TB_Kode.Text = "4";
-            //MessageBox.Show("hmm");
+            klientSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
+            BTN_LesKort.Select();
 
-            if (autentisering.Kodeinput().Count == 4)
-            {
-                autentisering.godkjenning(autentisering.Pin());
-                pin = Data.pin;
-                Data.pin = pin;
-                autentisering.Kodeinput().Clear();
-                kortID = Data.kortID;                  // dersom kortID ikke er oppgitt før kode, sendes ID som "0000", dermed nektet adgang.
-                //pin = Data.pin;
-                dataTilSentral = $"k_{kortID}_p_{pin}_l_{kortleserID}x";
-                //TB_Mottak.Text = Data.pin;
-                //SendData(klientSokkel, dataTilSentral, out comMedSentral);
-                if (comMedSentral)
-                {
-                    //dataFraSentral = MottaData(klientSokkel, out comMedSentral);
-                }
-                if (dataTilSentral.Length > 0)
-                {
-                    //BTN_sendData.Enabled = false;
-                    //TB_dataTilServer.Select();
-                    BW_SendKvittering.RunWorkerAsync();
-                    MessageBox.Show("terminal" + dataTilSentral);
-                }
-            }
-        }
-        static string MottaData(Socket s, out bool gjennomført)
-        {
-            byte[] data = new byte[1024];
-            string svar = " ";
-            gjennomført = false;
             try
             {
-                int antallMottatt = s.Receive(data);
-                svar = Encoding.ASCII.GetString(data, 0, antallMottatt);
-
+                klientSokkel.Connect(serverEP); // blokkerende metode
+                comMedSentral = true;
             }
-            catch (Exception e)
+            catch (SocketException)
             {
-                MessageBox.Show("Feil" + e.Message);
+                MessageBox.Show("Fikk ikke kontakt med sentral!");
+                comMedSentral = false;
+            }
+
+            //if (comMedSentral)//==true)
+            //{
+            //    dataFraSentral = MottaData(klientSokkel, out comMedSentral);
+            //    //MessageBox.Show(dataFraSentral);
+            //    //TB_Mottak.Text = dataFraSentral;
+            //}
+            //noe som gir false                         eller??? idk hva dette engang var
+        }
+        public void Kode(int inn)
+        {
+            kodeinput.Add(inn);
+
+            if (kodeinput.Count == 4 && comMedSentral == true)
+            {
+                // her kan vi også ta å laste inn kortID uten å måtte trykke på enter-tasten, kanskje mer brukervennlig, slipper å forklare "trykk enter";
+                kortID = TB_KortInput.Text;
+                TB_KortInput.Clear();
+                TB_KortInput.Visible = false;
+                //
+                //comMedSentral = true;
+                pin = kodeinput[0].ToString() + kodeinput[1].ToString() + kodeinput[2].ToString() + kodeinput[3].ToString();
+                kodeinput.Clear();
+                dataTilSentral = $" K:{kortID} P:{pin} L:{kortleserID}";
+                if (comMedSentral == true)
+                {
+                    BW_SendKvittering.RunWorkerAsync();
+                    MessageBox.Show("Lokal info i kortleser:\n" + dataTilSentral);     //debug
+                }
+                BTN_LesKort.Select();
+                kortID = "";
+                pin = "";
+            }
+        }
+        public bool godkjenning(int BrukerPin)
+        {
+            bool svar = false;
+            if (svar == false)
+            {
+                pin = kodeinput[0].ToString() + kodeinput[1].ToString() + kodeinput[2].ToString() + kodeinput[3].ToString();
+                //pin = int.Parse(pinString);
+                svar = true;
+            }
+            else
+            {
+                kodeinput.Clear();
             }
             return svar;
-            //string svar = "";
-            //try
-            //{
-            //    byte[] dataSomBytes = new byte[1024];
-            //    int recv = s.Receive(dataSomBytes);
-            //    if (recv >= 0)
-            //    {
-            //        svar = Encoding.ASCII.GetString(dataSomBytes, 0, recv);
-            //        gjennomført = true;
-            //    }
-            //    else
-            //        gjennomført = false;
-            //}
-            //catch (Exception)
-            //{
-            //    throw;
-            //}
-            //return svar;
+        }
+        // Denne funker, men bool gjennomfjørt endres ikke slik som den bler brukt i server-klient i kommentert felt under
+        static string MottaData(Socket s, out bool gjennomført)
+        {
+            string svar = "";
+            try
+            {
+                byte[] dataSomBytes = new byte[1024];
+                int recv = s.Receive(dataSomBytes);
+                if (recv > 0)
+                {
+                    svar = Encoding.ASCII.GetString(dataSomBytes, 0, recv);
+                    gjennomført = true;
+                }
+                else
+                    gjennomført = false;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return svar;
         }
         static void SendData(Socket s, string data, out bool gjennomført)
         {
@@ -101,39 +121,16 @@ namespace Adgangskontroll_Kortleser
                 gjennomført = false;
             }
         }
-        private void Kortleser_Load(object sender, EventArgs e)
-        {
-            klientSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
-            BTN_LesKort.Select();
-
-            // les ipadresse og port fra fil(config) kanskje??????
-            try
-            {
-                klientSokkel.Connect(serverEP); // blokkerende metode
-                comMedSentral = true;
-            }
-            catch (SocketException)
-            {
-                MessageBox.Show("Fikk ikke kontakt med serveren!");
-                comMedSentral = false;
-            }
-
-            //if (comMedSentral)//==true)
-            //{
-            //    dataFraSentral = MottaData(klientSokkel, out comMedSentral);
-            //    //MessageBox.Show(dataFraSentral);
-            //    //TB_Mottak.Text = dataFraSentral;
-            //}
-            //noe som gir false
-        }
         private void TB_KortInput_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)13)
+            if (e.KeyChar == (char)13)  // samme som enter
             {
-                if (TB_KortInput.Text.Length == 4 && Int32.TryParse(TB_KortInput.Text, out Data.kortID))
+                // Trenger bare å håndtere lengden. Hvis ID oppgis f.eks: "abcd" så er dette "feil" id, men godkjent input i databasen
+                // Siden Kode() nå leser av TB_KortInput uten enter, så vil ikke dette leses ved å trykke enter.
+                // Detaljene om implementasjonen kan diskuteres senere når design er mer kritisk.
+                if (TB_KortInput.Text.Length == 4)
                 {
-                    Data.kortID = Convert.ToInt32(TB_KortInput.Text);
+                    kortID = TB_KortInput.Text;
                     TB_KortInput.Visible = false;
                     UgyldigLabel.Visible = false;
                     TB_KortInput.Clear();
@@ -145,6 +142,22 @@ namespace Adgangskontroll_Kortleser
                 }
             }
         }
+        private void BW_SendKvittering_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            SendData(klientSokkel, dataTilSentral, out comMedSentral);
+            if (comMedSentral)
+            {
+                dataFraSentral = MottaData(klientSokkel, out comMedSentral);
+            }
+        }
+        private void BW_SendKvittering_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            if (comMedSentral)
+            {
+                TB_MottakFraSentral.Text = dataFraSentral;
+            }
+            //else //Application.Exit();
+        }
         private void BTN_LesKort_Click(object sender, EventArgs e)
         {
             TB_KortInput.Visible = true;
@@ -152,61 +165,43 @@ namespace Adgangskontroll_Kortleser
         }
         private void BTN1_Click(object sender, EventArgs e)
         {
-            access(1);
+            Kode(1);
         }
         private void BTN2_Click(object sender, EventArgs e)
         {
-            access(2);
+            Kode(2);
         }
         private void BTN3_Click(object sender, EventArgs e)
         {
-            access(3);
+            Kode(3);
         }
         private void BTN4_Click(object sender, EventArgs e)
         {
-            access(4);
+            Kode(4);
         }
         private void BTN5_Click(object sender, EventArgs e)
         {
-            access(5);
+            Kode(5);
         }
         private void BTN6_Click(object sender, EventArgs e)
         {
-            access(6);
+            Kode(6);
         }
         private void BTN7_Click(object sender, EventArgs e)
         {
-            access(7);
+            Kode(7);
         }
         private void BTN8_Click(object sender, EventArgs e)
         {
-            access(8);
+            Kode(8);
         }
         private void BTN9_Click(object sender, EventArgs e)
         {
-            access(9);
+            Kode(9);
         }
         private void BTN0_Click(object sender, EventArgs e)
         {
-            access(0);
-        }
-
-        private void BW_SendKvittering_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            SendData(klientSokkel, dataTilSentral, out comMedSentral);
-            if (comMedSentral) //her er den true
-            {
-                dataFraSentral = MottaData(klientSokkel, out comMedSentral);
-            }
-        }
-
-        private void BW_SendKvittering_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
-        {
-            if (true)//comMedSentral)       // denne har blitt endret til false et sted, tydeligvis, for dette funker 
-            {
-                TB_Mottak.Text = dataFraSentral;
-            }
-            //else //Application.Exit();
+            Kode(0);
         }
     }
 }
