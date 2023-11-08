@@ -10,22 +10,13 @@ namespace Adgangskontroll_Sentral
 {
     public partial class Sentral : Form
     {
-        //List<Panel> panels = new List<Panel>();
-        //int index;
-
-        //DataTable dtgetData = new DataTable();
         Database db = new Database();
 
-        byte[] data = new byte[1024];       //eehhhhh
+        byte[] data = new byte[1024];       // denne brukes ingen steder...
         static string dataFraKlient;
         static string dataTilKlient;
 
-
-        //NpgsqlConnection vCon = Database.VCon;
-        //NpgsqlCommand vCmd = Database.VCmd;
-
         // VelgerTCP/IP og adresser + portnummer
-        // men kan bruke udp og rtp...
         Socket lytteSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
         // Oppgir server sin IP adresse og portnummer
@@ -47,26 +38,24 @@ namespace Adgangskontroll_Sentral
         {
             try
             {
-                //while (false)
+                //// Fra klient-server
+                //// Her må vi endre til threadpool eller noe, for vi skal kunne starte flere tråder med flere lesere
+                //while (harforbindelse)    //slik løkke fungerer ikke her, uansett true eller false...
                 //{
-                //Console.WriteLine("Venter på en klient ...");
-                Socket kommSokkel = lytteSokkel.Accept(); // blokkerende metode
+                    //Console.WriteLine("Venter på en klient ...");
+                    Socket kommSokkel = lytteSokkel.Accept(); // blokkerende metode
 
-                //VisKommunikasjonsinfo(kommSokkel.LocalEndPoint as IPEndPoint, kommSokkel.RemoteEndPoint as IPEndPoint);
-                IPEndPoint klientEP = (IPEndPoint)kommSokkel.RemoteEndPoint;
+                    //VisKommunikasjonsinfo(kommSokkel.LocalEndPoint as IPEndPoint, kommSokkel.RemoteEndPoint as IPEndPoint);
+                    IPEndPoint klientEP = (IPEndPoint)kommSokkel.RemoteEndPoint;
 
-                Thread ht = new Thread(Klientkommunikasjon);
-                ht.Start(kommSokkel);
-
+                    Thread ht = new Thread(Klientkommunikasjon);        //må starte mer enn én tråd, implementer ThreadPool i Public Senral() osv.
+                    ht.Start(kommSokkel);
                 //}
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-            //lytteSokkel.Close();
         }
         private void Sentral_Load(object sender, EventArgs e)
         {
@@ -74,12 +63,6 @@ namespace Adgangskontroll_Sentral
             panel2.Hide();
             panel3.Hide();
             panel4.Hide();
-
-            // frem og tilbake-opplegg
-            //panels.Add(panel1);
-            //panels.Add(panel2);
-            //panels.Add(panel3);
-            //panels[index].BringToFront();
         }
         static void VisKommunikasjonsinfo(IPEndPoint l, IPEndPoint r)
         {
@@ -99,6 +82,7 @@ namespace Adgangskontroll_Sentral
             bool harForbindelse = true;
 
             //SendData(kommSokkel, "Velkommen til en enkel testserver", out harForbindelse);    // fra server-klient
+            // Trenger kanskje ikke slik implementasjon, med mindre KortLeserID skal hentes fra sentral
 
             while (harForbindelse)
             {
@@ -114,7 +98,7 @@ namespace Adgangskontroll_Sentral
                 }
             }
             //IPEndPoint r = kommSokkel.RemoteEndPoint as IPEndPoint;
-            //Console.WriteLine("Forbindelsen med {0}:{1} er brutt", r.Address, r.Port);
+            //Console.WriteLine("Forbindelsen med {0}:{1} er brutt", r.Address, r.Port);    // endre til noe mer passende
             kommSokkel.Close();
         }
         static string MottaData(Socket s, out bool gjennomført)
@@ -134,7 +118,7 @@ namespace Adgangskontroll_Sentral
             }
             catch (Exception)
             {
-                throw;      // Trenger noe bedre enn dette
+                throw;
             }
             return svar;
         }
@@ -188,13 +172,6 @@ namespace Adgangskontroll_Sentral
             panel3.Hide();
             panel2.Hide();
             panel1.BringToFront();
-
-            // tror panel2 og 3 ligger inni panel1???
-
-            //if (index < panels.Count-1)
-            //{
-            //    panels[++index].BringToFront();
-            //}
         }
 
         private void BTN_Brukere_Click(object sender, EventArgs e)
@@ -204,11 +181,6 @@ namespace Adgangskontroll_Sentral
             panel3.Hide();
             panel4.Hide();
             panel2.BringToFront();
-
-            //if (index > 0)
-            //{
-            //    panels[-- index].BringToFront();
-            //}
         }
 
         private void BTN_info_Click(object sender, EventArgs e)
