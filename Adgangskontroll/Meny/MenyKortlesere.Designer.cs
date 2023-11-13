@@ -109,7 +109,7 @@
             // 
             // TB_SeksjonVis
             // 
-            TB_SeksjonVis.Location = new Point(182, 118);
+            TB_SeksjonVis.Location = new Point(182, 117);
             TB_SeksjonVis.Name = "TB_SeksjonVis";
             TB_SeksjonVis.Size = new Size(75, 27);
             TB_SeksjonVis.TabIndex = 7;
@@ -117,7 +117,7 @@
             // 
             // TB_LeserID
             // 
-            TB_LeserID.Location = new Point(51, 116);
+            TB_LeserID.Location = new Point(52, 116);
             TB_LeserID.Name = "TB_LeserID";
             TB_LeserID.Size = new Size(101, 27);
             TB_LeserID.TabIndex = 8;
@@ -125,7 +125,7 @@
             // 
             // TB_seksjon
             // 
-            TB_seksjon.Location = new Point(182, 118);
+            TB_seksjon.Location = new Point(182, 117);
             TB_seksjon.Name = "TB_seksjon";
             TB_seksjon.Size = new Size(101, 27);
             TB_seksjon.TabIndex = 9;
@@ -133,7 +133,7 @@
             // 
             // BTN_LeggTilNy
             // 
-            BTN_LeggTilNy.Location = new Point(290, 115);
+            BTN_LeggTilNy.Location = new Point(302, 116);
             BTN_LeggTilNy.Name = "BTN_LeggTilNy";
             BTN_LeggTilNy.Size = new Size(92, 29);
             BTN_LeggTilNy.TabIndex = 10;
@@ -164,7 +164,7 @@
             // 
             // BTN_endre
             // 
-            BTN_endre.Location = new Point(290, 115);
+            BTN_endre.Location = new Point(302, 116);
             BTN_endre.Name = "BTN_endre";
             BTN_endre.Size = new Size(92, 29);
             BTN_endre.TabIndex = 13;
