@@ -50,7 +50,7 @@
             // lbl_ENavn
             // 
             lbl_ENavn.AutoSize = true;
-            lbl_ENavn.Location = new Point(212, 117);
+            lbl_ENavn.Location = new Point(192, 95);
             lbl_ENavn.Name = "lbl_ENavn";
             lbl_ENavn.Size = new Size(74, 20);
             lbl_ENavn.TabIndex = 17;
@@ -60,7 +60,7 @@
             // lbl_FNavn
             // 
             lbl_FNavn.AutoSize = true;
-            lbl_FNavn.Location = new Point(71, 117);
+            lbl_FNavn.Location = new Point(51, 95);
             lbl_FNavn.Name = "lbl_FNavn";
             lbl_FNavn.Size = new Size(64, 20);
             lbl_FNavn.TabIndex = 16;
@@ -70,7 +70,7 @@
             // dataGridView
             // 
             dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView.Location = new Point(70, 104);
+            dataGridView.Location = new Point(50, 82);
             dataGridView.Name = "dataGridView";
             dataGridView.RowHeadersWidth = 51;
             dataGridView.RowTemplate.Height = 29;
@@ -80,7 +80,7 @@
             // 
             // BTN_VisBrukere
             // 
-            BTN_VisBrukere.Location = new Point(427, 57);
+            BTN_VisBrukere.Location = new Point(407, 35);
             BTN_VisBrukere.Name = "BTN_VisBrukere";
             BTN_VisBrukere.Size = new Size(94, 29);
             BTN_VisBrukere.TabIndex = 14;
@@ -90,7 +90,7 @@
             // 
             // TB_Enavn
             // 
-            TB_Enavn.Location = new Point(212, 144);
+            TB_Enavn.Location = new Point(192, 122);
             TB_Enavn.Name = "TB_Enavn";
             TB_Enavn.Size = new Size(125, 27);
             TB_Enavn.TabIndex = 13;
@@ -98,7 +98,7 @@
             // 
             // TB_Fnavn
             // 
-            TB_Fnavn.Location = new Point(71, 144);
+            TB_Fnavn.Location = new Point(51, 122);
             TB_Fnavn.Name = "TB_Fnavn";
             TB_Fnavn.Size = new Size(125, 27);
             TB_Fnavn.TabIndex = 11;
@@ -106,7 +106,7 @@
             // 
             // BTN_LeggTil
             // 
-            BTN_LeggTil.Location = new Point(675, 144);
+            BTN_LeggTil.Location = new Point(655, 122);
             BTN_LeggTil.Name = "BTN_LeggTil";
             BTN_LeggTil.Size = new Size(94, 29);
             BTN_LeggTil.TabIndex = 12;
@@ -117,7 +117,7 @@
             // 
             // BTN_Ny
             // 
-            BTN_Ny.Location = new Point(71, 57);
+            BTN_Ny.Location = new Point(50, 35);
             BTN_Ny.Name = "BTN_Ny";
             BTN_Ny.Size = new Size(150, 29);
             BTN_Ny.TabIndex = 18;
@@ -127,7 +127,7 @@
             // 
             // BTN_EndreBru
             // 
-            BTN_EndreBru.Location = new Point(249, 57);
+            BTN_EndreBru.Location = new Point(229, 35);
             BTN_EndreBru.Name = "BTN_EndreBru";
             BTN_EndreBru.Size = new Size(150, 29);
             BTN_EndreBru.TabIndex = 19;
@@ -138,7 +138,7 @@
             // lbl_GyldigFra
             // 
             lbl_GyldigFra.AutoSize = true;
-            lbl_GyldigFra.Location = new Point(401, 117);
+            lbl_GyldigFra.Location = new Point(381, 95);
             lbl_GyldigFra.Name = "lbl_GyldigFra";
             lbl_GyldigFra.Size = new Size(77, 20);
             lbl_GyldigFra.TabIndex = 23;
@@ -148,7 +148,7 @@
             // lbl_GyldigTil
             // 
             lbl_GyldigTil.AutoSize = true;
-            lbl_GyldigTil.Location = new Point(528, 117);
+            lbl_GyldigTil.Location = new Point(508, 95);
             lbl_GyldigTil.Name = "lbl_GyldigTil";
             lbl_GyldigTil.Size = new Size(72, 20);
             lbl_GyldigTil.TabIndex = 24;
@@ -158,7 +158,7 @@
             // dtGyldigFra
             // 
             dtGyldigFra.Format = DateTimePickerFormat.Short;
-            dtGyldigFra.Location = new Point(401, 144);
+            dtGyldigFra.Location = new Point(381, 122);
             dtGyldigFra.Name = "dtGyldigFra";
             dtGyldigFra.Size = new Size(120, 27);
             dtGyldigFra.TabIndex = 25;
@@ -167,7 +167,7 @@
             // dtGyldigTil
             // 
             dtGyldigTil.Format = DateTimePickerFormat.Short;
-            dtGyldigTil.Location = new Point(534, 144);
+            dtGyldigTil.Location = new Point(514, 122);
             dtGyldigTil.Name = "dtGyldigTil";
             dtGyldigTil.Size = new Size(120, 27);
             dtGyldigTil.TabIndex = 26;
@@ -176,7 +176,7 @@
             // lbl_ID
             // 
             lbl_ID.AutoSize = true;
-            lbl_ID.Location = new Point(348, 117);
+            lbl_ID.Location = new Point(328, 95);
             lbl_ID.Name = "lbl_ID";
             lbl_ID.Size = new Size(27, 20);
             lbl_ID.TabIndex = 28;
@@ -185,7 +185,7 @@
             // 
             // TB_ID
             // 
-            TB_ID.Location = new Point(348, 144);
+            TB_ID.Location = new Point(328, 122);
             TB_ID.Name = "TB_ID";
             TB_ID.Size = new Size(42, 27);
             TB_ID.TabIndex = 27;
@@ -193,7 +193,7 @@
             // 
             // BTN_Endre
             // 
-            BTN_Endre.Location = new Point(675, 144);
+            BTN_Endre.Location = new Point(655, 122);
             BTN_Endre.Name = "BTN_Endre";
             BTN_Endre.Size = new Size(94, 29);
             BTN_Endre.TabIndex = 29;

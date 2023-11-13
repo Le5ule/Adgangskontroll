@@ -34,7 +34,7 @@
             // 
             // BTN_Om
             // 
-            BTN_Om.Location = new Point(114, 95);
+            BTN_Om.Location = new Point(50, 35);
             BTN_Om.Name = "BTN_Om";
             BTN_Om.Size = new Size(49, 29);
             BTN_Om.TabIndex = 0;
@@ -45,7 +45,7 @@
             // lbl_info
             // 
             lbl_info.AutoSize = true;
-            lbl_info.Location = new Point(165, 127);
+            lbl_info.Location = new Point(99, 67);
             lbl_info.Name = "lbl_info";
             lbl_info.Size = new Size(181, 180);
             lbl_info.TabIndex = 1;

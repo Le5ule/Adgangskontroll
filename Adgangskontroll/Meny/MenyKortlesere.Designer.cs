@@ -46,7 +46,7 @@
             // 
             // BTN_Nyelesere
             // 
-            BTN_Nyelesere.Location = new Point(51, 35);
+            BTN_Nyelesere.Location = new Point(50, 35);
             BTN_Nyelesere.Name = "BTN_Nyelesere";
             BTN_Nyelesere.Size = new Size(175, 29);
             BTN_Nyelesere.TabIndex = 1;
@@ -77,17 +77,17 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(51, 151);
+            dataGridView1.Location = new Point(50, 151);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 29;
-            dataGridView1.Size = new Size(680, 288);
+            dataGridView1.Size = new Size(737, 287);
             dataGridView1.TabIndex = 4;
             dataGridView1.Visible = false;
             // 
             // BTN_alle
             // 
-            BTN_alle.Location = new Point(51, 81);
+            BTN_alle.Location = new Point(50, 81);
             BTN_alle.Name = "BTN_alle";
             BTN_alle.Size = new Size(125, 29);
             BTN_alle.TabIndex = 5;
@@ -98,7 +98,7 @@
             // 
             // BTN_seksjon
             // 
-            BTN_seksjon.Location = new Point(51, 116);
+            BTN_seksjon.Location = new Point(50, 116);
             BTN_seksjon.Name = "BTN_seksjon";
             BTN_seksjon.Size = new Size(125, 29);
             BTN_seksjon.TabIndex = 6;
@@ -117,7 +117,7 @@
             // 
             // TB_LeserID
             // 
-            TB_LeserID.Location = new Point(52, 116);
+            TB_LeserID.Location = new Point(50, 116);
             TB_LeserID.Name = "TB_LeserID";
             TB_LeserID.Size = new Size(101, 27);
             TB_LeserID.TabIndex = 8;
@@ -125,7 +125,7 @@
             // 
             // TB_seksjon
             // 
-            TB_seksjon.Location = new Point(182, 117);
+            TB_seksjon.Location = new Point(182, 116);
             TB_seksjon.Name = "TB_seksjon";
             TB_seksjon.Size = new Size(101, 27);
             TB_seksjon.TabIndex = 9;
@@ -145,7 +145,7 @@
             // lbl_ID
             // 
             lbl_ID.AutoSize = true;
-            lbl_ID.Location = new Point(51, 93);
+            lbl_ID.Location = new Point(50, 93);
             lbl_ID.Name = "lbl_ID";
             lbl_ID.Size = new Size(89, 20);
             lbl_ID.TabIndex = 11;
@@ -164,7 +164,7 @@
             // 
             // BTN_endre
             // 
-            BTN_endre.Location = new Point(302, 116);
+            BTN_endre.Location = new Point(302, 115);
             BTN_endre.Name = "BTN_endre";
             BTN_endre.Size = new Size(92, 29);
             BTN_endre.TabIndex = 13;

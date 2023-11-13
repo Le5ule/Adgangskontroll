@@ -68,9 +68,11 @@
             iconButton4.ImageAlign = ContentAlignment.MiddleLeft;
             iconButton4.Location = new Point(0, 280);
             iconButton4.Name = "iconButton4";
+            iconButton4.Padding = new Padding(10, 0, 0, 0);
             iconButton4.Size = new Size(195, 60);
             iconButton4.TabIndex = 22;
             iconButton4.Text = "Innstillinger";
+            iconButton4.TextImageRelation = TextImageRelation.ImageBeforeText;
             iconButton4.UseVisualStyleBackColor = false;
             iconButton4.Click += iBTN_Innstillinger_Click;
             // 
@@ -86,9 +88,11 @@
             iconButton3.ImageAlign = ContentAlignment.MiddleLeft;
             iconButton3.Location = new Point(0, 220);
             iconButton3.Name = "iconButton3";
+            iconButton3.Padding = new Padding(10, 0, 0, 0);
             iconButton3.Size = new Size(195, 60);
             iconButton3.TabIndex = 21;
             iconButton3.Text = "Logg";
+            iconButton3.TextImageRelation = TextImageRelation.ImageBeforeText;
             iconButton3.UseVisualStyleBackColor = false;
             iconButton3.Click += iBTN_Logg_Click;
             // 
@@ -104,9 +108,11 @@
             iBTN_Brukere.ImageAlign = ContentAlignment.MiddleLeft;
             iBTN_Brukere.Location = new Point(0, 160);
             iBTN_Brukere.Name = "iBTN_Brukere";
+            iBTN_Brukere.Padding = new Padding(10, 0, 0, 0);
             iBTN_Brukere.Size = new Size(195, 60);
             iBTN_Brukere.TabIndex = 20;
             iBTN_Brukere.Text = "Brukere";
+            iBTN_Brukere.TextImageRelation = TextImageRelation.ImageBeforeText;
             iBTN_Brukere.UseVisualStyleBackColor = false;
             iBTN_Brukere.Click += iBTN_Brukere_Click;
             // 
@@ -122,9 +128,11 @@
             iBTN_Kortlesere.ImageAlign = ContentAlignment.MiddleLeft;
             iBTN_Kortlesere.Location = new Point(0, 100);
             iBTN_Kortlesere.Name = "iBTN_Kortlesere";
+            iBTN_Kortlesere.Padding = new Padding(10, 0, 0, 0);
             iBTN_Kortlesere.Size = new Size(195, 60);
             iBTN_Kortlesere.TabIndex = 19;
             iBTN_Kortlesere.Text = "Kortlesere";
+            iBTN_Kortlesere.TextImageRelation = TextImageRelation.ImageBeforeText;
             iBTN_Kortlesere.UseVisualStyleBackColor = false;
             iBTN_Kortlesere.Click += iBTN_Kortlesere_Click;
             // 
