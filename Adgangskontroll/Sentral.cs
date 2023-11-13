@@ -1,3 +1,4 @@
+using Microsoft.Windows.Themes;
 using Npgsql;
 using Sentral;
 using System.Data;
@@ -15,6 +16,9 @@ namespace Adgangskontroll_Sentral
         byte[] data = new byte[1024];       // denne brukes ingen steder...
         static string dataFraKlient;
         static string dataTilKlient;
+
+        private Form activeForm;
+        private Button currentButton;
 
         // VelgerTCP/IP og adresser + portnummer
         Socket lytteSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -34,6 +38,56 @@ namespace Adgangskontroll_Sentral
 
             KobleTilKortleser();
         }
+        private void Sentral_Load(object sender, EventArgs e)
+        {
+
+        }
+        private void ActivateButton(object btnSender)
+        {
+            if (btnSender != null)
+            {
+                if (currentButton != (Button)btnSender)
+                {
+                    DisableButton();
+                    currentButton = (Button)btnSender;
+                    currentButton.BackColor = SystemColors.GradientActiveCaption;
+                    BTN_LukkMenyVindu.Visible = true;
+                }
+            }
+        }
+        private void DisableButton()
+        {
+            foreach (Control previousBtn in PanelMeny.Controls)
+            {
+                previousBtn.BackColor = SystemColors.GradientInactiveCaption;
+                panelTopp.BackColor = SystemColors.ActiveCaption;
+            }
+        }
+        private void OpenChildForm(Form childForm, object btnSender)
+        {
+            if (activeForm != null)
+            {
+                activeForm.Close();
+            }
+            ActivateButton(btnSender);
+            activeForm = childForm;
+            childForm.TopLevel = false;
+            childForm.FormBorderStyle = FormBorderStyle.None;
+            childForm.Dock = DockStyle.Fill;
+            this.PanelForms.Controls.Add(childForm);
+            this.PanelForms.Tag = childForm;
+            childForm.BringToFront();
+            childForm.Show();
+            lbl_Tittel.Text = childForm.Text;
+        }
+        private void Reset()
+        {
+            DisableButton();
+            lbl_Tittel.Text = "Adgangskontroll";
+            currentButton = null;
+            BTN_LukkMenyVindu.Visible = false;
+        }
+
         private void KobleTilKortleser()//object o)
         {
             try
@@ -42,14 +96,14 @@ namespace Adgangskontroll_Sentral
                 //// Her må vi endre til threadpool eller noe, for vi skal kunne starte flere tråder med flere lesere
                 //while (harforbindelse)    //slik løkke fungerer ikke her, uansett true eller false...
                 //{
-                    //Console.WriteLine("Venter på en klient ...");
-                    Socket kommSokkel = lytteSokkel.Accept(); // blokkerende metode
+                //Console.WriteLine("Venter på en klient ...");
+                Socket kommSokkel = lytteSokkel.Accept(); // blokkerende metode
 
-                    //VisKommunikasjonsinfo(kommSokkel.LocalEndPoint as IPEndPoint, kommSokkel.RemoteEndPoint as IPEndPoint);
-                    IPEndPoint klientEP = (IPEndPoint)kommSokkel.RemoteEndPoint;
+                //VisKommunikasjonsinfo(kommSokkel.LocalEndPoint as IPEndPoint, kommSokkel.RemoteEndPoint as IPEndPoint);
+                IPEndPoint klientEP = (IPEndPoint)kommSokkel.RemoteEndPoint;
 
-                    Thread ht = new Thread(Klientkommunikasjon);        //må starte mer enn én tråd, implementer ThreadPool i Public Senral() osv.
-                    ht.Start(kommSokkel);
+                Thread ht = new Thread(Klientkommunikasjon);        //må starte mer enn én tråd, implementer ThreadPool i Public Senral() osv.
+                ht.Start(kommSokkel);
                 //}
             }
             catch (Exception)
@@ -57,13 +111,7 @@ namespace Adgangskontroll_Sentral
                 throw;
             }
         }
-        private void Sentral_Load(object sender, EventArgs e)
-        {
-            panel1.Hide();
-            panel2.Hide();
-            panel3.Hide();
-            panel4.Hide();
-        }
+
         static void VisKommunikasjonsinfo(IPEndPoint l, IPEndPoint r)
         {
             // Noe som samsvarer med at kommunikasjon eksisterer, slags godkjenning... spørs nødvendig med egen metode...
@@ -135,71 +183,33 @@ namespace Adgangskontroll_Sentral
                 gjennomført = false;
             }
         }
-        private void BTN_VisAnsatte_Click(object sender, EventArgs e)
+        private void iBTN_Brukere_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = db.VisAnsatt();
+            OpenChildForm(new MenyBrukere(), sender);
+            //currentButton.BackColor = SystemColors.GradientActiveCaption;
+        }
+        private void iBTN_Kortlesere_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new MenyKortlesere(), sender);
         }
 
-        private void BTN_LeggTil_Click(object sender, EventArgs e)
+        private void iBTN_Logg_Click(object sender, EventArgs e)
         {
-            string id = TB_ID.Text;
-            string navn = TB_Navn.Text;
-            db.LeggTilNyBruker(id, navn);
-            TB_ID.Clear();
-            TB_Navn.Clear();
-        }
-        private void BTN_VisTab_Click(object sender, EventArgs e)
-        {
-            dataGridView2.DataSource = db.VisBrukere();
+            OpenChildForm(new MenyLogg(), sender);
         }
 
-        //  Eksempel innlogging
-        private void BTN_LoggInn_Click(object sender, EventArgs e)
+        private void iBTN_Innstillinger_Click(object sender, EventArgs e)
         {
-            // dersom feltene er tomme så returneres bare "", altså tom strengverdi, som ikke finnes i databasen, men godtas som input
-            string LoggID = TB_LoggID.Text;
-            string LoggPin = TB_LoggPin.Text;
-            TB_LoggID.Clear();
-            TB_LoggPin.Clear();
-            TB_suksess.Text = db.Innlogging(LoggID, LoggPin);  //debug, returnerer tekst: "korrekt" / "feil"
+            OpenChildForm(new MenyInnstillinger(), sender);
         }
 
-        // Paneler og visning av dems menyer
-        private void BTN_LesAnsatt_Click(object sender, EventArgs e)
+        private void BTN_LukkMenyVindu_Click(object sender, EventArgs e)
         {
-            panel1.Show();
-            panel4.Hide();
-            panel3.Hide();
-            panel2.Hide();
-            panel1.BringToFront();
+            if (activeForm != null)
+            {
+                activeForm.Close();
+            }
+            Reset();
         }
-
-        private void BTN_Brukere_Click(object sender, EventArgs e)
-        {
-            panel2.Show();
-            panel1.Hide();
-            panel3.Hide();
-            panel4.Hide();
-            panel2.BringToFront();
-        }
-
-        private void BTN_info_Click(object sender, EventArgs e)
-        {
-            panel3.Show();
-            panel1.Hide();
-            panel2.Hide();
-            panel4.Hide();
-            panel3.BringToFront();
-        }
-
-        private void BTN_Innlogg_Click(object sender, EventArgs e)
-        {
-            panel4.Show();
-            panel1.Hide();
-            panel2.Hide();
-            panel3.Hide();
-            panel4.BringToFront();
-        }
-
     }
 }

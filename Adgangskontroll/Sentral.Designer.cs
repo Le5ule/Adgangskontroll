@@ -28,341 +28,189 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Sentral));
-            dataGridView1 = new DataGridView();
-            BTN_LesDB = new Button();
-            TB_ID = new TextBox();
-            BTN_VisKode = new Button();
-            label1 = new Label();
-            BTN_LesAnsatt = new Button();
-            BTN_Brukere = new Button();
-            BTN_info = new Button();
-            BTN_Innlogg = new Button();
-            panel1 = new Panel();
-            panel3 = new Panel();
-            panel2 = new Panel();
-            label6 = new Label();
-            label3 = new Label();
-            label2 = new Label();
-            dataGridView2 = new DataGridView();
-            button5 = new Button();
-            TB_Navn = new TextBox();
-            panel4 = new Panel();
-            TB_suksess = new TextBox();
-            label4 = new Label();
-            label5 = new Label();
-            TB_LoggPin = new TextBox();
-            TB_LoggID = new TextBox();
-            BTN_LoggInn = new Button();
-            label7 = new Label();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
-            panel1.SuspendLayout();
-            panel3.SuspendLayout();
-            panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
-            panel4.SuspendLayout();
+            PanelMeny = new Panel();
+            iconButton4 = new FontAwesome.Sharp.IconButton();
+            iconButton3 = new FontAwesome.Sharp.IconButton();
+            iBTN_Brukere = new FontAwesome.Sharp.IconButton();
+            iBTN_Kortlesere = new FontAwesome.Sharp.IconButton();
+            panelTopp = new Panel();
+            panelBar = new Panel();
+            BTN_LukkMenyVindu = new FontAwesome.Sharp.IconButton();
+            lbl_Tittel = new Label();
+            PanelForms = new Panel();
+            PanelMeny.SuspendLayout();
+            panelBar.SuspendLayout();
             SuspendLayout();
             // 
-            // dataGridView1
+            // PanelMeny
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(26, 56);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.RowTemplate.Height = 29;
-            dataGridView1.Size = new Size(779, 347);
-            dataGridView1.TabIndex = 1;
+            PanelMeny.BackColor = SystemColors.GradientInactiveCaption;
+            PanelMeny.Controls.Add(iconButton4);
+            PanelMeny.Controls.Add(iconButton3);
+            PanelMeny.Controls.Add(iBTN_Brukere);
+            PanelMeny.Controls.Add(iBTN_Kortlesere);
+            PanelMeny.Controls.Add(panelTopp);
+            PanelMeny.Dock = DockStyle.Left;
+            PanelMeny.Location = new Point(0, 0);
+            PanelMeny.Name = "PanelMeny";
+            PanelMeny.Size = new Size(195, 678);
+            PanelMeny.TabIndex = 16;
             // 
-            // BTN_LesDB
+            // iconButton4
             // 
-            BTN_LesDB.Location = new Point(26, 21);
-            BTN_LesDB.Name = "BTN_LesDB";
-            BTN_LesDB.Size = new Size(94, 29);
-            BTN_LesDB.TabIndex = 3;
-            BTN_LesDB.Text = "Les DB";
-            BTN_LesDB.UseVisualStyleBackColor = true;
-            BTN_LesDB.Click += BTN_VisAnsatte_Click;
+            iconButton4.BackColor = SystemColors.GradientInactiveCaption;
+            iconButton4.Dock = DockStyle.Top;
+            iconButton4.FlatAppearance.BorderSize = 0;
+            iconButton4.FlatStyle = FlatStyle.Flat;
+            iconButton4.IconChar = FontAwesome.Sharp.IconChar.Gears;
+            iconButton4.IconColor = Color.Black;
+            iconButton4.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconButton4.ImageAlign = ContentAlignment.MiddleLeft;
+            iconButton4.Location = new Point(0, 280);
+            iconButton4.Name = "iconButton4";
+            iconButton4.Size = new Size(195, 60);
+            iconButton4.TabIndex = 22;
+            iconButton4.Text = "Innstillinger";
+            iconButton4.UseVisualStyleBackColor = false;
+            iconButton4.Click += iBTN_Innstillinger_Click;
             // 
-            // TB_ID
+            // iconButton3
             // 
-            TB_ID.Location = new Point(24, 36);
-            TB_ID.Name = "TB_ID";
-            TB_ID.Size = new Size(125, 27);
-            TB_ID.TabIndex = 4;
+            iconButton3.BackColor = SystemColors.GradientInactiveCaption;
+            iconButton3.Dock = DockStyle.Top;
+            iconButton3.FlatAppearance.BorderSize = 0;
+            iconButton3.FlatStyle = FlatStyle.Flat;
+            iconButton3.IconChar = FontAwesome.Sharp.IconChar.ClockRotateLeft;
+            iconButton3.IconColor = Color.Black;
+            iconButton3.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iconButton3.ImageAlign = ContentAlignment.MiddleLeft;
+            iconButton3.Location = new Point(0, 220);
+            iconButton3.Name = "iconButton3";
+            iconButton3.Size = new Size(195, 60);
+            iconButton3.TabIndex = 21;
+            iconButton3.Text = "Logg";
+            iconButton3.UseVisualStyleBackColor = false;
+            iconButton3.Click += iBTN_Logg_Click;
             // 
-            // BTN_VisKode
+            // iBTN_Brukere
             // 
-            BTN_VisKode.Location = new Point(315, 35);
-            BTN_VisKode.Name = "BTN_VisKode";
-            BTN_VisKode.Size = new Size(94, 29);
-            BTN_VisKode.TabIndex = 5;
-            BTN_VisKode.Text = "Legg til";
-            BTN_VisKode.UseVisualStyleBackColor = true;
-            BTN_VisKode.Click += BTN_LeggTil_Click;
+            iBTN_Brukere.BackColor = SystemColors.GradientInactiveCaption;
+            iBTN_Brukere.Dock = DockStyle.Top;
+            iBTN_Brukere.FlatAppearance.BorderSize = 0;
+            iBTN_Brukere.FlatStyle = FlatStyle.Flat;
+            iBTN_Brukere.IconChar = FontAwesome.Sharp.IconChar.IdCard;
+            iBTN_Brukere.IconColor = Color.Black;
+            iBTN_Brukere.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iBTN_Brukere.ImageAlign = ContentAlignment.MiddleLeft;
+            iBTN_Brukere.Location = new Point(0, 160);
+            iBTN_Brukere.Name = "iBTN_Brukere";
+            iBTN_Brukere.Size = new Size(195, 60);
+            iBTN_Brukere.TabIndex = 20;
+            iBTN_Brukere.Text = "Brukere";
+            iBTN_Brukere.UseVisualStyleBackColor = false;
+            iBTN_Brukere.Click += iBTN_Brukere_Click;
             // 
-            // label1
+            // iBTN_Kortlesere
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(44, 32);
-            label1.Name = "label1";
-            label1.Size = new Size(570, 320);
-            label1.TabIndex = 6;
-            label1.Text = resources.GetString("label1.Text");
+            iBTN_Kortlesere.BackColor = SystemColors.GradientInactiveCaption;
+            iBTN_Kortlesere.Dock = DockStyle.Top;
+            iBTN_Kortlesere.FlatAppearance.BorderSize = 0;
+            iBTN_Kortlesere.FlatStyle = FlatStyle.Flat;
+            iBTN_Kortlesere.IconChar = FontAwesome.Sharp.IconChar.Keyboard;
+            iBTN_Kortlesere.IconColor = Color.Black;
+            iBTN_Kortlesere.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iBTN_Kortlesere.ImageAlign = ContentAlignment.MiddleLeft;
+            iBTN_Kortlesere.Location = new Point(0, 100);
+            iBTN_Kortlesere.Name = "iBTN_Kortlesere";
+            iBTN_Kortlesere.Size = new Size(195, 60);
+            iBTN_Kortlesere.TabIndex = 19;
+            iBTN_Kortlesere.Text = "Kortlesere";
+            iBTN_Kortlesere.UseVisualStyleBackColor = false;
+            iBTN_Kortlesere.Click += iBTN_Kortlesere_Click;
             // 
-            // BTN_LesAnsatt
+            // panelTopp
             // 
-            BTN_LesAnsatt.Location = new Point(29, 65);
-            BTN_LesAnsatt.Name = "BTN_LesAnsatt";
-            BTN_LesAnsatt.Size = new Size(94, 29);
-            BTN_LesAnsatt.TabIndex = 8;
-            BTN_LesAnsatt.Text = "les ansatt";
-            BTN_LesAnsatt.UseVisualStyleBackColor = true;
-            BTN_LesAnsatt.Click += BTN_LesAnsatt_Click;
+            panelTopp.BackColor = SystemColors.ActiveCaption;
+            panelTopp.Dock = DockStyle.Top;
+            panelTopp.Location = new Point(0, 0);
+            panelTopp.Name = "panelTopp";
+            panelTopp.Size = new Size(195, 100);
+            panelTopp.TabIndex = 18;
             // 
-            // BTN_Brukere
+            // panelBar
             // 
-            BTN_Brukere.Location = new Point(29, 100);
-            BTN_Brukere.Name = "BTN_Brukere";
-            BTN_Brukere.Size = new Size(94, 29);
-            BTN_Brukere.TabIndex = 9;
-            BTN_Brukere.Text = "brukere";
-            BTN_Brukere.UseVisualStyleBackColor = true;
-            BTN_Brukere.Click += BTN_Brukere_Click;
+            panelBar.BackColor = SystemColors.ActiveCaption;
+            panelBar.Controls.Add(BTN_LukkMenyVindu);
+            panelBar.Controls.Add(lbl_Tittel);
+            panelBar.Dock = DockStyle.Top;
+            panelBar.Location = new Point(195, 0);
+            panelBar.Name = "panelBar";
+            panelBar.Size = new Size(876, 100);
+            panelBar.TabIndex = 18;
             // 
-            // BTN_info
+            // BTN_LukkMenyVindu
             // 
-            BTN_info.Location = new Point(29, 170);
-            BTN_info.Name = "BTN_info";
-            BTN_info.Size = new Size(94, 29);
-            BTN_info.TabIndex = 10;
-            BTN_info.Text = "info";
-            BTN_info.UseVisualStyleBackColor = true;
-            BTN_info.Click += BTN_info_Click;
+            BTN_LukkMenyVindu.BackColor = SystemColors.ActiveCaption;
+            BTN_LukkMenyVindu.Dock = DockStyle.Left;
+            BTN_LukkMenyVindu.FlatAppearance.BorderSize = 0;
+            BTN_LukkMenyVindu.FlatStyle = FlatStyle.Flat;
+            BTN_LukkMenyVindu.IconChar = FontAwesome.Sharp.IconChar.Xmark;
+            BTN_LukkMenyVindu.IconColor = Color.Black;
+            BTN_LukkMenyVindu.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            BTN_LukkMenyVindu.Location = new Point(0, 0);
+            BTN_LukkMenyVindu.Name = "BTN_LukkMenyVindu";
+            BTN_LukkMenyVindu.Size = new Size(94, 100);
+            BTN_LukkMenyVindu.TabIndex = 1;
+            BTN_LukkMenyVindu.UseVisualStyleBackColor = false;
+            BTN_LukkMenyVindu.Visible = false;
+            BTN_LukkMenyVindu.Click += BTN_LukkMenyVindu_Click;
             // 
-            // BTN_Innlogg
+            // lbl_Tittel
             // 
-            BTN_Innlogg.Location = new Point(29, 135);
-            BTN_Innlogg.Name = "BTN_Innlogg";
-            BTN_Innlogg.Size = new Size(94, 29);
-            BTN_Innlogg.TabIndex = 11;
-            BTN_Innlogg.Text = "innlogging";
-            BTN_Innlogg.UseVisualStyleBackColor = true;
-            BTN_Innlogg.Click += BTN_Innlogg_Click;
+            lbl_Tittel.AutoSize = true;
+            lbl_Tittel.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point);
+            lbl_Tittel.Location = new Point(154, 33);
+            lbl_Tittel.Name = "lbl_Tittel";
+            lbl_Tittel.Size = new Size(233, 37);
+            lbl_Tittel.TabIndex = 0;
+            lbl_Tittel.Text = "Adgangskontroll";
             // 
-            // panel1
+            // PanelForms
             // 
-            panel1.Controls.Add(dataGridView1);
-            panel1.Controls.Add(BTN_LesDB);
-            panel1.Location = new Point(162, 41);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(897, 436);
-            panel1.TabIndex = 12;
-            // 
-            // panel3
-            // 
-            panel3.Controls.Add(label1);
-            panel3.Location = new Point(162, 39);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(897, 438);
-            panel3.TabIndex = 13;
-            // 
-            // panel2
-            // 
-            panel2.Controls.Add(label6);
-            panel2.Controls.Add(label3);
-            panel2.Controls.Add(label2);
-            panel2.Controls.Add(dataGridView2);
-            panel2.Controls.Add(button5);
-            panel2.Controls.Add(TB_Navn);
-            panel2.Controls.Add(TB_ID);
-            panel2.Controls.Add(BTN_VisKode);
-            panel2.Location = new Point(162, 29);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(897, 433);
-            panel2.TabIndex = 13;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(590, 75);
-            label6.Name = "label6";
-            label6.Size = new Size(280, 180);
-            label6.TabIndex = 11;
-            label6.Text = resources.GetString("label6.Text");
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(165, 9);
-            label3.Name = "label3";
-            label3.Size = new Size(29, 20);
-            label3.TabIndex = 10;
-            label3.Text = "Pin";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(26, 9);
-            label2.Name = "label2";
-            label2.Size = new Size(58, 20);
-            label2.TabIndex = 9;
-            label2.Text = "Kort-ID";
-            // 
-            // dataGridView2
-            // 
-            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Location = new Point(24, 70);
-            dataGridView2.Name = "dataGridView2";
-            dataGridView2.RowHeadersWidth = 51;
-            dataGridView2.RowTemplate.Height = 29;
-            dataGridView2.Size = new Size(530, 328);
-            dataGridView2.TabIndex = 8;
-            // 
-            // button5
-            // 
-            button5.Location = new Point(460, 35);
-            button5.Name = "button5";
-            button5.Size = new Size(94, 29);
-            button5.TabIndex = 7;
-            button5.Text = "Vis tab";
-            button5.UseVisualStyleBackColor = true;
-            button5.Click += BTN_VisTab_Click;
-            // 
-            // TB_Navn
-            // 
-            TB_Navn.Location = new Point(165, 36);
-            TB_Navn.Name = "TB_Navn";
-            TB_Navn.Size = new Size(125, 27);
-            TB_Navn.TabIndex = 6;
-            // 
-            // panel4
-            // 
-            panel4.Controls.Add(TB_suksess);
-            panel4.Controls.Add(label4);
-            panel4.Controls.Add(label5);
-            panel4.Controls.Add(TB_LoggPin);
-            panel4.Controls.Add(TB_LoggID);
-            panel4.Controls.Add(BTN_LoggInn);
-            panel4.Location = new Point(162, 29);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(902, 439);
-            panel4.TabIndex = 14;
-            // 
-            // TB_suksess
-            // 
-            TB_suksess.Location = new Point(315, 106);
-            TB_suksess.Name = "TB_suksess";
-            TB_suksess.Size = new Size(94, 27);
-            TB_suksess.TabIndex = 11;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(165, 9);
-            label4.Name = "label4";
-            label4.Size = new Size(30, 20);
-            label4.TabIndex = 10;
-            label4.Text = "pin";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(26, 9);
-            label5.Name = "label5";
-            label5.Size = new Size(22, 20);
-            label5.TabIndex = 9;
-            label5.Text = "id";
-            // 
-            // TB_LoggPin
-            // 
-            TB_LoggPin.Location = new Point(165, 38);
-            TB_LoggPin.Name = "TB_LoggPin";
-            TB_LoggPin.Size = new Size(125, 27);
-            TB_LoggPin.TabIndex = 6;
-            // 
-            // TB_LoggID
-            // 
-            TB_LoggID.Location = new Point(24, 37);
-            TB_LoggID.Name = "TB_LoggID";
-            TB_LoggID.Size = new Size(125, 27);
-            TB_LoggID.TabIndex = 4;
-            // 
-            // BTN_LoggInn
-            // 
-            BTN_LoggInn.Location = new Point(315, 37);
-            BTN_LoggInn.Name = "BTN_LoggInn";
-            BTN_LoggInn.Size = new Size(94, 29);
-            BTN_LoggInn.TabIndex = 5;
-            BTN_LoggInn.Text = "Logg inn";
-            BTN_LoggInn.UseVisualStyleBackColor = true;
-            BTN_LoggInn.Click += BTN_LoggInn_Click;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(21, 512);
-            label7.Name = "label7";
-            label7.Size = new Size(189, 120);
-            label7.TabIndex = 15;
-            label7.Text = "Vil også ha en form for\r\nenkel statusrapport her i\r\nhovedvinduet(ikke i panel)\r\nmed umiddelbar info om\r\naktiv/inaktiv alarm\r\n    -evt x/y online kortlesere";
+            PanelForms.Dock = DockStyle.Fill;
+            PanelForms.Location = new Point(195, 100);
+            PanelForms.Name = "PanelForms";
+            PanelForms.Size = new Size(876, 578);
+            PanelForms.TabIndex = 14;
             // 
             // Sentral
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1071, 678);
-            Controls.Add(label7);
-            Controls.Add(BTN_Innlogg);
-            Controls.Add(BTN_info);
-            Controls.Add(BTN_Brukere);
-            Controls.Add(BTN_LesAnsatt);
-            Controls.Add(panel4);
-            Controls.Add(panel2);
-            Controls.Add(panel1);
-            Controls.Add(panel3);
+            Controls.Add(PanelForms);
+            Controls.Add(panelBar);
+            Controls.Add(PanelMeny);
             Name = "Sentral";
             Text = "Sentral";
             Load += Sentral_Load;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
-            panel1.ResumeLayout(false);
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
-            panel4.ResumeLayout(false);
-            panel4.PerformLayout();
+            PanelMeny.ResumeLayout(false);
+            panelBar.ResumeLayout(false);
+            panelBar.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private DataGridView dataGridView1;
-        private Button BTN_LesDB;
-        private TextBox TB_ID;
-        private Button BTN_VisKode;
-        private Label label1;
-        private Button BTN_LesAnsatt;
-        private Button BTN_Brukere;
-        private Button BTN_info;
-        private Button BTN_Innlogg;
-        private Panel panel1;
-        private Panel panel2;
-        private Panel panel3;
-        private TextBox TB_Navn;
-        private DataGridView dataGridView2;
-        private Button button5;
-        private Label label3;
-        private Label label2;
-        private Panel panel4;
-        private TextBox TB_suksess;
-        private Label label4;
-        private Label label5;
-        private TextBox TB_LoggPin;
-        private TextBox TB_LoggID;
-        private Button BTN_LoggInn;
-        private Label label6;
         private Label label7;
+        private Panel PanelMeny;
+        private Panel panelTopp;
+        private Panel panelBar;
+        private Panel PanelForms;
+        private FontAwesome.Sharp.IconButton iconButton4;
+        private FontAwesome.Sharp.IconButton iconButton3;
+        private FontAwesome.Sharp.IconButton iBTN_Brukere;
+        private FontAwesome.Sharp.IconButton iBTN_Kortlesere;
+        private Label lbl_Tittel;
+        private FontAwesome.Sharp.IconButton BTN_LukkMenyVindu;
     }
 }
