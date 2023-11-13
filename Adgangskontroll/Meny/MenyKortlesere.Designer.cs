@@ -81,7 +81,7 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 29;
-            dataGridView1.Size = new Size(737, 287);
+            dataGridView1.Size = new Size(797, 336);
             dataGridView1.TabIndex = 4;
             dataGridView1.Visible = false;
             // 
@@ -177,7 +177,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(859, 505);
             Controls.Add(BTN_endre);
             Controls.Add(lbl_seksjon);
             Controls.Add(lbl_ID);
