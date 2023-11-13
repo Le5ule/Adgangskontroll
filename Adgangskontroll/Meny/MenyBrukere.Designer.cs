@@ -74,7 +74,7 @@
             dataGridView.Name = "dataGridView";
             dataGridView.RowHeadersWidth = 51;
             dataGridView.RowTemplate.Height = 29;
-            dataGridView.Size = new Size(771, 420);
+            dataGridView.Size = new Size(797, 336);
             dataGridView.TabIndex = 15;
             dataGridView.Visible = false;
             // 
@@ -206,7 +206,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(853, 765);
+            ClientSize = new Size(868, 465);
             Controls.Add(BTN_Endre);
             Controls.Add(lbl_ID);
             Controls.Add(TB_ID);
