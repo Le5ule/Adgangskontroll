@@ -12,7 +12,7 @@ namespace Adgangskontroll_Kortleser
         static string dataFraSentral;
         static string pin;
         static string kortID;
-        static string kortleserID = "0";
+        static string kortleserID = "0";    // skal leses inn et annet sted
         List<int> kodeinput = new List<int>();
 
         Socket klientSokkel;
@@ -26,6 +26,9 @@ namespace Adgangskontroll_Kortleser
             klientSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
             BTN_LesKort.Select();
+
+            iPB_Unlock.Hide();
+            iPB_DoorOpen.Hide();
 
             try
             {
@@ -49,27 +52,34 @@ namespace Adgangskontroll_Kortleser
         public void Kode(int inn)
         {
             kodeinput.Add(inn);
-
-            if (kodeinput.Count == 4 && comMedSentral == true)
+            try
             {
-                // her kan vi også ta å laste inn kortID uten å måtte trykke på enter-tasten, kanskje mer brukervennlig, slipper å forklare "trykk enter";
-                kortID = TB_KortInput.Text;
-                TB_KortInput.Clear();
-                TB_KortInput.Visible = false;
-                //
-                //comMedSentral = true;
-                pin = kodeinput[0].ToString() + kodeinput[1].ToString() + kodeinput[2].ToString() + kodeinput[3].ToString();
-                kodeinput.Clear();
-                dataTilSentral = $" K:{kortID} P:{pin} L:{kortleserID}";
-                if (comMedSentral == true)
+                if (kodeinput.Count == 4 && comMedSentral == true)
                 {
-                    BW_SendKvittering.RunWorkerAsync();
-                    MessageBox.Show("Lokal info i kortleser:\n" + dataTilSentral);     //debug
+                    // her kan vi også ta å laste inn kortID uten å måtte trykke på enter-tasten, kanskje mer brukervennlig, slipper å forklare "trykk enter";
+                    kortID = TB_KortInput.Text;
+                    TB_KortInput.Clear();
+                    TB_KortInput.Visible = false;
+                    //
+                    //comMedSentral = true;
+                    pin = kodeinput[0].ToString() + kodeinput[1].ToString() + kodeinput[2].ToString() + kodeinput[3].ToString();
+                    kodeinput.Clear();
+                    dataTilSentral = $" K:{kortID} P:{pin} L:{kortleserID}";
+                    if (comMedSentral == true)
+                    {
+                        BW_SendKvittering.RunWorkerAsync();
+                        MessageBox.Show("Lokal info i kortleser:\n" + dataTilSentral);     //debug
+                    }
+                    BTN_LesKort.Select();
+                    kortID = "";
+                    pin = "";
                 }
-                BTN_LesKort.Select();
-                kortID = "";
-                pin = "";
             }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
         public bool godkjenning(int BrukerPin)
         {
@@ -86,7 +96,7 @@ namespace Adgangskontroll_Kortleser
             }
             return svar;
         }
-        // Denne funker, men bool gjennomfjørt endres ikke slik som den bler brukt i server-klient i kommentert felt under
+        // Denne funker, men bool gjennomfjørt endres ikke slik som den blir brukt i server-klient i kommentert felt under
         static string MottaData(Socket s, out bool gjennomført)
         {
             string svar = "";
@@ -148,6 +158,7 @@ namespace Adgangskontroll_Kortleser
             if (comMedSentral)
             {
                 dataFraSentral = MottaData(klientSokkel, out comMedSentral);
+                // if eller try med at verdi er sann/usann, lik som Innlogging() i database.cs for sentral
             }
         }
         private void BW_SendKvittering_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
@@ -202,6 +213,29 @@ namespace Adgangskontroll_Kortleser
         private void BTN0_Click(object sender, EventArgs e)
         {
             Kode(0);
+        }
+
+        private void BTN_Åpne_Click(object sender, EventArgs e)
+        {
+            // skal brukes i godkjenning av input
+            //iPB_Unlock.Show();
+            //iPB_Unlock.BringToFront();
+            //iPB_Lock.Hide();
+            
+            iPB_DoorOpen.Show();
+            iPB_DoorOpen.BringToFront();
+            iPB_DoorLocked.Hide();
+        }
+
+        private void BTN_Lukk_Click(object sender, EventArgs e)
+        {
+            iPB_Lock.Show();
+            iPB_Lock.BringToFront();
+            iPB_Unlock.Hide();
+
+            iPB_DoorLocked.Show();
+            iPB_DoorLocked.BringToFront();
+            iPB_DoorOpen.Hide();
         }
     }
 }
