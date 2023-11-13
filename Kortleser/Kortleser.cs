@@ -221,7 +221,7 @@ namespace Adgangskontroll_Kortleser
             //iPB_Unlock.Show();
             //iPB_Unlock.BringToFront();
             //iPB_Lock.Hide();
-            
+
             iPB_DoorOpen.Show();
             iPB_DoorOpen.BringToFront();
             iPB_DoorLocked.Hide();

@@ -321,7 +321,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(810, 455);
+            ClientSize = new Size(810, 289);
             Controls.Add(BTN_Lukk);
             Controls.Add(Label_ID);
             Controls.Add(BTN_Åpne);
