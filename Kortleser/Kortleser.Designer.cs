@@ -1,4 +1,7 @@
-﻿namespace Adgangskontroll_Kortleser
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace Adgangskontroll_Kortleser
 {
     partial class Kortleser
     {
@@ -46,21 +49,25 @@
             panel1 = new Panel();
             label1 = new Label();
             label2 = new Label();
+            button1 = new Button();
+            button2 = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
             // TB_MottakFraSentral
             // 
-            TB_MottakFraSentral.Location = new Point(199, 73);
+            TB_MottakFraSentral.Location = new Point(174, 55);
+            TB_MottakFraSentral.Margin = new Padding(3, 2, 3, 2);
             TB_MottakFraSentral.Name = "TB_MottakFraSentral";
-            TB_MottakFraSentral.Size = new Size(253, 27);
+            TB_MottakFraSentral.Size = new Size(222, 23);
             TB_MottakFraSentral.TabIndex = 37;
             // 
             // BTN0
             // 
-            BTN0.Location = new Point(61, 216);
+            BTN0.Location = new Point(53, 162);
+            BTN0.Margin = new Padding(3, 2, 3, 2);
             BTN0.Name = "BTN0";
-            BTN0.Size = new Size(23, 25);
+            BTN0.Size = new Size(20, 19);
             BTN0.TabIndex = 36;
             BTN0.Text = "0";
             BTN0.UseVisualStyleBackColor = true;
@@ -68,9 +75,10 @@
             // 
             // BTN9
             // 
-            BTN9.Location = new Point(88, 188);
+            BTN9.Location = new Point(77, 141);
+            BTN9.Margin = new Padding(3, 2, 3, 2);
             BTN9.Name = "BTN9";
-            BTN9.Size = new Size(23, 25);
+            BTN9.Size = new Size(20, 19);
             BTN9.TabIndex = 35;
             BTN9.Text = "9";
             BTN9.UseVisualStyleBackColor = true;
@@ -78,9 +86,10 @@
             // 
             // BTN8
             // 
-            BTN8.Location = new Point(61, 188);
+            BTN8.Location = new Point(53, 141);
+            BTN8.Margin = new Padding(3, 2, 3, 2);
             BTN8.Name = "BTN8";
-            BTN8.Size = new Size(23, 25);
+            BTN8.Size = new Size(20, 19);
             BTN8.TabIndex = 34;
             BTN8.Text = "8";
             BTN8.UseVisualStyleBackColor = true;
@@ -88,9 +97,10 @@
             // 
             // BTN7
             // 
-            BTN7.Location = new Point(34, 188);
+            BTN7.Location = new Point(30, 141);
+            BTN7.Margin = new Padding(3, 2, 3, 2);
             BTN7.Name = "BTN7";
-            BTN7.Size = new Size(23, 25);
+            BTN7.Size = new Size(20, 19);
             BTN7.TabIndex = 33;
             BTN7.Text = "7";
             BTN7.UseVisualStyleBackColor = true;
@@ -98,9 +108,10 @@
             // 
             // BTN6
             // 
-            BTN6.Location = new Point(88, 159);
+            BTN6.Location = new Point(77, 119);
+            BTN6.Margin = new Padding(3, 2, 3, 2);
             BTN6.Name = "BTN6";
-            BTN6.Size = new Size(23, 25);
+            BTN6.Size = new Size(20, 19);
             BTN6.TabIndex = 32;
             BTN6.Text = "6";
             BTN6.UseVisualStyleBackColor = true;
@@ -108,9 +119,10 @@
             // 
             // BTN5
             // 
-            BTN5.Location = new Point(61, 159);
+            BTN5.Location = new Point(53, 119);
+            BTN5.Margin = new Padding(3, 2, 3, 2);
             BTN5.Name = "BTN5";
-            BTN5.Size = new Size(23, 25);
+            BTN5.Size = new Size(20, 19);
             BTN5.TabIndex = 31;
             BTN5.Text = "5";
             BTN5.UseVisualStyleBackColor = true;
@@ -118,9 +130,10 @@
             // 
             // BTN4
             // 
-            BTN4.Location = new Point(34, 159);
+            BTN4.Location = new Point(30, 119);
+            BTN4.Margin = new Padding(3, 2, 3, 2);
             BTN4.Name = "BTN4";
-            BTN4.Size = new Size(23, 25);
+            BTN4.Size = new Size(20, 19);
             BTN4.TabIndex = 30;
             BTN4.Text = "4";
             BTN4.UseVisualStyleBackColor = true;
@@ -128,9 +141,10 @@
             // 
             // BTN3
             // 
-            BTN3.Location = new Point(88, 130);
+            BTN3.Location = new Point(77, 98);
+            BTN3.Margin = new Padding(3, 2, 3, 2);
             BTN3.Name = "BTN3";
-            BTN3.Size = new Size(23, 25);
+            BTN3.Size = new Size(20, 19);
             BTN3.TabIndex = 29;
             BTN3.Text = "3";
             BTN3.UseVisualStyleBackColor = true;
@@ -138,9 +152,10 @@
             // 
             // BTN2
             // 
-            BTN2.Location = new Point(61, 130);
+            BTN2.Location = new Point(53, 98);
+            BTN2.Margin = new Padding(3, 2, 3, 2);
             BTN2.Name = "BTN2";
-            BTN2.Size = new Size(23, 25);
+            BTN2.Size = new Size(20, 19);
             BTN2.TabIndex = 28;
             BTN2.Text = "2";
             BTN2.UseVisualStyleBackColor = true;
@@ -148,9 +163,10 @@
             // 
             // BTN1
             // 
-            BTN1.Location = new Point(34, 130);
+            BTN1.Location = new Point(30, 98);
+            BTN1.Margin = new Padding(3, 2, 3, 2);
             BTN1.Name = "BTN1";
-            BTN1.Size = new Size(23, 25);
+            BTN1.Size = new Size(20, 19);
             BTN1.TabIndex = 27;
             BTN1.Text = "1";
             BTN1.UseVisualStyleBackColor = true;
@@ -158,9 +174,10 @@
             // 
             // BTN_LesKort
             // 
-            BTN_LesKort.Location = new Point(34, 61);
+            BTN_LesKort.Location = new Point(30, 46);
+            BTN_LesKort.Margin = new Padding(3, 2, 3, 2);
             BTN_LesKort.Name = "BTN_LesKort";
-            BTN_LesKort.Size = new Size(77, 29);
+            BTN_LesKort.Size = new Size(67, 22);
             BTN_LesKort.TabIndex = 38;
             BTN_LesKort.Text = "Les kort";
             BTN_LesKort.UseVisualStyleBackColor = true;
@@ -168,9 +185,10 @@
             // 
             // TB_KortInput
             // 
-            TB_KortInput.Location = new Point(34, 97);
+            TB_KortInput.Location = new Point(30, 73);
+            TB_KortInput.Margin = new Padding(3, 2, 3, 2);
             TB_KortInput.Name = "TB_KortInput";
-            TB_KortInput.Size = new Size(77, 27);
+            TB_KortInput.Size = new Size(68, 23);
             TB_KortInput.TabIndex = 40;
             TB_KortInput.Visible = false;
             TB_KortInput.KeyPress += TB_KortInput_KeyPress;
@@ -180,9 +198,9 @@
             UgyldigLabel.AutoSize = true;
             UgyldigLabel.BackColor = Color.Transparent;
             UgyldigLabel.ForeColor = SystemColors.ActiveCaptionText;
-            UgyldigLabel.Location = new Point(23, 14);
+            UgyldigLabel.Location = new Point(20, 10);
             UgyldigLabel.Name = "UgyldigLabel";
-            UgyldigLabel.Size = new Size(102, 40);
+            UgyldigLabel.Size = new Size(82, 30);
             UgyldigLabel.TabIndex = 39;
             UgyldigLabel.Text = "Ugyldig input,\r\nprøv igjen";
             UgyldigLabel.Visible = false;
@@ -208,38 +226,61 @@
             panel1.Controls.Add(BTN3);
             panel1.Controls.Add(BTN2);
             panel1.Controls.Add(BTN1);
-            panel1.Location = new Point(12, 12);
+            panel1.Location = new Point(10, 9);
+            panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(153, 265);
+            panel1.Size = new Size(134, 199);
             panel1.TabIndex = 41;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(199, 173);
+            label1.Location = new Point(174, 130);
             label1.Name = "label1";
-            label1.Size = new Size(394, 80);
+            label1.Size = new Size(313, 60);
             label1.TabIndex = 42;
             label1.Text = "\"Dør åpen\"\r\nLabel skal vises når døren åpnes. Simulere virtuell dør elns.\r\nSammen med knapp som fungerer som håndtak.\r\nUtfordring: bryte opp her\r\n";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(199, 12);
+            label2.Location = new Point(174, 9);
             label2.Name = "label2";
-            label2.Size = new Size(281, 60);
+            label2.Size = new Size(223, 45);
             label2.TabIndex = 43;
             label2.Text = "(debug)Her hentes data fra sentralen.\r\nIllustrerer bare at informasjon kan sendes\r\nfrem og tilbake";
             // 
+            // button1
+            // 
+            button1.Location = new Point(174, 98);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 44;
+            button1.Text = "Åpen Dør";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(321, 98);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 23);
+            button2.TabIndex = 45;
+            button2.Text = "Lukk Dør";
+            button2.UseVisualStyleBackColor = true;
+            // 
             // Kortleser
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(614, 291);
+            ClientSize = new Size(537, 218);
+            Controls.Add(button2);
+            Controls.Add(button1);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(panel1);
             Controls.Add(TB_MottakFraSentral);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "Kortleser";
             Text = "Kortleser";
             Load += Kortleser_Load;
@@ -269,5 +310,7 @@
         private Panel panel1;
         private Label label1;
         private Label label2;
+        private Button button1;
+        private Button button2;
     }
 }

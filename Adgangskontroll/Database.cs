@@ -16,7 +16,7 @@ namespace Sentral
         private static NpgsqlConnection vCon;
         private static NpgsqlCommand vCmd;
               // legg inn din informasjon her for kobling mot din database
-        static string kobling = "server=129.151.221.119 ; port=5432 ; user id=id ; password=pass ; database=data ;";
+        static string kobling = "server=129.151.221.119 ; port=5432 ; user id=602393 ; password=Ha1FinDagIDag! ; database=602393 ;";
 
         public static NpgsqlCommand VCmd
         {

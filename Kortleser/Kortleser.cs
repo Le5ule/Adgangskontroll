@@ -1,6 +1,9 @@
 using System.Net;
+using System;
+using System.Windows.Forms;
 using System.Net.Sockets;
 using System.Text;
+using System.IO.Ports;
 
 namespace Adgangskontroll_Kortleser
 {
@@ -14,6 +17,7 @@ namespace Adgangskontroll_Kortleser
         static string kortID;
         static string kortleserID = "0";
         List<int> kodeinput = new List<int>();
+        SerialPort sp = new SerialPort("COM1", 9600);
 
         Socket klientSokkel;
 
@@ -69,6 +73,26 @@ namespace Adgangskontroll_Kortleser
                 BTN_LesKort.Select();
                 kortID = "";
                 pin = "";
+            }
+        }
+        public void simsim()
+        {
+
+            try
+            {
+                sp.Open();
+            }
+            catch (Exception u)
+            {
+                MessageBox.Show("Feil: " + u.Message);
+            }
+
+            if (sp.IsOpen)
+            {
+                while (true)
+                {
+
+                }
             }
         }
         public bool godkjenning(int BrukerPin)
@@ -202,6 +226,11 @@ namespace Adgangskontroll_Kortleser
         private void BTN0_Click(object sender, EventArgs e)
         {
             Kode(0);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            simsim();
         }
     }
 }
