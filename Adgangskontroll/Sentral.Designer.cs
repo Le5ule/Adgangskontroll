@@ -38,8 +38,10 @@
             BTN_LukkMenyVindu = new FontAwesome.Sharp.IconButton();
             lbl_Tittel = new Label();
             PanelForms = new Panel();
+            button1 = new Button();
             PanelMeny.SuspendLayout();
             panelBar.SuspendLayout();
+            PanelForms.SuspendLayout();
             SuspendLayout();
             // 
             // PanelMeny
@@ -185,11 +187,22 @@
             // 
             // PanelForms
             // 
+            PanelForms.Controls.Add(button1);
             PanelForms.Dock = DockStyle.Fill;
             PanelForms.Location = new Point(195, 100);
             PanelForms.Name = "PanelForms";
             PanelForms.Size = new Size(876, 431);
             PanelForms.TabIndex = 14;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(352, 137);
+            button1.Name = "button1";
+            button1.Size = new Size(94, 29);
+            button1.TabIndex = 0;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // Sentral
             // 
@@ -205,6 +218,7 @@
             PanelMeny.ResumeLayout(false);
             panelBar.ResumeLayout(false);
             panelBar.PerformLayout();
+            PanelForms.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -220,5 +234,6 @@
         private FontAwesome.Sharp.IconButton iBTN_Kortlesere;
         private Label lbl_Tittel;
         private FontAwesome.Sharp.IconButton BTN_LukkMenyVindu;
+        private Button button1;
     }
 }

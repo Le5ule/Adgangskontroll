@@ -2,6 +2,7 @@ using Microsoft.Windows.Themes;
 using Npgsql;
 using Sentral;
 using System.Data;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -16,6 +17,9 @@ namespace Adgangskontroll_Sentral
         byte[] data = new byte[1024];       // denne brukes ingen steder...
         static string dataFraKlient;
         static string dataTilKlient;
+
+        static List<string> Kortleser_ID = new List<string>() {"A323","B434","D453","F117" };
+        static int index = 0;
 
         private Form activeForm;
         private Button currentButton;
@@ -36,7 +40,7 @@ namespace Adgangskontroll_Sentral
             lytteSokkel.Bind(serverEP);
             lytteSokkel.Listen(10);
 
-            KobleTilKortleser();
+            //KobleTilKortleser();
         }
         private void Sentral_Load(object sender, EventArgs e)
         {
@@ -139,9 +143,25 @@ namespace Adgangskontroll_Sentral
                 if (harForbindelse)
                 {
 
-                    MessageBox.Show("Mottatt fra kortleser\n" + dataFraKortleser); //debug
+                    //MessageBox.Show("Mottatt fra kortleser\n" + dataFraKortleser); //debug
 
-                    dataTilKortleser = "Retur: " + dataFraKortleser;
+                    if (dataFraKortleser == "RequestID") 
+                    { 
+                        if (Kortleser_ID.Count != index)
+                        {
+                            dataTilKortleser = Kortleser_ID[index];
+                            index++;
+                        }
+                        else
+                        {
+                            index = 0;
+                            dataTilKortleser = Kortleser_ID[index];
+                            index++;
+                        }
+                        //dataTilKortleser = Kortleser_ID[index];
+                    }
+
+                    else dataTilKortleser = "Retur: " + dataFraKortleser;
                     SendData(kommSokkel, dataTilKortleser, out harForbindelse);
                 }
             }
@@ -210,6 +230,20 @@ namespace Adgangskontroll_Sentral
                 activeForm.Close();
             }
             Reset();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            foreach (string kortleser in Kortleser_ID)
+            {
+                //kortleserene skal nå lese inn denne ID-en...
+                //dataTilKortleser = kortleser;
+                Process.Start("C:\\Users\\leand\\OneDrive - Høgskulen på Vestlandet\\ELE 301\\Prosjektoppgave\\Adgangskontroll\\Kortleser\\bin\\Debug\\net7.0-windows\\Kortleser.exe");
+                KobleTilKortleser();
+                //index++;
+            }
+            //Process.Start("C:\\Users\\leand\\OneDrive - Høgskulen på Vestlandet\\ELE 301\\Prosjektoppgave\\Adgangskontroll\\Kortleser\\bin\\Debug\\net7.0-windows\\Kortleser.exe");
+            //KobleTilKortleser();
         }
     }
 }

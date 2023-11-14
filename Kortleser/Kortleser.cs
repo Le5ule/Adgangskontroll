@@ -12,7 +12,7 @@ namespace Adgangskontroll_Kortleser
         static string dataFraSentral;
         static string pin;
         static string kortID;
-        static string kortleserID = "0";    // skal leses inn et annet sted
+        static string kortleserID;    // skal leses inn et annet sted
         List<int> kodeinput = new List<int>();
 
         Socket klientSokkel;
@@ -30,10 +30,25 @@ namespace Adgangskontroll_Kortleser
             iPB_Unlock.Hide();
             iPB_DoorOpen.Hide();
 
+            //Label_ID.Text = dataFraSentral;
+
             try
             {
                 klientSokkel.Connect(serverEP); // blokkerende metode
                 comMedSentral = true;
+                try
+                {
+                    dataTilSentral = "RequestID";
+                    //string ID = MottaID(klientSokkel, out comMedSentral);
+                    BW_SendKvittering.RunWorkerAsync();
+                    Label_ID.Text = dataFraSentral;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                
             }
             catch (SocketException)
             {
@@ -131,6 +146,27 @@ namespace Adgangskontroll_Kortleser
                 gjennomført = false;
             }
         }
+        static string MottaID(Socket s, out bool gjennomført)
+        {
+            string ID = "";
+            try
+            {
+                byte[] dataSomBytes = new byte[1024];
+                int recv = s.Receive(dataSomBytes);
+                if (recv > 0)
+                {
+                    ID = Encoding.ASCII.GetString(dataSomBytes, 0, recv);
+                    gjennomført = true;
+                }
+                else
+                    gjennomført = false;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return ID;
+        }
         private void TB_KortInput_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)  // samme som enter
@@ -165,7 +201,8 @@ namespace Adgangskontroll_Kortleser
         {
             if (comMedSentral)
             {
-                TB_MottakFraSentral.Text = dataFraSentral;
+                if (dataFraSentral.Length == 4) Label_ID.Text = dataFraSentral;
+                else TB_MottakFraSentral.Text = dataFraSentral;
             }
             //else //Application.Exit();
         }
