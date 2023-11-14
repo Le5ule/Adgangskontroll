@@ -18,7 +18,7 @@ namespace Adgangskontroll_Sentral
         static string dataFraKlient;
         static string dataTilKlient;
 
-        static List<string> Kortleser_ID = new List<string>() {"A323","B434","D453","F117" };
+        static List<string> Kortleser_ID = new List<string>() { "A323", "B434", "D453", "F117" };
         static int index = 0;
 
         private Form activeForm;
@@ -143,9 +143,10 @@ namespace Adgangskontroll_Sentral
                 if (harForbindelse)
                 {
                     //MessageBox.Show("Mottatt fra kortleser\n" + dataFraKortleser); //debug
+
                     //rotete kode her, men det funker
-                    if (dataFraKortleser == "RequestID") 
-                    { 
+                    if (dataFraKortleser == "RequestID")
+                    {
                         if (Kortleser_ID.Count != index)
                         {
                             dataTilKortleser = Kortleser_ID[index];
@@ -157,10 +158,9 @@ namespace Adgangskontroll_Sentral
                             dataTilKortleser = Kortleser_ID[index];
                             index++;
                         }
-                        //dataTilKortleser = Kortleser_ID[index];
                     }
-
                     else dataTilKortleser = "Retur: " + dataFraKortleser;
+
                     SendData(kommSokkel, dataTilKortleser, out harForbindelse);
                 }
             }

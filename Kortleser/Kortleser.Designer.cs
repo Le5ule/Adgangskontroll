@@ -335,6 +335,7 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "Kortleser";
             Text = "Kortleser";
+            FormClosing += Kortleser_FormClosing;
             Load += Kortleser_Load;
             Panel_KortLeser.ResumeLayout(false);
             Panel_KortLeser.PerformLayout();
