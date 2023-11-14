@@ -53,54 +53,69 @@
             // 
             // BTN_Alarmer
             // 
+            BTN_Alarmer.BackColor = SystemColors.GradientActiveCaption;
+            BTN_Alarmer.FlatAppearance.BorderSize = 0;
+            BTN_Alarmer.FlatStyle = FlatStyle.Flat;
             BTN_Alarmer.Location = new Point(50, 35);
             BTN_Alarmer.Name = "BTN_Alarmer";
             BTN_Alarmer.Size = new Size(94, 29);
             BTN_Alarmer.TabIndex = 1;
             BTN_Alarmer.Text = "Alarmer";
-            BTN_Alarmer.UseVisualStyleBackColor = true;
+            BTN_Alarmer.UseVisualStyleBackColor = false;
             BTN_Alarmer.Click += BTN_Alarmer_Click;
             // 
             // BTN_VisAlleAlarmer
             // 
+            BTN_VisAlleAlarmer.BackColor = SystemColors.GradientActiveCaption;
+            BTN_VisAlleAlarmer.FlatAppearance.BorderSize = 0;
+            BTN_VisAlleAlarmer.FlatStyle = FlatStyle.Flat;
             BTN_VisAlleAlarmer.Location = new Point(50, 83);
             BTN_VisAlleAlarmer.Name = "BTN_VisAlleAlarmer";
             BTN_VisAlleAlarmer.Size = new Size(94, 29);
             BTN_VisAlleAlarmer.TabIndex = 2;
             BTN_VisAlleAlarmer.Text = "Vis alle";
-            BTN_VisAlleAlarmer.UseVisualStyleBackColor = true;
+            BTN_VisAlleAlarmer.UseVisualStyleBackColor = false;
             BTN_VisAlleAlarmer.Visible = false;
             BTN_VisAlleAlarmer.Click += BTN_VisAlleAlarmer_Click;
             // 
             // BTN_Historikk
             // 
+            BTN_Historikk.BackColor = SystemColors.GradientActiveCaption;
+            BTN_Historikk.FlatAppearance.BorderSize = 0;
+            BTN_Historikk.FlatStyle = FlatStyle.Flat;
             BTN_Historikk.Location = new Point(177, 35);
             BTN_Historikk.Name = "BTN_Historikk";
             BTN_Historikk.Size = new Size(94, 29);
             BTN_Historikk.TabIndex = 3;
             BTN_Historikk.Text = "Historikk";
-            BTN_Historikk.UseVisualStyleBackColor = true;
+            BTN_Historikk.UseVisualStyleBackColor = false;
             BTN_Historikk.Click += BTN_Historikk_Click;
             // 
             // BTN_VisBruker
             // 
+            BTN_VisBruker.BackColor = SystemColors.GradientActiveCaption;
+            BTN_VisBruker.FlatAppearance.BorderSize = 0;
+            BTN_VisBruker.FlatStyle = FlatStyle.Flat;
             BTN_VisBruker.Location = new Point(50, 127);
             BTN_VisBruker.Name = "BTN_VisBruker";
             BTN_VisBruker.Size = new Size(113, 29);
             BTN_VisBruker.TabIndex = 4;
             BTN_VisBruker.Text = "Vis for bruker:";
-            BTN_VisBruker.UseVisualStyleBackColor = true;
+            BTN_VisBruker.UseVisualStyleBackColor = false;
             BTN_VisBruker.Visible = false;
             BTN_VisBruker.Click += BTN_UtvalgteBrukere_Click;
             // 
             // BTN_VisLeser
             // 
+            BTN_VisLeser.BackColor = SystemColors.GradientActiveCaption;
+            BTN_VisLeser.FlatAppearance.BorderSize = 0;
+            BTN_VisLeser.FlatStyle = FlatStyle.Flat;
             BTN_VisLeser.Location = new Point(278, 127);
             BTN_VisLeser.Name = "BTN_VisLeser";
             BTN_VisLeser.Size = new Size(113, 29);
             BTN_VisLeser.TabIndex = 5;
             BTN_VisLeser.Text = "Vis for leser:";
-            BTN_VisLeser.UseVisualStyleBackColor = true;
+            BTN_VisLeser.UseVisualStyleBackColor = false;
             BTN_VisLeser.Visible = false;
             BTN_VisLeser.Click += BTN_VisLeser_Click;
             // 
@@ -122,12 +137,15 @@
             // 
             // BTN_VisAlleHendelser
             // 
+            BTN_VisAlleHendelser.BackColor = SystemColors.GradientActiveCaption;
+            BTN_VisAlleHendelser.FlatAppearance.BorderSize = 0;
+            BTN_VisAlleHendelser.FlatStyle = FlatStyle.Flat;
             BTN_VisAlleHendelser.Location = new Point(177, 83);
             BTN_VisAlleHendelser.Name = "BTN_VisAlleHendelser";
             BTN_VisAlleHendelser.Size = new Size(94, 29);
             BTN_VisAlleHendelser.TabIndex = 8;
             BTN_VisAlleHendelser.Text = "Vis alle";
-            BTN_VisAlleHendelser.UseVisualStyleBackColor = true;
+            BTN_VisAlleHendelser.UseVisualStyleBackColor = false;
             BTN_VisAlleHendelser.Visible = false;
             BTN_VisAlleHendelser.Click += BTN_VisAlleHendelser_Click;
             // 

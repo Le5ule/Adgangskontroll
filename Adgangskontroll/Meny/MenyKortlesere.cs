@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace Sentral
     public partial class MenyKortlesere : Form
     {
         Database db = new Database();
+
         public MenyKortlesere()
         {
             InitializeComponent();

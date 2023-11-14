@@ -46,32 +46,41 @@
             // 
             // BTN_Nyelesere
             // 
+            BTN_Nyelesere.BackColor = SystemColors.GradientActiveCaption;
+            BTN_Nyelesere.FlatAppearance.BorderSize = 0;
+            BTN_Nyelesere.FlatStyle = FlatStyle.Flat;
             BTN_Nyelesere.Location = new Point(50, 35);
             BTN_Nyelesere.Name = "BTN_Nyelesere";
             BTN_Nyelesere.Size = new Size(175, 29);
             BTN_Nyelesere.TabIndex = 1;
             BTN_Nyelesere.Text = "Legg til nye kortlesere";
-            BTN_Nyelesere.UseVisualStyleBackColor = true;
+            BTN_Nyelesere.UseVisualStyleBackColor = false;
             BTN_Nyelesere.Click += BTN_Nyelesere_Click;
             // 
             // BTN_EndreLesere
             // 
+            BTN_EndreLesere.BackColor = SystemColors.GradientActiveCaption;
+            BTN_EndreLesere.FlatAppearance.BorderSize = 0;
+            BTN_EndreLesere.FlatStyle = FlatStyle.Flat;
             BTN_EndreLesere.Location = new Point(244, 35);
             BTN_EndreLesere.Name = "BTN_EndreLesere";
             BTN_EndreLesere.Size = new Size(138, 29);
             BTN_EndreLesere.TabIndex = 2;
             BTN_EndreLesere.Text = "Endre kortlesere";
-            BTN_EndreLesere.UseVisualStyleBackColor = true;
+            BTN_EndreLesere.UseVisualStyleBackColor = false;
             BTN_EndreLesere.Click += BTN_EndreLesere_Click;
             // 
             // BTN_VisLesere
             // 
+            BTN_VisLesere.BackColor = SystemColors.GradientActiveCaption;
+            BTN_VisLesere.FlatAppearance.BorderSize = 0;
+            BTN_VisLesere.FlatStyle = FlatStyle.Flat;
             BTN_VisLesere.Location = new Point(401, 35);
             BTN_VisLesere.Name = "BTN_VisLesere";
             BTN_VisLesere.Size = new Size(125, 29);
             BTN_VisLesere.TabIndex = 3;
             BTN_VisLesere.Text = "Vis kortlesere";
-            BTN_VisLesere.UseVisualStyleBackColor = true;
+            BTN_VisLesere.UseVisualStyleBackColor = false;
             BTN_VisLesere.Click += BTN_VisLesere_Click;
             // 
             // dataGridView1
@@ -87,23 +96,25 @@
             // 
             // BTN_alle
             // 
+            BTN_alle.BackColor = SystemColors.GradientActiveCaption;
             BTN_alle.Location = new Point(50, 81);
             BTN_alle.Name = "BTN_alle";
             BTN_alle.Size = new Size(125, 29);
             BTN_alle.TabIndex = 5;
             BTN_alle.Text = "Vis alle";
-            BTN_alle.UseVisualStyleBackColor = true;
+            BTN_alle.UseVisualStyleBackColor = false;
             BTN_alle.Visible = false;
             BTN_alle.Click += BTN_alle_Click;
             // 
             // BTN_seksjon
             // 
+            BTN_seksjon.BackColor = SystemColors.GradientActiveCaption;
             BTN_seksjon.Location = new Point(50, 116);
             BTN_seksjon.Name = "BTN_seksjon";
             BTN_seksjon.Size = new Size(125, 29);
             BTN_seksjon.TabIndex = 6;
             BTN_seksjon.Text = "Vis pr seksjon";
-            BTN_seksjon.UseVisualStyleBackColor = true;
+            BTN_seksjon.UseVisualStyleBackColor = false;
             BTN_seksjon.Visible = false;
             BTN_seksjon.Click += BTN_seksjon_Click;
             // 
@@ -164,12 +175,13 @@
             // 
             // BTN_endre
             // 
+            BTN_endre.BackColor = SystemColors.GradientActiveCaption;
             BTN_endre.Location = new Point(302, 115);
             BTN_endre.Name = "BTN_endre";
             BTN_endre.Size = new Size(92, 29);
             BTN_endre.TabIndex = 13;
             BTN_endre.Text = "Endre";
-            BTN_endre.UseVisualStyleBackColor = true;
+            BTN_endre.UseVisualStyleBackColor = false;
             BTN_endre.Visible = false;
             BTN_endre.Click += BTN_endre_Click;
             // 

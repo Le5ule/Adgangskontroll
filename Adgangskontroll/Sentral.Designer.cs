@@ -38,7 +38,7 @@
             BTN_LukkMenyVindu = new FontAwesome.Sharp.IconButton();
             lbl_Tittel = new Label();
             PanelForms = new Panel();
-            button1 = new Button();
+            BTN_Start = new Button();
             PanelMeny.SuspendLayout();
             panelBar.SuspendLayout();
             PanelForms.SuspendLayout();
@@ -187,22 +187,25 @@
             // 
             // PanelForms
             // 
-            PanelForms.Controls.Add(button1);
+            PanelForms.Controls.Add(BTN_Start);
             PanelForms.Dock = DockStyle.Fill;
             PanelForms.Location = new Point(195, 100);
             PanelForms.Name = "PanelForms";
             PanelForms.Size = new Size(876, 431);
             PanelForms.TabIndex = 14;
             // 
-            // button1
+            // BTN_Start
             // 
-            button1.Location = new Point(293, 50);
-            button1.Name = "button1";
-            button1.Size = new Size(94, 29);
-            button1.TabIndex = 0;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            BTN_Start.BackColor = SystemColors.GradientActiveCaption;
+            BTN_Start.FlatAppearance.BorderSize = 0;
+            BTN_Start.FlatStyle = FlatStyle.Flat;
+            BTN_Start.Location = new Point(107, 60);
+            BTN_Start.Name = "BTN_Start";
+            BTN_Start.Size = new Size(167, 29);
+            BTN_Start.TabIndex = 0;
+            BTN_Start.Text = "Start alle kortlesere";
+            BTN_Start.UseVisualStyleBackColor = false;
+            BTN_Start.Click += Start_Click;
             // 
             // Sentral
             // 
@@ -234,6 +237,6 @@
         private FontAwesome.Sharp.IconButton iBTN_Kortlesere;
         private Label lbl_Tittel;
         private FontAwesome.Sharp.IconButton BTN_LukkMenyVindu;
-        private Button button1;
+        private Button BTN_Start;
     }
 }

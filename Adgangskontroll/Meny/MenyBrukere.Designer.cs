@@ -80,12 +80,15 @@
             // 
             // BTN_VisBrukere
             // 
+            BTN_VisBrukere.BackColor = SystemColors.GradientActiveCaption;
+            BTN_VisBrukere.FlatAppearance.BorderSize = 0;
+            BTN_VisBrukere.FlatStyle = FlatStyle.Flat;
             BTN_VisBrukere.Location = new Point(407, 35);
             BTN_VisBrukere.Name = "BTN_VisBrukere";
             BTN_VisBrukere.Size = new Size(94, 29);
             BTN_VisBrukere.TabIndex = 14;
             BTN_VisBrukere.Text = "Vis brukere";
-            BTN_VisBrukere.UseVisualStyleBackColor = true;
+            BTN_VisBrukere.UseVisualStyleBackColor = false;
             BTN_VisBrukere.Click += BTN_VisBrukere_Click;
             // 
             // TB_Enavn
@@ -106,33 +109,42 @@
             // 
             // BTN_LeggTil
             // 
+            BTN_LeggTil.BackColor = SystemColors.GradientActiveCaption;
+            BTN_LeggTil.FlatAppearance.BorderSize = 0;
+            BTN_LeggTil.FlatStyle = FlatStyle.Flat;
             BTN_LeggTil.Location = new Point(655, 122);
             BTN_LeggTil.Name = "BTN_LeggTil";
             BTN_LeggTil.Size = new Size(94, 29);
             BTN_LeggTil.TabIndex = 12;
             BTN_LeggTil.Text = "Legg til";
-            BTN_LeggTil.UseVisualStyleBackColor = true;
+            BTN_LeggTil.UseVisualStyleBackColor = false;
             BTN_LeggTil.Visible = false;
             BTN_LeggTil.Click += BTN_LeggTil_Click;
             // 
             // BTN_Ny
             // 
+            BTN_Ny.BackColor = SystemColors.GradientActiveCaption;
+            BTN_Ny.FlatAppearance.BorderSize = 0;
+            BTN_Ny.FlatStyle = FlatStyle.Flat;
             BTN_Ny.Location = new Point(50, 35);
             BTN_Ny.Name = "BTN_Ny";
             BTN_Ny.Size = new Size(150, 29);
             BTN_Ny.TabIndex = 18;
             BTN_Ny.Text = "Legg til nye brukere";
-            BTN_Ny.UseVisualStyleBackColor = true;
+            BTN_Ny.UseVisualStyleBackColor = false;
             BTN_Ny.Click += BTN_Ny_Click;
             // 
             // BTN_EndreBru
             // 
+            BTN_EndreBru.BackColor = SystemColors.GradientActiveCaption;
+            BTN_EndreBru.FlatAppearance.BorderSize = 0;
+            BTN_EndreBru.FlatStyle = FlatStyle.Flat;
             BTN_EndreBru.Location = new Point(229, 35);
             BTN_EndreBru.Name = "BTN_EndreBru";
             BTN_EndreBru.Size = new Size(150, 29);
             BTN_EndreBru.TabIndex = 19;
             BTN_EndreBru.Text = "Endre brukere";
-            BTN_EndreBru.UseVisualStyleBackColor = true;
+            BTN_EndreBru.UseVisualStyleBackColor = false;
             BTN_EndreBru.Click += BTN_EndreBrukere_Click;
             // 
             // lbl_GyldigFra
@@ -193,12 +205,15 @@
             // 
             // BTN_Endre
             // 
+            BTN_Endre.BackColor = SystemColors.GradientActiveCaption;
+            BTN_Endre.FlatAppearance.BorderSize = 0;
+            BTN_Endre.FlatStyle = FlatStyle.Flat;
             BTN_Endre.Location = new Point(655, 122);
             BTN_Endre.Name = "BTN_Endre";
             BTN_Endre.Size = new Size(94, 29);
             BTN_Endre.TabIndex = 29;
             BTN_Endre.Text = "Endre";
-            BTN_Endre.UseVisualStyleBackColor = true;
+            BTN_Endre.UseVisualStyleBackColor = false;
             BTN_Endre.Visible = false;
             BTN_Endre.Click += BTN_Endre_Click;
             // 
@@ -224,7 +239,6 @@
             Controls.Add(BTN_LeggTil);
             Controls.Add(dataGridView);
             Name = "MenyBrukere";
-            Text = "Brukere";
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
