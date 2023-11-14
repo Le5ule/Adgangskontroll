@@ -144,7 +144,7 @@ namespace Adgangskontroll_Sentral
                 {
 
                     //MessageBox.Show("Mottatt fra kortleser\n" + dataFraKortleser); //debug
-
+                    //rotete kode her, men det funker
                     if (dataFraKortleser == "RequestID") 
                     { 
                         if (Kortleser_ID.Count != index)
@@ -236,14 +236,9 @@ namespace Adgangskontroll_Sentral
         {
             foreach (string kortleser in Kortleser_ID)
             {
-                //kortleserene skal nå lese inn denne ID-en...
-                //dataTilKortleser = kortleser;
                 Process.Start("C:\\Users\\leand\\OneDrive - Høgskulen på Vestlandet\\ELE 301\\Prosjektoppgave\\Adgangskontroll\\Kortleser\\bin\\Debug\\net7.0-windows\\Kortleser.exe");
                 KobleTilKortleser();
-                //index++;
             }
-            //Process.Start("C:\\Users\\leand\\OneDrive - Høgskulen på Vestlandet\\ELE 301\\Prosjektoppgave\\Adgangskontroll\\Kortleser\\bin\\Debug\\net7.0-windows\\Kortleser.exe");
-            //KobleTilKortleser();
         }
     }
 }

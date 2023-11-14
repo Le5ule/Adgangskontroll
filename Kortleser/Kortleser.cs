@@ -30,8 +30,6 @@ namespace Adgangskontroll_Kortleser
             iPB_Unlock.Hide();
             iPB_DoorOpen.Hide();
 
-            //Label_ID.Text = dataFraSentral;
-
             try
             {
                 klientSokkel.Connect(serverEP); // blokkerende metode
@@ -39,9 +37,9 @@ namespace Adgangskontroll_Kortleser
                 try
                 {
                     dataTilSentral = "RequestID";
-                    //string ID = MottaID(klientSokkel, out comMedSentral);
                     BW_SendKvittering.RunWorkerAsync();
-                    Label_ID.Text = dataFraSentral;
+                    //Label_ID.Text = "Dør: ";// + dataFraSentral;
+                    //kortleserID = dataFraSentral;
                 }
                 catch (Exception)
                 {
@@ -110,7 +108,7 @@ namespace Adgangskontroll_Kortleser
                 kodeinput.Clear();
             }
             return svar;
-        }
+        }   //ikke i bruk
         // Denne funker, men bool gjennomfjørt endres ikke slik som den blir brukt i server-klient i kommentert felt under
         static string MottaData(Socket s, out bool gjennomført)
         {
@@ -201,7 +199,11 @@ namespace Adgangskontroll_Kortleser
         {
             if (comMedSentral)
             {
-                if (dataFraSentral.Length == 4) Label_ID.Text = dataFraSentral;
+                if (dataFraSentral.Length == 4)
+                {
+                    Label_ID.Text = "Dør: " + dataFraSentral;
+                    kortleserID = dataFraSentral;
+                }
                 else TB_MottakFraSentral.Text = dataFraSentral;
             }
             //else //Application.Exit();
