@@ -14,10 +14,7 @@ namespace Adgangskontroll_Sentral
     {
         Database db = new Database();
 
-        byte[] data = new byte[1024];       // denne brukes ingen steder...
-        static string dataFraKlient;
-        static string dataTilKlient;
-
+        static string kobling;
         static List<string> Kortleser_ID = new List<string>() { "A323", "B434", "D453", "F117" };
         static int index = 0;
 

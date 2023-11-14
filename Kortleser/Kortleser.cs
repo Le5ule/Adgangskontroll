@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -24,6 +25,9 @@ namespace Adgangskontroll_Kortleser
         }
         private void Kortleser_Load(object sender, EventArgs e)
         {
+            //start simsim
+            //Process.Start("C:\\Users\\leand\\OneDrive - Høgskulen på Vestlandet\\ELE 301\\Prosjektoppgave\\Tilleggsfiler\\Tilleggsfiler\\SimSim-v2\\SimSim\\SimSim\\SimSim\\SimSim.exe");
+
             klientSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
             BTN_LesKort.Select();

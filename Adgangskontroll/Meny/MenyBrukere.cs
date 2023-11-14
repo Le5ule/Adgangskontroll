@@ -56,6 +56,7 @@ namespace Sentral
             lbl_GyldigFra.Visible = false;
             lbl_GyldigTil.Visible = false;
             BTN_Endre.Visible = false;
+            BTN_LeggTil.Visible = false;
             dataGridView.DataSource = db.VisBrukere();
         }
 
@@ -89,6 +90,7 @@ namespace Sentral
             lbl_GyldigTil.Visible = true;
             BTN_LeggTil.Visible = true;
             BTN_Endre.Visible = false;
+            dataGridView.Visible = false;
         }
     }
 }
