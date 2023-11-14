@@ -50,7 +50,7 @@ namespace Adgangskontroll_Kortleser
             label1 = new Label();
             label2 = new Label();
             button1 = new Button();
-            button2 = new Button();
+            bwSjekkForData = new System.ComponentModel.BackgroundWorker();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -235,7 +235,7 @@ namespace Adgangskontroll_Kortleser
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(174, 130);
+            label1.Location = new Point(174, 109);
             label1.Name = "label1";
             label1.Size = new Size(313, 60);
             label1.TabIndex = 42;
@@ -252,29 +252,24 @@ namespace Adgangskontroll_Kortleser
             // 
             // button1
             // 
-            button1.Location = new Point(174, 98);
+            button1.Location = new Point(174, 83);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 44;
-            button1.Text = "Åpen Dør";
+            button1.Text = "Åpen/Lukk Dør";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
-            // button2
+            // bwSjekkForData
             // 
-            button2.Location = new Point(321, 98);
-            button2.Name = "button2";
-            button2.Size = new Size(75, 23);
-            button2.TabIndex = 45;
-            button2.Text = "Lukk Dør";
-            button2.UseVisualStyleBackColor = true;
+            bwSjekkForData.DoWork += bwSjekkForData_DoWork_1;
+            bwSjekkForData.RunWorkerCompleted += bwSjekkForData_RunWorkerCompleted_1;
             // 
             // Kortleser
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(537, 218);
-            Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -311,6 +306,6 @@ namespace Adgangskontroll_Kortleser
         private Label label1;
         private Label label2;
         private Button button1;
-        private Button button2;
+        private System.ComponentModel.BackgroundWorker bwSjekkForData;
     }
 }

@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Net.Sockets;
 using System.Text;
 using System.IO.Ports;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Adgangskontroll_Kortleser
 {
@@ -16,8 +17,9 @@ namespace Adgangskontroll_Kortleser
         static string pin;
         static string kortID;
         static string kortleserID = "0";
+        string data = "";
         List<int> kodeinput = new List<int>();
-        SerialPort sp = new SerialPort("COM1", 9600);
+        SerialPort sp;
 
         Socket klientSokkel;
 
@@ -25,6 +27,8 @@ namespace Adgangskontroll_Kortleser
         {
             InitializeComponent();
         }
+
+
         private void Kortleser_Load(object sender, EventArgs e)
         {
             klientSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -40,6 +44,23 @@ namespace Adgangskontroll_Kortleser
             {
                 MessageBox.Show("Fikk ikke kontakt med sentral!");
                 comMedSentral = false;
+            }
+
+            //Kobling til Simsim
+            sp = new SerialPort("COM6", 9600);
+
+            try
+            {
+                sp.Open();
+            }
+            catch (Exception u)
+            {
+                MessageBox.Show("Feil: " + u.Message);
+            }
+
+            if (sp.IsOpen)
+            {
+                bwSjekkForData.RunWorkerAsync();
             }
 
             //if (comMedSentral)//==true)
@@ -75,25 +96,67 @@ namespace Adgangskontroll_Kortleser
                 pin = "";
             }
         }
-        public void simsim()
-        {
 
+        //SimSim funksjoner
+        void SendEnMelding(string enMelding, SerialPort sp)
+        {
             try
             {
-                sp.Open();
+                sp.Write(enMelding);
             }
             catch (Exception u)
             {
                 MessageBox.Show("Feil: " + u.Message);
             }
+        }
+        string HentUtEnMelding(ref string data)
+        {
+            string svar = "";
 
-            if (sp.IsOpen)
+            int indeksStart = data.IndexOf('$');
+            int indeksSlutt = data.IndexOf('#');
+
+            if (indeksStart > 0) data = data.Substring(indeksStart);
+
+            svar = data.Substring(0, (indeksSlutt - indeksStart) + 1);
+
+            data = data.Substring((indeksSlutt - indeksStart) + 1);
+
+            return svar;
+        }
+        string MottaDataSim(SerialPort sp)
+        {
+            string svar = "";
+            try
             {
-                while (true)
-                {
-
-                }
+                svar = sp.ReadExisting();
             }
+            catch (Exception u)
+            {
+                MessageBox.Show("Feil: " + u.Message);
+            }
+            return svar;
+        }
+        bool EnHelMeldingMotatt(string data)
+        {
+            bool svar = false;
+
+            int indeksStart = data.IndexOf('$');
+            int indeksSlutt = data.IndexOf('#');
+
+            if (indeksStart != -1 && indeksSlutt != -1)
+            {
+                if (indeksStart < indeksSlutt) svar = true;
+            }
+
+            return svar;
+        }
+        //Slutt på SimSim funksjoner
+
+        //Funksjon for å konvertere rå data fra simsim til dør status
+        void VisDør(string enMelding)
+        {
+            int indeksStart = enMelding.IndexOf('E');  
         }
         public bool godkjenning(int BrukerPin)
         {
@@ -228,9 +291,30 @@ namespace Adgangskontroll_Kortleser
             Kode(0);
         }
 
+        //åpne og lukke dør
         private void button1_Click(object sender, EventArgs e)
         {
-            simsim();
+            SendEnMelding("$O61", sp);
+            label1.Text = data;
+        }
+
+        private void bwSjekkForData_DoWork_1(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            Thread.Sleep(500);
+
+            data = data + MottaDataSim(sp);
+        }
+
+        private void bwSjekkForData_RunWorkerCompleted_1(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            if (EnHelMeldingMotatt(data))
+            {
+                string enMelding = HentUtEnMelding(ref data);
+
+                label1.Text = enMelding;
+
+            }
+            bwSjekkForData.RunWorkerAsync();
         }
     }
 }
