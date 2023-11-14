@@ -18,6 +18,7 @@ namespace Adgangskontroll_Kortleser
         static string kortID;
         static string kortleserID = "0";
         string data = "";
+        int råDørÅpen = 0;
         List<int> kodeinput = new List<int>();
         SerialPort sp;
 
@@ -156,7 +157,12 @@ namespace Adgangskontroll_Kortleser
         //Funksjon for å konvertere rå data fra simsim til dør status
         void VisDør(string enMelding)
         {
-            int indeksStart = enMelding.IndexOf('E');  
+            int indeksStart = enMelding.IndexOf('E');
+            råDørÅpen = Convert.ToInt32(enMelding.Substring(indeksStart + 7, 1));
+            if (råDørÅpen == 1)
+                label1.Text = "Åpen";
+            else
+                label1.Text = "Lukket";
         }
         public bool godkjenning(int BrukerPin)
         {
@@ -294,8 +300,11 @@ namespace Adgangskontroll_Kortleser
         //åpne og lukke dør
         private void button1_Click(object sender, EventArgs e)
         {
-            SendEnMelding("$O61", sp);
-            label1.Text = data;
+            if (råDørÅpen == 0)
+                SendEnMelding("$O61", sp);
+            else
+                SendEnMelding("$O60", sp);
+            
         }
 
         private void bwSjekkForData_DoWork_1(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -310,8 +319,8 @@ namespace Adgangskontroll_Kortleser
             if (EnHelMeldingMotatt(data))
             {
                 string enMelding = HentUtEnMelding(ref data);
-
-                label1.Text = enMelding;
+                VisDør(enMelding);
+                //label1.Text = enMelding;      //Dette var bare for å se hele rå dataen fra simsim
 
             }
             bwSjekkForData.RunWorkerAsync();
