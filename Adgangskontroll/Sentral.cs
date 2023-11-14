@@ -35,7 +35,7 @@ namespace Adgangskontroll_Sentral
         public Sentral()
         {
             InitializeComponent();
-            db.Connection();    //skal endre dette til enten her eller i Database.cs at man setter inn egenefinerte parametre for tilkobling
+            db.Connection();    //skal endre dette til enten her eller i Database.cs at man setter inn egendefinerte parametre for tilkobling
 
             lytteSokkel.Bind(serverEP);
             lytteSokkel.Listen(10);
@@ -142,7 +142,6 @@ namespace Adgangskontroll_Sentral
 
                 if (harForbindelse)
                 {
-
                     //MessageBox.Show("Mottatt fra kortleser\n" + dataFraKortleser); //debug
                     //rotete kode her, men det funker
                     if (dataFraKortleser == "RequestID") 
@@ -203,6 +202,7 @@ namespace Adgangskontroll_Sentral
                 gjennomført = false;
             }
         }
+
         private void iBTN_Brukere_Click(object sender, EventArgs e)
         {
             OpenChildForm(new MenyBrukere(), sender);
