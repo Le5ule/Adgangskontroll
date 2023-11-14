@@ -212,33 +212,30 @@ namespace Adgangskontroll_Sentral
         {
             OpenChildForm(new MenyKortlesere(), sender);
         }
-
         private void iBTN_Logg_Click(object sender, EventArgs e)
         {
             OpenChildForm(new MenyLogg(), sender);
         }
-
         private void iBTN_Innstillinger_Click(object sender, EventArgs e)
         {
             OpenChildForm(new MenyInnstillinger(), sender);
         }
-
         private void BTN_LukkMenyVindu_Click(object sender, EventArgs e)
         {
-            if (activeForm != null)
-            {
-                activeForm.Close();
-            }
+            if (activeForm != null) activeForm.Close();
+
             Reset();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Start_Click(object sender, EventArgs e)
         {
             foreach (string kortleser in Kortleser_ID)
             {
+                //Må endre til bane for Kortleser.exe
                 Process.Start("C:\\Users\\leand\\OneDrive - Høgskulen på Vestlandet\\ELE 301\\Prosjektoppgave\\Adgangskontroll\\Kortleser\\bin\\Debug\\net7.0-windows\\Kortleser.exe");
                 KobleTilKortleser();
             }
+            BTN_Start.Enabled = false;
         }
     }
 }

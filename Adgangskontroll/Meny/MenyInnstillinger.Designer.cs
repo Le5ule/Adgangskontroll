@@ -34,12 +34,16 @@
             // 
             // BTN_Om
             // 
+            BTN_Om.BackColor = SystemColors.GradientActiveCaption;
+            BTN_Om.FlatAppearance.BorderSize = 0;
+            BTN_Om.FlatStyle = FlatStyle.Flat;
+            BTN_Om.ForeColor = SystemColors.ActiveCaptionText;
             BTN_Om.Location = new Point(50, 35);
             BTN_Om.Name = "BTN_Om";
             BTN_Om.Size = new Size(49, 29);
             BTN_Om.TabIndex = 0;
             BTN_Om.Text = "Om";
-            BTN_Om.UseVisualStyleBackColor = true;
+            BTN_Om.UseVisualStyleBackColor = false;
             BTN_Om.Click += BTN_Om_Click;
             // 
             // lbl_info
