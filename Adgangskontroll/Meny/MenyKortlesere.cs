@@ -26,6 +26,7 @@ namespace Sentral
             BTN_seksjon.Visible = true;
             dataGridView1.Visible = true;
             TB_SeksjonVis.Visible = true;
+            BTN_endre.Visible = false;
             TB_LeserID.Visible = false;
             TB_seksjon.Visible = false;
             lbl_ID.Visible = false;

@@ -55,7 +55,7 @@
             PanelMeny.Dock = DockStyle.Left;
             PanelMeny.Location = new Point(0, 0);
             PanelMeny.Name = "PanelMeny";
-            PanelMeny.Size = new Size(195, 531);
+            PanelMeny.Size = new Size(195, 570);
             PanelMeny.TabIndex = 16;
             // 
             // iconButton4
@@ -191,7 +191,7 @@
             PanelForms.Dock = DockStyle.Fill;
             PanelForms.Location = new Point(195, 100);
             PanelForms.Name = "PanelForms";
-            PanelForms.Size = new Size(876, 431);
+            PanelForms.Size = new Size(876, 470);
             PanelForms.TabIndex = 14;
             // 
             // BTN_Start
@@ -199,7 +199,7 @@
             BTN_Start.BackColor = SystemColors.GradientActiveCaption;
             BTN_Start.FlatAppearance.BorderSize = 0;
             BTN_Start.FlatStyle = FlatStyle.Flat;
-            BTN_Start.Location = new Point(107, 60);
+            BTN_Start.Location = new Point(99, 60);
             BTN_Start.Name = "BTN_Start";
             BTN_Start.Size = new Size(167, 29);
             BTN_Start.TabIndex = 0;
@@ -211,7 +211,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1071, 531);
+            ClientSize = new Size(1071, 570);
             Controls.Add(PanelForms);
             Controls.Add(panelBar);
             Controls.Add(PanelMeny);

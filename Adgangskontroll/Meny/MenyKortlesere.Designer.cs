@@ -144,12 +144,15 @@
             // 
             // BTN_LeggTilNy
             // 
+            BTN_LeggTilNy.BackColor = SystemColors.GradientActiveCaption;
+            BTN_LeggTilNy.FlatAppearance.BorderSize = 0;
+            BTN_LeggTilNy.FlatStyle = FlatStyle.Flat;
             BTN_LeggTilNy.Location = new Point(302, 116);
             BTN_LeggTilNy.Name = "BTN_LeggTilNy";
             BTN_LeggTilNy.Size = new Size(92, 29);
             BTN_LeggTilNy.TabIndex = 10;
             BTN_LeggTilNy.Text = "Legg til";
-            BTN_LeggTilNy.UseVisualStyleBackColor = true;
+            BTN_LeggTilNy.UseVisualStyleBackColor = false;
             BTN_LeggTilNy.Visible = false;
             BTN_LeggTilNy.Click += BTN_LeggTilNy_Click;
             // 
@@ -176,7 +179,7 @@
             // BTN_endre
             // 
             BTN_endre.BackColor = SystemColors.GradientActiveCaption;
-            BTN_endre.Location = new Point(302, 115);
+            BTN_endre.Location = new Point(302, 116);
             BTN_endre.Name = "BTN_endre";
             BTN_endre.Size = new Size(92, 29);
             BTN_endre.TabIndex = 13;
