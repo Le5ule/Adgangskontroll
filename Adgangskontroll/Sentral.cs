@@ -17,7 +17,7 @@ namespace Adgangskontroll_Sentral
         static string kobling;      // var ment til å bestå av en stren variabler som ikke er deklarert,
                                     // for å enkelt endre kobling til database
 
-        static List<string> Kortleser_ID = new List<string>() { "A323" };
+        static List<string> Kortleser_ID = new List<string>() { "A323" }; //Oppdater denne listen med så mange kortleser-IDer vi trenger
         static int index = 0;
 
         private Form activeForm;
