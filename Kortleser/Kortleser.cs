@@ -1,7 +1,11 @@
 using System.Diagnostics;
 using System.Net;
+using System;
+using System.Windows.Forms;
 using System.Net.Sockets;
 using System.Text;
+using System.IO.Ports;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Adgangskontroll_Kortleser
 {
@@ -14,8 +18,11 @@ namespace Adgangskontroll_Kortleser
         static string dataFraSentral;
         static string pin;
         static string kortID;
+        string data = "";
+        int rÃ¥DÃ¸rÃ…pen = 0;
         static string kortleserID;
         List<int> kodeinput = new List<int>();
+        SerialPort sp;
 
         Socket klientSokkel;
 
@@ -23,10 +30,12 @@ namespace Adgangskontroll_Kortleser
         {
             InitializeComponent();
         }
+
+
         private void Kortleser_Load(object sender, EventArgs e)
         {
             //start simsim
-            //Process.Start("C:\\Users\\leand\\OneDrive - Høgskulen på Vestlandet\\ELE 301\\Prosjektoppgave\\Tilleggsfiler\\Tilleggsfiler\\SimSim-v2\\SimSim\\SimSim\\SimSim\\SimSim.exe");
+            //Process.Start("C:\\Users\\leand\\OneDrive - HÃ¸gskulen pÃ¥ Vestlandet\\ELE 301\\Prosjektoppgave\\Tilleggsfiler\\Tilleggsfiler\\SimSim-v2\\SimSim\\SimSim\\SimSim\\SimSim.exe");
 
             klientSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
@@ -57,6 +66,23 @@ namespace Adgangskontroll_Kortleser
                 kommunikasjonMedSentral = false;
             }
 
+            //Kobling til Simsim
+            sp = new SerialPort("COM6", 9600);
+
+            try
+            {
+                sp.Open();
+            }
+            catch (Exception u)
+            {
+                MessageBox.Show("Feil: " + u.Message);
+            }
+
+            if (sp.IsOpen)
+            {
+                bwSjekkForData.RunWorkerAsync();
+            }
+
             //if (comMedSentral)//==true)
             //{
             //    dataFraSentral = MottaData(klientSokkel, out comMedSentral);
@@ -72,7 +98,7 @@ namespace Adgangskontroll_Kortleser
             {
                 if (kodeinput.Count == 4 && kommunikasjonMedSentral == true)
                 {
-                    // her kan vi også ta å laste inn kortID uten å måtte trykke på enter-tasten, kanskje mer brukervennlig, slipper å forklare "trykk enter";
+                    // her kan vi ogsÃ¥ ta Ã¥ laste inn kortID uten Ã¥ mÃ¥tte trykke pÃ¥ enter-tasten, kanskje mer brukervennlig, slipper Ã¥ forklare "trykk enter";
                     kortID = TB_KortInput.Text;
                     TB_KortInput.Clear();
                     TB_KortInput.Visible = false;
@@ -97,6 +123,73 @@ namespace Adgangskontroll_Kortleser
             }
 
         }
+
+        //SimSim funksjoner
+        void SendEnMelding(string enMelding, SerialPort sp)
+        {
+            try
+            {
+                sp.Write(enMelding);
+            }
+            catch (Exception u)
+            {
+                MessageBox.Show("Feil: " + u.Message);
+            }
+        }
+        string HentUtEnMelding(ref string data)
+        {
+            string svar = "";
+
+            int indeksStart = data.IndexOf('$');
+            int indeksSlutt = data.IndexOf('#');
+
+            if (indeksStart > 0) data = data.Substring(indeksStart);
+
+            svar = data.Substring(0, (indeksSlutt - indeksStart) + 1);
+
+            data = data.Substring((indeksSlutt - indeksStart) + 1);
+
+            return svar;
+        }
+        string MottaDataSim(SerialPort sp)
+        {
+            string svar = "";
+            try
+            {
+                svar = sp.ReadExisting();
+            }
+            catch (Exception u)
+            {
+                MessageBox.Show("Feil: " + u.Message);
+            }
+            return svar;
+        }
+        bool EnHelMeldingMotatt(string data)
+        {
+            bool svar = false;
+
+            int indeksStart = data.IndexOf('$');
+            int indeksSlutt = data.IndexOf('#');
+
+            if (indeksStart != -1 && indeksSlutt != -1)
+            {
+                if (indeksStart < indeksSlutt) svar = true;
+            }
+
+            return svar;
+        }
+        //Slutt pÃ¥ SimSim funksjoner
+
+        //Funksjon for Ã¥ konvertere rÃ¥ data fra simsim til dÃ¸r status
+        void VisDÃ¸r(string enMelding)
+        {
+            int indeksStart = enMelding.IndexOf('E');
+            rÃ¥DÃ¸rÃ…pen = Convert.ToInt32(enMelding.Substring(indeksStart + 7, 1));
+            if (rÃ¥DÃ¸rÃ…pen == 1)
+                label1.Text = "Ã…pen";
+            else
+                label1.Text = "Lukket";
+        }
         public bool godkjenning(int BrukerPin)
         {
             bool svar = false;
@@ -113,8 +206,8 @@ namespace Adgangskontroll_Kortleser
             return svar;
         }   //ikke i bruk
 
-        // Denne funker, men bool gjennomfjørt endres ikke slik som den blir brukt i server-klient i kommentert felt under
-        static string MottaData(Socket s, out bool gjennomført)
+        // Denne funker, men bool gjennomfjÃ¸rt endres ikke slik som den blir brukt i server-klient i kommentert felt under
+        static string MottaData(Socket s, out bool gjennomfÃ¸rt)
         {
             string svar = "";
             try
@@ -124,10 +217,10 @@ namespace Adgangskontroll_Kortleser
                 if (recv > 0)
                 {
                     svar = Encoding.ASCII.GetString(dataSomBytes, 0, recv);
-                    gjennomført = true;
+                    gjennomfÃ¸rt = true;
                 }
                 else
-                    gjennomført = false;
+                    gjennomfÃ¸rt = false;
             }
             catch (Exception)
             {
@@ -135,26 +228,26 @@ namespace Adgangskontroll_Kortleser
             }
             return svar;
         }
-        static void SendData(Socket s, string data, out bool gjennomført)
+        static void SendData(Socket s, string data, out bool gjennomfÃ¸rt)
         {
             try
             {
                 byte[] dataSomBytes = Encoding.ASCII.GetBytes(data);
                 s.Send(dataSomBytes, dataSomBytes.Length, SocketFlags.None);
-                gjennomført = true;
+                gjennomfÃ¸rt = true;
             }
             catch (Exception)
             {
-                gjennomført = false;
+                gjennomfÃ¸rt = false;
             }
         }
         private void TB_KortInput_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)  // samme som enter
             {
-                // Trenger bare å håndtere lengden. Hvis ID oppgis f.eks: "abcd" så er dette "feil" id, men godkjent input i databasen
-                // Siden Kode() nå leser av TB_KortInput uten enter, så vil ikke dette leses ved å trykke enter.
-                // Detaljene om implementasjonen kan diskuteres senere når design er mer kritisk.
+                // Trenger bare Ã¥ hÃ¥ndtere lengden. Hvis ID oppgis f.eks: "abcd" sÃ¥ er dette "feil" id, men godkjent input i databasen
+                // Siden Kode() nÃ¥ leser av TB_KortInput uten enter, sÃ¥ vil ikke dette leses ved Ã¥ trykke enter.
+                // Detaljene om implementasjonen kan diskuteres senere nÃ¥r design er mer kritisk.
                 if (TB_KortInput.Text.Length == 4)
                 {
                     kortID = TB_KortInput.Text;
@@ -182,9 +275,9 @@ namespace Adgangskontroll_Kortleser
         {
             if (kommunikasjonMedSentral)
             {
-                if (dataFraSentral.Length == 4) //Dette vil alltid være kortleser sin ID
+                if (dataFraSentral.Length == 4) //Dette vil alltid vÃ¦re kortleser sin ID
                 {
-                    Label_ID.Text = "Dør: " + dataFraSentral;
+                    Label_ID.Text = "DÃ¸r: " + dataFraSentral;
                     kortleserID = dataFraSentral;
                 }
                 else TB_MottakFraSentral.Text = dataFraSentral;     //debug
@@ -236,12 +329,36 @@ namespace Adgangskontroll_Kortleser
         {
             Kode(0);
         }
-        private void BTN_Åpne_Click(object sender, EventArgs e)
+
+        private void bwSjekkForData_DoWork_1(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            Thread.Sleep(500);
+
+            data = data + MottaDataSim(sp);
+        }
+
+        private void bwSjekkForData_RunWorkerCompleted_1(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            if (EnHelMeldingMotatt(data))
+            {
+                string enMelding = HentUtEnMelding(ref data);
+                VisDÃ¸r(enMelding);
+                //label1.Text = enMelding;      //Dette var bare for Ã¥ se hele rÃ¥ dataen fra simsim
+
+            }
+            bwSjekkForData.RunWorkerAsync();
+        }
+        private void BTN_Ã…pne_Click(object sender, EventArgs e)
         {
             // skal brukes i godkjenning av input
             //iPB_Unlock.Show();
             //iPB_Unlock.BringToFront();
             //iPB_Lock.Hide();
+            
+            if (rÃ¥DÃ¸rÃ…pen == 0)
+                SendEnMelding("$O61", sp);
+            else
+                SendEnMelding("$O60", sp);
 
             iPB_DoorOpen.Show();
             iPB_DoorOpen.BringToFront();
@@ -263,7 +380,7 @@ namespace Adgangskontroll_Kortleser
         {
             if (!Avbryt)
             {
-                var result = MessageBox.Show("Er du sikker på at du vil fjerne denne kortleseren?", "Fjerne kortleser " + kortleserID, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                var result = MessageBox.Show("Er du sikker pÃ¥ at du vil fjerne denne kortleseren?", "Fjerne kortleser " + kortleserID, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 // Hvis man trykket "nei"
                 if (result == DialogResult.No)

@@ -1,4 +1,7 @@
-﻿namespace Adgangskontroll_Kortleser
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace Adgangskontroll_Kortleser
 {
     partial class Kortleser
     {
@@ -45,6 +48,7 @@
             BW_SendKvittering = new System.ComponentModel.BackgroundWorker();
             Panel_KortLeser = new Panel();
             label2 = new Label();
+
             BTN_Åpne = new Button();
             BTN_Lukk = new Button();
             Label_ID = new Label();
@@ -57,20 +61,23 @@
             ((System.ComponentModel.ISupportInitialize)iPB_Unlock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)iPB_DoorLocked).BeginInit();
             ((System.ComponentModel.ISupportInitialize)iPB_DoorOpen).BeginInit();
+
             SuspendLayout();
             // 
             // TB_MottakFraSentral
             // 
+
             TB_MottakFraSentral.Location = new Point(490, 205);
             TB_MottakFraSentral.Name = "TB_MottakFraSentral";
-            TB_MottakFraSentral.Size = new Size(253, 27);
+            TB_MottakFraSentral.Size = new Size(222, 23);
             TB_MottakFraSentral.TabIndex = 37;
             // 
             // BTN0
             // 
-            BTN0.Location = new Point(61, 216);
+            BTN0.Location = new Point(53, 162);
+            BTN0.Margin = new Padding(3, 2, 3, 2);
             BTN0.Name = "BTN0";
-            BTN0.Size = new Size(23, 25);
+            BTN0.Size = new Size(20, 19);
             BTN0.TabIndex = 36;
             BTN0.Text = "0";
             BTN0.UseVisualStyleBackColor = true;
@@ -78,9 +85,10 @@
             // 
             // BTN9
             // 
-            BTN9.Location = new Point(88, 188);
+            BTN9.Location = new Point(77, 141);
+            BTN9.Margin = new Padding(3, 2, 3, 2);
             BTN9.Name = "BTN9";
-            BTN9.Size = new Size(23, 25);
+            BTN9.Size = new Size(20, 19);
             BTN9.TabIndex = 35;
             BTN9.Text = "9";
             BTN9.UseVisualStyleBackColor = true;
@@ -88,9 +96,10 @@
             // 
             // BTN8
             // 
-            BTN8.Location = new Point(61, 188);
+            BTN8.Location = new Point(53, 141);
+            BTN8.Margin = new Padding(3, 2, 3, 2);
             BTN8.Name = "BTN8";
-            BTN8.Size = new Size(23, 25);
+            BTN8.Size = new Size(20, 19);
             BTN8.TabIndex = 34;
             BTN8.Text = "8";
             BTN8.UseVisualStyleBackColor = true;
@@ -98,9 +107,10 @@
             // 
             // BTN7
             // 
-            BTN7.Location = new Point(34, 188);
+            BTN7.Location = new Point(30, 141);
+            BTN7.Margin = new Padding(3, 2, 3, 2);
             BTN7.Name = "BTN7";
-            BTN7.Size = new Size(23, 25);
+            BTN7.Size = new Size(20, 19);
             BTN7.TabIndex = 33;
             BTN7.Text = "7";
             BTN7.UseVisualStyleBackColor = true;
@@ -108,9 +118,10 @@
             // 
             // BTN6
             // 
-            BTN6.Location = new Point(88, 159);
+            BTN6.Location = new Point(77, 119);
+            BTN6.Margin = new Padding(3, 2, 3, 2);
             BTN6.Name = "BTN6";
-            BTN6.Size = new Size(23, 25);
+            BTN6.Size = new Size(20, 19);
             BTN6.TabIndex = 32;
             BTN6.Text = "6";
             BTN6.UseVisualStyleBackColor = true;
@@ -118,9 +129,10 @@
             // 
             // BTN5
             // 
-            BTN5.Location = new Point(61, 159);
+            BTN5.Location = new Point(53, 119);
+            BTN5.Margin = new Padding(3, 2, 3, 2);
             BTN5.Name = "BTN5";
-            BTN5.Size = new Size(23, 25);
+            BTN5.Size = new Size(20, 19);
             BTN5.TabIndex = 31;
             BTN5.Text = "5";
             BTN5.UseVisualStyleBackColor = true;
@@ -128,9 +140,10 @@
             // 
             // BTN4
             // 
-            BTN4.Location = new Point(34, 159);
+            BTN4.Location = new Point(30, 119);
+            BTN4.Margin = new Padding(3, 2, 3, 2);
             BTN4.Name = "BTN4";
-            BTN4.Size = new Size(23, 25);
+            BTN4.Size = new Size(20, 19);
             BTN4.TabIndex = 30;
             BTN4.Text = "4";
             BTN4.UseVisualStyleBackColor = true;
@@ -138,9 +151,10 @@
             // 
             // BTN3
             // 
-            BTN3.Location = new Point(88, 130);
+            BTN3.Location = new Point(77, 98);
+            BTN3.Margin = new Padding(3, 2, 3, 2);
             BTN3.Name = "BTN3";
-            BTN3.Size = new Size(23, 25);
+            BTN3.Size = new Size(20, 19);
             BTN3.TabIndex = 29;
             BTN3.Text = "3";
             BTN3.UseVisualStyleBackColor = true;
@@ -148,9 +162,10 @@
             // 
             // BTN2
             // 
-            BTN2.Location = new Point(61, 130);
+            BTN2.Location = new Point(53, 98);
+            BTN2.Margin = new Padding(3, 2, 3, 2);
             BTN2.Name = "BTN2";
-            BTN2.Size = new Size(23, 25);
+            BTN2.Size = new Size(20, 19);
             BTN2.TabIndex = 28;
             BTN2.Text = "2";
             BTN2.UseVisualStyleBackColor = true;
@@ -158,9 +173,10 @@
             // 
             // BTN1
             // 
-            BTN1.Location = new Point(34, 130);
+            BTN1.Location = new Point(30, 98);
+            BTN1.Margin = new Padding(3, 2, 3, 2);
             BTN1.Name = "BTN1";
-            BTN1.Size = new Size(23, 25);
+            BTN1.Size = new Size(20, 19);
             BTN1.TabIndex = 27;
             BTN1.Text = "1";
             BTN1.UseVisualStyleBackColor = true;
@@ -168,9 +184,10 @@
             // 
             // BTN_LesKort
             // 
-            BTN_LesKort.Location = new Point(34, 61);
+            BTN_LesKort.Location = new Point(30, 46);
+            BTN_LesKort.Margin = new Padding(3, 2, 3, 2);
             BTN_LesKort.Name = "BTN_LesKort";
-            BTN_LesKort.Size = new Size(77, 29);
+            BTN_LesKort.Size = new Size(67, 22);
             BTN_LesKort.TabIndex = 38;
             BTN_LesKort.Text = "Les kort";
             BTN_LesKort.UseVisualStyleBackColor = true;
@@ -178,9 +195,10 @@
             // 
             // TB_KortInput
             // 
-            TB_KortInput.Location = new Point(34, 97);
+            TB_KortInput.Location = new Point(30, 73);
+            TB_KortInput.Margin = new Padding(3, 2, 3, 2);
             TB_KortInput.Name = "TB_KortInput";
-            TB_KortInput.Size = new Size(77, 27);
+            TB_KortInput.Size = new Size(68, 23);
             TB_KortInput.TabIndex = 40;
             TB_KortInput.Visible = false;
             TB_KortInput.KeyPress += TB_KortInput_KeyPress;
@@ -190,9 +208,9 @@
             UgyldigLabel.AutoSize = true;
             UgyldigLabel.BackColor = Color.Transparent;
             UgyldigLabel.ForeColor = SystemColors.ActiveCaptionText;
-            UgyldigLabel.Location = new Point(23, 14);
+            UgyldigLabel.Location = new Point(20, 10);
             UgyldigLabel.Name = "UgyldigLabel";
-            UgyldigLabel.Size = new Size(102, 40);
+            UgyldigLabel.Size = new Size(82, 30);
             UgyldigLabel.TabIndex = 39;
             UgyldigLabel.Text = "Ugyldig input,\r\nprøv igjen";
             UgyldigLabel.Visible = false;
@@ -201,7 +219,7 @@
             // 
             BW_SendKvittering.DoWork += BW_SendKvittering_DoWork;
             BW_SendKvittering.RunWorkerCompleted += BW_SendKvittering_RunWorkerCompleted;
-            // 
+            //
             // Panel_KortLeser
             // 
             Panel_KortLeser.BackColor = SystemColors.WindowFrame;
@@ -228,7 +246,7 @@
             label2.AutoSize = true;
             label2.Location = new Point(490, 144);
             label2.Name = "label2";
-            label2.Size = new Size(281, 60);
+            label2.Size = new Size(223, 45);
             label2.TabIndex = 43;
             label2.Text = "(debug)Her hentes data fra sentralen.\r\nIllustrerer bare at informasjon kan sendes\r\nfrem og tilbake";
             // 
@@ -319,7 +337,7 @@
             // 
             // Kortleser
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(810, 289);
             Controls.Add(BTN_Lukk);
