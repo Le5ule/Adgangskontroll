@@ -1,6 +1,8 @@
+using Microsoft.Windows.Themes;
 using Npgsql;
 using Sentral;
 using System.Data;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -12,9 +14,12 @@ namespace Adgangskontroll_Sentral
     {
         Database db = new Database();
 
-        byte[] data = new byte[1024];       // denne brukes ingen steder...
-        static string dataFraKlient;
-        static string dataTilKlient;
+        static string kobling;
+        static List<string> Kortleser_ID = new List<string>() { "A323", "B434", "D453", "F117" };
+        static int index = 0;
+
+        private Form activeForm;
+        private Button currentButton;
 
         // VelgerTCP/IP og adresser + portnummer
         Socket lytteSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -27,13 +32,63 @@ namespace Adgangskontroll_Sentral
         public Sentral()
         {
             InitializeComponent();
-            db.Connection();    //skal endre dette til enten her eller i Database.cs at man setter inn egenefinerte parametre for tilkobling
+            db.Connection();    //skal endre dette til enten her eller i Database.cs at man setter inn egendefinerte parametre for tilkobling
 
             lytteSokkel.Bind(serverEP);
             lytteSokkel.Listen(10);
 
-            KobleTilKortleser();
+            //KobleTilKortleser();
         }
+        private void Sentral_Load(object sender, EventArgs e)
+        {
+
+        }
+        private void ActivateButton(object btnSender)
+        {
+            if (btnSender != null)
+            {
+                if (currentButton != (Button)btnSender)
+                {
+                    DisableButton();
+                    currentButton = (Button)btnSender;
+                    currentButton.BackColor = SystemColors.GradientActiveCaption;
+                    BTN_LukkMenyVindu.Visible = true;
+                }
+            }
+        }
+        private void DisableButton()
+        {
+            foreach (Control previousBtn in PanelMeny.Controls)
+            {
+                previousBtn.BackColor = SystemColors.GradientInactiveCaption;
+                panelTopp.BackColor = SystemColors.ActiveCaption;
+            }
+        }
+        private void OpenChildForm(Form childForm, object btnSender)
+        {
+            if (activeForm != null)
+            {
+                activeForm.Close();
+            }
+            ActivateButton(btnSender);
+            activeForm = childForm;
+            childForm.TopLevel = false;
+            childForm.FormBorderStyle = FormBorderStyle.None;
+            childForm.Dock = DockStyle.Fill;
+            this.PanelForms.Controls.Add(childForm);
+            this.PanelForms.Tag = childForm;
+            childForm.BringToFront();
+            childForm.Show();
+            lbl_Tittel.Text = childForm.Text;
+        }
+        private void Reset()
+        {
+            DisableButton();
+            lbl_Tittel.Text = "Adgangskontroll";
+            currentButton = null;
+            BTN_LukkMenyVindu.Visible = false;
+        }
+
         private void KobleTilKortleser()//object o)
         {
             try
@@ -42,14 +97,14 @@ namespace Adgangskontroll_Sentral
                 //// Her må vi endre til threadpool eller noe, for vi skal kunne starte flere tråder med flere lesere
                 //while (harforbindelse)    //slik løkke fungerer ikke her, uansett true eller false...
                 //{
-                    //Console.WriteLine("Venter på en klient ...");
-                    Socket kommSokkel = lytteSokkel.Accept(); // blokkerende metode
+                //Console.WriteLine("Venter på en klient ...");
+                Socket kommSokkel = lytteSokkel.Accept(); // blokkerende metode
 
-                    //VisKommunikasjonsinfo(kommSokkel.LocalEndPoint as IPEndPoint, kommSokkel.RemoteEndPoint as IPEndPoint);
-                    IPEndPoint klientEP = (IPEndPoint)kommSokkel.RemoteEndPoint;
+                //VisKommunikasjonsinfo(kommSokkel.LocalEndPoint as IPEndPoint, kommSokkel.RemoteEndPoint as IPEndPoint);
+                IPEndPoint klientEP = (IPEndPoint)kommSokkel.RemoteEndPoint;
 
-                    Thread ht = new Thread(Klientkommunikasjon);        //må starte mer enn én tråd, implementer ThreadPool i Public Senral() osv.
-                    ht.Start(kommSokkel);
+                Thread ht = new Thread(Klientkommunikasjon);        //må starte mer enn én tråd, implementer ThreadPool i Public Senral() osv.
+                ht.Start(kommSokkel);
                 //}
             }
             catch (Exception)
@@ -57,13 +112,7 @@ namespace Adgangskontroll_Sentral
                 throw;
             }
         }
-        private void Sentral_Load(object sender, EventArgs e)
-        {
-            panel1.Hide();
-            panel2.Hide();
-            panel3.Hide();
-            panel4.Hide();
-        }
+
         static void VisKommunikasjonsinfo(IPEndPoint l, IPEndPoint r)
         {
             // Noe som samsvarer med at kommunikasjon eksisterer, slags godkjenning... spørs nødvendig med egen metode...
@@ -90,10 +139,25 @@ namespace Adgangskontroll_Sentral
 
                 if (harForbindelse)
                 {
+                    //MessageBox.Show("Mottatt fra kortleser\n" + dataFraKortleser); //debug
 
-                    MessageBox.Show("Mottatt fra kortleser\n" + dataFraKortleser); //debug
+                    //rotete kode her, men det funker
+                    if (dataFraKortleser == "RequestID")
+                    {
+                        if (Kortleser_ID.Count != index)
+                        {
+                            dataTilKortleser = Kortleser_ID[index];
+                            index++;
+                        }
+                        else
+                        {
+                            index = 0;
+                            dataTilKortleser = Kortleser_ID[index];
+                            index++;
+                        }
+                    }
+                    else dataTilKortleser = "Retur: " + dataFraKortleser;
 
-                    dataTilKortleser = "Retur: " + dataFraKortleser;
                     SendData(kommSokkel, dataTilKortleser, out harForbindelse);
                 }
             }
@@ -135,71 +199,40 @@ namespace Adgangskontroll_Sentral
                 gjennomført = false;
             }
         }
-        private void BTN_VisAnsatte_Click(object sender, EventArgs e)
+
+        private void iBTN_Brukere_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = db.VisAnsatt();
+            OpenChildForm(new MenyBrukere(), sender);
+            //currentButton.BackColor = SystemColors.GradientActiveCaption;
+        }
+        private void iBTN_Kortlesere_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new MenyKortlesere(), sender);
+        }
+        private void iBTN_Logg_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new MenyLogg(), sender);
+        }
+        private void iBTN_Innstillinger_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new MenyInnstillinger(), sender);
+        }
+        private void BTN_LukkMenyVindu_Click(object sender, EventArgs e)
+        {
+            if (activeForm != null) activeForm.Close();
+
+            Reset();
         }
 
-        private void BTN_LeggTil_Click(object sender, EventArgs e)
+        private void Start_Click(object sender, EventArgs e)
         {
-            string id = TB_ID.Text;
-            string navn = TB_Navn.Text;
-            db.LeggTilNyBruker(id, navn);
-            TB_ID.Clear();
-            TB_Navn.Clear();
+            foreach (string kortleser in Kortleser_ID)
+            {
+                //Må endre til bane for Kortleser.exe
+                Process.Start("C:\\Users\\leand\\OneDrive - Høgskulen på Vestlandet\\ELE 301\\Prosjektoppgave\\Adgangskontroll\\Kortleser\\bin\\Debug\\net7.0-windows\\Kortleser.exe");
+                KobleTilKortleser();
+            }
+            BTN_Start.Enabled = false;
         }
-        private void BTN_VisTab_Click(object sender, EventArgs e)
-        {
-            dataGridView2.DataSource = db.VisBrukere();
-        }
-
-        //  Eksempel innlogging
-        private void BTN_LoggInn_Click(object sender, EventArgs e)
-        {
-            // dersom feltene er tomme så returneres bare "", altså tom strengverdi, som ikke finnes i databasen, men godtas som input
-            string LoggID = TB_LoggID.Text;
-            string LoggPin = TB_LoggPin.Text;
-            TB_LoggID.Clear();
-            TB_LoggPin.Clear();
-            TB_suksess.Text = db.Innlogging(LoggID, LoggPin);  //debug, returnerer tekst: "korrekt" / "feil"
-        }
-
-        // Paneler og visning av dems menyer
-        private void BTN_LesAnsatt_Click(object sender, EventArgs e)
-        {
-            panel1.Show();
-            panel4.Hide();
-            panel3.Hide();
-            panel2.Hide();
-            panel1.BringToFront();
-        }
-
-        private void BTN_Brukere_Click(object sender, EventArgs e)
-        {
-            panel2.Show();
-            panel1.Hide();
-            panel3.Hide();
-            panel4.Hide();
-            panel2.BringToFront();
-        }
-
-        private void BTN_info_Click(object sender, EventArgs e)
-        {
-            panel3.Show();
-            panel1.Hide();
-            panel2.Hide();
-            panel4.Hide();
-            panel3.BringToFront();
-        }
-
-        private void BTN_Innlogg_Click(object sender, EventArgs e)
-        {
-            panel4.Show();
-            panel1.Hide();
-            panel2.Hide();
-            panel3.Hide();
-            panel4.BringToFront();
-        }
-
     }
 }
