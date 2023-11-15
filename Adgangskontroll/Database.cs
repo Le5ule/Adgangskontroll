@@ -16,12 +16,9 @@ namespace Sentral
         private static NpgsqlConnection vCon;
         private static NpgsqlCommand vCmd;
 
-              // legg inn din informasjon her for kobling mot din database
+        // legg inn din informasjon her for kobling mot din database
         static string kobling = "server=129.151.221.119 ; port=5432 ; user id=602393 ; password=Ha1FinDagIDag! ; database=602393 ;";
-
-        // hmmmmm vanskelig...
-        //List<int> ny_ID = new List<int>();
-        //List<int> gjenbruk_ID = new List<int>();
+       
 
         public static NpgsqlCommand VCmd
         {
@@ -88,13 +85,7 @@ namespace Sentral
             }
             return suksess;
         }
-        public DataTable VisAnsatt()
-        {
-            dtgetData = getData("select * from ansatt0;");
-            DataTable dt = Database.DtgetData;
-
-            return dt;
-        }
+        
         public DataTable VisBrukere()
         {
             dtgetData = getData("select * from Brukere;");
@@ -113,8 +104,9 @@ namespace Sentral
         }
         public DataTable EndreBruker(string Fnavn, string Enavn, string id, DateTime fra, DateTime til)
         {
+            string epost = $"{id}@bedrift.no";
             // Må endre format på query
-            dtgetData = getData("f");// ($"INSERT INTO Brukere values('{Fnavn}', '{Enavn}', );");
+            dtgetData = getData("");// 
             DataTable dt = dtgetData;
 
             return dt;

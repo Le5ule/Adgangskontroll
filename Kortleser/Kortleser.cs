@@ -11,16 +11,16 @@ namespace Adgangskontroll_Kortleser
 {
     public partial class Kortleser : Form
     {
-        //byte[] data = new byte[1024];     // Denne blir ikke brukt noen steder...
         static bool Avbryt = false;
         static bool kommunikasjonMedSentral = false;
         static string dataTilSentral;
         static string dataFraSentral;
         static string pin;
         static string kortID;
+        static string kortleserID;
         string data = "";
         int råDørÅpen = 0;
-        static string kortleserID;
+        
         List<int> kodeinput = new List<int>();
         SerialPort sp;
 
@@ -34,8 +34,7 @@ namespace Adgangskontroll_Kortleser
 
         private void Kortleser_Load(object sender, EventArgs e)
         {
-            //start simsim
-            //Process.Start("C:\\Users\\leand\\OneDrive - Høgskulen på Vestlandet\\ELE 301\\Prosjektoppgave\\Tilleggsfiler\\Tilleggsfiler\\SimSim-v2\\SimSim\\SimSim\\SimSim\\SimSim.exe");
+            // Kortleser åpnes selv om det ikke er kommunikasjon med sentral eller SimSim, litt rart...
 
             klientSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
@@ -98,15 +97,20 @@ namespace Adgangskontroll_Kortleser
             {
                 if (kodeinput.Count == 4 && kommunikasjonMedSentral == true)
                 {
-                    // her kan vi også ta å laste inn kortID uten å måtte trykke på enter-tasten, kanskje mer brukervennlig, slipper å forklare "trykk enter";
                     kortID = TB_KortInput.Text;
                     TB_KortInput.Clear();
                     TB_KortInput.Visible = false;
-                    //
-                    //comMedSentral = true;
+                    //comMedSentral = true;         // usikker på hvorfor denne er kommentert vekk her...
                     pin = kodeinput[0].ToString() + kodeinput[1].ToString() + kodeinput[2].ToString() + kodeinput[3].ToString();
                     kodeinput.Clear();
+
+
+                    //dette må omformateres slik at det stemmer med query til db.
+                    //lagre dette som string, inn i sentral,
+                    //variabel i query inni sentral. Makes sense?
                     dataTilSentral = $" K:{kortID} P:{pin} L:{kortleserID}";
+                    
+
                     if (kommunikasjonMedSentral == true)
                     {
                         BW_SendKvittering.RunWorkerAsync();
@@ -124,7 +128,7 @@ namespace Adgangskontroll_Kortleser
 
         }
 
-        //SimSim funksjoner
+        //SimSim-funksjoner
         void SendEnMelding(string enMelding, SerialPort sp)
         {
             try
@@ -178,17 +182,18 @@ namespace Adgangskontroll_Kortleser
 
             return svar;
         }
-        //Slutt på SimSim funksjoner
+        //Slutt på SimSim-funksjoner
 
-        //Funksjon for å konvertere rå data fra simsim til dør status
+        //Funksjon for å konvertere rådata fra simsim til dør-status
         void VisDør(string enMelding)
         {
             int indeksStart = enMelding.IndexOf('E');
             råDørÅpen = Convert.ToInt32(enMelding.Substring(indeksStart + 7, 1));
-            if (råDørÅpen == 1)
-                label1.Text = "Åpen";
-            else
-                label1.Text = "Lukket";
+            // Endre til picturebox.show osv...
+            //if (råDørÅpen == 1)
+            //    //label1.Text = "Åpen";
+            //else
+            //    //label1.Text = "Lukket";
         }
         public bool godkjenning(int BrukerPin)
         {
@@ -206,7 +211,7 @@ namespace Adgangskontroll_Kortleser
             return svar;
         }   //ikke i bruk
 
-        // Denne funker, men bool gjennomfjørt endres ikke slik som den blir brukt i server-klient i kommentert felt under
+        // Denne funker, men bool gjennomfjørt endres ikke slik som den blir brukt i server-klient i kommentert felt under, tror jeg...
         static string MottaData(Socket s, out bool gjennomført)
         {
             string svar = "";
@@ -239,27 +244,6 @@ namespace Adgangskontroll_Kortleser
             catch (Exception)
             {
                 gjennomført = false;
-            }
-        }
-        private void TB_KortInput_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)13)  // samme som enter
-            {
-                // Trenger bare å håndtere lengden. Hvis ID oppgis f.eks: "abcd" så er dette "feil" id, men godkjent input i databasen
-                // Siden Kode() nå leser av TB_KortInput uten enter, så vil ikke dette leses ved å trykke enter.
-                // Detaljene om implementasjonen kan diskuteres senere når design er mer kritisk.
-                if (TB_KortInput.Text.Length == 4)
-                {
-                    kortID = TB_KortInput.Text;
-                    TB_KortInput.Visible = false;
-                    UgyldigLabel.Visible = false;
-                    TB_KortInput.Clear();
-                }
-                else
-                {
-                    UgyldigLabel.Visible = true;
-                    TB_KortInput.Clear();
-                }
             }
         }
         private void BW_SendKvittering_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
@@ -351,10 +335,11 @@ namespace Adgangskontroll_Kortleser
         private void BTN_Åpne_Click(object sender, EventArgs e)
         {
             // skal brukes i godkjenning av input
+
             //iPB_Unlock.Show();
             //iPB_Unlock.BringToFront();
             //iPB_Lock.Hide();
-            
+
             if (råDørÅpen == 0)
                 SendEnMelding("$O61", sp);
             else

@@ -44,6 +44,8 @@
             lbl_ID = new Label();
             TB_ID = new TextBox();
             BTN_Endre = new Button();
+            TB_Seksjon = new TextBox();
+            lbl_Seksjon = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -112,7 +114,7 @@
             BTN_LeggTil.BackColor = SystemColors.GradientActiveCaption;
             BTN_LeggTil.FlatAppearance.BorderSize = 0;
             BTN_LeggTil.FlatStyle = FlatStyle.Flat;
-            BTN_LeggTil.Location = new Point(655, 122);
+            BTN_LeggTil.Location = new Point(742, 123);
             BTN_LeggTil.Name = "BTN_LeggTil";
             BTN_LeggTil.Size = new Size(94, 29);
             BTN_LeggTil.TabIndex = 12;
@@ -150,7 +152,7 @@
             // lbl_GyldigFra
             // 
             lbl_GyldigFra.AutoSize = true;
-            lbl_GyldigFra.Location = new Point(381, 95);
+            lbl_GyldigFra.Location = new Point(468, 95);
             lbl_GyldigFra.Name = "lbl_GyldigFra";
             lbl_GyldigFra.Size = new Size(77, 20);
             lbl_GyldigFra.TabIndex = 23;
@@ -160,7 +162,7 @@
             // lbl_GyldigTil
             // 
             lbl_GyldigTil.AutoSize = true;
-            lbl_GyldigTil.Location = new Point(508, 95);
+            lbl_GyldigTil.Location = new Point(595, 95);
             lbl_GyldigTil.Name = "lbl_GyldigTil";
             lbl_GyldigTil.Size = new Size(72, 20);
             lbl_GyldigTil.TabIndex = 24;
@@ -170,7 +172,7 @@
             // dtGyldigFra
             // 
             dtGyldigFra.Format = DateTimePickerFormat.Short;
-            dtGyldigFra.Location = new Point(381, 122);
+            dtGyldigFra.Location = new Point(468, 122);
             dtGyldigFra.Name = "dtGyldigFra";
             dtGyldigFra.Size = new Size(120, 27);
             dtGyldigFra.TabIndex = 25;
@@ -179,7 +181,7 @@
             // dtGyldigTil
             // 
             dtGyldigTil.Format = DateTimePickerFormat.Short;
-            dtGyldigTil.Location = new Point(514, 122);
+            dtGyldigTil.Location = new Point(601, 122);
             dtGyldigTil.Name = "dtGyldigTil";
             dtGyldigTil.Size = new Size(120, 27);
             dtGyldigTil.TabIndex = 26;
@@ -208,7 +210,7 @@
             BTN_Endre.BackColor = SystemColors.GradientActiveCaption;
             BTN_Endre.FlatAppearance.BorderSize = 0;
             BTN_Endre.FlatStyle = FlatStyle.Flat;
-            BTN_Endre.Location = new Point(655, 122);
+            BTN_Endre.Location = new Point(742, 122);
             BTN_Endre.Name = "BTN_Endre";
             BTN_Endre.Size = new Size(94, 29);
             BTN_Endre.TabIndex = 29;
@@ -217,11 +219,31 @@
             BTN_Endre.Visible = false;
             BTN_Endre.Click += BTN_Endre_Click;
             // 
+            // TB_Seksjon
+            // 
+            TB_Seksjon.Location = new Point(376, 122);
+            TB_Seksjon.Name = "TB_Seksjon";
+            TB_Seksjon.Size = new Size(86, 27);
+            TB_Seksjon.TabIndex = 30;
+            TB_Seksjon.Visible = false;
+            // 
+            // lbl_Seksjon
+            // 
+            lbl_Seksjon.AutoSize = true;
+            lbl_Seksjon.Location = new Point(376, 95);
+            lbl_Seksjon.Name = "lbl_Seksjon";
+            lbl_Seksjon.Size = new Size(62, 20);
+            lbl_Seksjon.TabIndex = 31;
+            lbl_Seksjon.Text = "Seksjon:";
+            lbl_Seksjon.Visible = false;
+            // 
             // MenyBrukere
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(868, 475);
+            Controls.Add(lbl_Seksjon);
+            Controls.Add(TB_Seksjon);
             Controls.Add(BTN_Endre);
             Controls.Add(lbl_ID);
             Controls.Add(TB_ID);
@@ -262,5 +284,7 @@
         private Label lbl_ID;
         private TextBox TB_ID;
         private Button BTN_Endre;
+        private TextBox TB_Seksjon;
+        private Label lbl_Seksjon;
     }
 }
