@@ -43,15 +43,25 @@
             TB_KortInput = new TextBox();
             UgyldigLabel = new Label();
             BW_SendKvittering = new System.ComponentModel.BackgroundWorker();
-            panel1 = new Panel();
-            label1 = new Label();
+            Panel_KortLeser = new Panel();
             label2 = new Label();
-            panel1.SuspendLayout();
+            BTN_Åpne = new Button();
+            BTN_Lukk = new Button();
+            Label_ID = new Label();
+            iPB_Lock = new FontAwesome.Sharp.IconPictureBox();
+            iPB_Unlock = new FontAwesome.Sharp.IconPictureBox();
+            iPB_DoorLocked = new FontAwesome.Sharp.IconPictureBox();
+            iPB_DoorOpen = new FontAwesome.Sharp.IconPictureBox();
+            Panel_KortLeser.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)iPB_Lock).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)iPB_Unlock).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)iPB_DoorLocked).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)iPB_DoorOpen).BeginInit();
             SuspendLayout();
             // 
             // TB_MottakFraSentral
             // 
-            TB_MottakFraSentral.Location = new Point(199, 73);
+            TB_MottakFraSentral.Location = new Point(490, 205);
             TB_MottakFraSentral.Name = "TB_MottakFraSentral";
             TB_MottakFraSentral.Size = new Size(253, 27);
             TB_MottakFraSentral.TabIndex = 37;
@@ -192,59 +202,147 @@
             BW_SendKvittering.DoWork += BW_SendKvittering_DoWork;
             BW_SendKvittering.RunWorkerCompleted += BW_SendKvittering_RunWorkerCompleted;
             // 
-            // panel1
+            // Panel_KortLeser
             // 
-            panel1.BackColor = SystemColors.WindowFrame;
-            panel1.Controls.Add(TB_KortInput);
-            panel1.Controls.Add(UgyldigLabel);
-            panel1.Controls.Add(BTN_LesKort);
-            panel1.Controls.Add(BTN0);
-            panel1.Controls.Add(BTN9);
-            panel1.Controls.Add(BTN8);
-            panel1.Controls.Add(BTN7);
-            panel1.Controls.Add(BTN6);
-            panel1.Controls.Add(BTN5);
-            panel1.Controls.Add(BTN4);
-            panel1.Controls.Add(BTN3);
-            panel1.Controls.Add(BTN2);
-            panel1.Controls.Add(BTN1);
-            panel1.Location = new Point(12, 12);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(153, 265);
-            panel1.TabIndex = 41;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(199, 173);
-            label1.Name = "label1";
-            label1.Size = new Size(394, 80);
-            label1.TabIndex = 42;
-            label1.Text = "\"Dør åpen\"\r\nLabel skal vises når døren åpnes. Simulere virtuell dør elns.\r\nSammen med knapp som fungerer som håndtak.\r\nUtfordring: bryte opp her\r\n";
+            Panel_KortLeser.BackColor = SystemColors.WindowFrame;
+            Panel_KortLeser.Controls.Add(TB_KortInput);
+            Panel_KortLeser.Controls.Add(UgyldigLabel);
+            Panel_KortLeser.Controls.Add(BTN_LesKort);
+            Panel_KortLeser.Controls.Add(BTN0);
+            Panel_KortLeser.Controls.Add(BTN9);
+            Panel_KortLeser.Controls.Add(BTN8);
+            Panel_KortLeser.Controls.Add(BTN7);
+            Panel_KortLeser.Controls.Add(BTN6);
+            Panel_KortLeser.Controls.Add(BTN5);
+            Panel_KortLeser.Controls.Add(BTN4);
+            Panel_KortLeser.Controls.Add(BTN3);
+            Panel_KortLeser.Controls.Add(BTN2);
+            Panel_KortLeser.Controls.Add(BTN1);
+            Panel_KortLeser.Location = new Point(12, 12);
+            Panel_KortLeser.Name = "Panel_KortLeser";
+            Panel_KortLeser.Size = new Size(151, 265);
+            Panel_KortLeser.TabIndex = 41;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(199, 12);
+            label2.Location = new Point(490, 144);
             label2.Name = "label2";
             label2.Size = new Size(281, 60);
             label2.TabIndex = 43;
             label2.Text = "(debug)Her hentes data fra sentralen.\r\nIllustrerer bare at informasjon kan sendes\r\nfrem og tilbake";
             // 
+            // BTN_Åpne
+            // 
+            BTN_Åpne.Location = new Point(246, 165);
+            BTN_Åpne.Name = "BTN_Åpne";
+            BTN_Åpne.Size = new Size(94, 29);
+            BTN_Åpne.TabIndex = 45;
+            BTN_Åpne.Text = "Åpne";
+            BTN_Åpne.UseVisualStyleBackColor = true;
+            BTN_Åpne.Click += BTN_Åpne_Click;
+            // 
+            // BTN_Lukk
+            // 
+            BTN_Lukk.Location = new Point(246, 200);
+            BTN_Lukk.Name = "BTN_Lukk";
+            BTN_Lukk.Size = new Size(94, 29);
+            BTN_Lukk.TabIndex = 46;
+            BTN_Lukk.Text = "Lukk";
+            BTN_Lukk.UseVisualStyleBackColor = true;
+            BTN_Lukk.Click += BTN_Lukk_Click;
+            // 
+            // Label_ID
+            // 
+            Label_ID.AutoSize = true;
+            Label_ID.Location = new Point(300, 86);
+            Label_ID.Name = "Label_ID";
+            Label_ID.Size = new Size(67, 20);
+            Label_ID.TabIndex = 48;
+            Label_ID.Text = "\"Dør-ID\"";
+            // 
+            // iPB_Lock
+            // 
+            iPB_Lock.BackColor = SystemColors.Control;
+            iPB_Lock.ForeColor = SystemColors.ControlText;
+            iPB_Lock.IconChar = FontAwesome.Sharp.IconChar.Lock;
+            iPB_Lock.IconColor = SystemColors.ControlText;
+            iPB_Lock.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iPB_Lock.IconSize = 40;
+            iPB_Lock.Location = new Point(236, 113);
+            iPB_Lock.Name = "iPB_Lock";
+            iPB_Lock.Size = new Size(40, 40);
+            iPB_Lock.TabIndex = 50;
+            iPB_Lock.TabStop = false;
+            // 
+            // iPB_Unlock
+            // 
+            iPB_Unlock.BackColor = SystemColors.Control;
+            iPB_Unlock.ForeColor = SystemColors.ControlText;
+            iPB_Unlock.IconChar = FontAwesome.Sharp.IconChar.LockOpen;
+            iPB_Unlock.IconColor = SystemColors.ControlText;
+            iPB_Unlock.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iPB_Unlock.IconSize = 48;
+            iPB_Unlock.Location = new Point(237, 109);
+            iPB_Unlock.Name = "iPB_Unlock";
+            iPB_Unlock.Size = new Size(48, 48);
+            iPB_Unlock.TabIndex = 51;
+            iPB_Unlock.TabStop = false;
+            // 
+            // iPB_DoorLocked
+            // 
+            iPB_DoorLocked.BackColor = SystemColors.Control;
+            iPB_DoorLocked.ForeColor = SystemColors.ControlText;
+            iPB_DoorLocked.IconChar = FontAwesome.Sharp.IconChar.DoorClosed;
+            iPB_DoorLocked.IconColor = SystemColors.ControlText;
+            iPB_DoorLocked.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iPB_DoorLocked.IconSize = 50;
+            iPB_DoorLocked.Location = new Point(300, 109);
+            iPB_DoorLocked.Name = "iPB_DoorLocked";
+            iPB_DoorLocked.Size = new Size(50, 50);
+            iPB_DoorLocked.TabIndex = 51;
+            iPB_DoorLocked.TabStop = false;
+            // 
+            // iPB_DoorOpen
+            // 
+            iPB_DoorOpen.BackColor = SystemColors.Control;
+            iPB_DoorOpen.ForeColor = SystemColors.ControlText;
+            iPB_DoorOpen.IconChar = FontAwesome.Sharp.IconChar.DoorOpen;
+            iPB_DoorOpen.IconColor = SystemColors.ControlText;
+            iPB_DoorOpen.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            iPB_DoorOpen.IconSize = 50;
+            iPB_DoorOpen.Location = new Point(300, 109);
+            iPB_DoorOpen.Name = "iPB_DoorOpen";
+            iPB_DoorOpen.Size = new Size(50, 50);
+            iPB_DoorOpen.TabIndex = 52;
+            iPB_DoorOpen.TabStop = false;
+            // 
             // Kortleser
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(614, 291);
+            ClientSize = new Size(810, 289);
+            Controls.Add(BTN_Lukk);
+            Controls.Add(Label_ID);
+            Controls.Add(BTN_Åpne);
+            Controls.Add(iPB_Unlock);
+            Controls.Add(iPB_Lock);
+            Controls.Add(iPB_DoorOpen);
+            Controls.Add(iPB_DoorLocked);
             Controls.Add(label2);
-            Controls.Add(label1);
-            Controls.Add(panel1);
+            Controls.Add(Panel_KortLeser);
             Controls.Add(TB_MottakFraSentral);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "Kortleser";
             Text = "Kortleser";
+            FormClosing += Kortleser_FormClosing;
             Load += Kortleser_Load;
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            Panel_KortLeser.ResumeLayout(false);
+            Panel_KortLeser.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)iPB_Lock).EndInit();
+            ((System.ComponentModel.ISupportInitialize)iPB_Unlock).EndInit();
+            ((System.ComponentModel.ISupportInitialize)iPB_DoorLocked).EndInit();
+            ((System.ComponentModel.ISupportInitialize)iPB_DoorOpen).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -266,8 +364,14 @@
         private TextBox TB_KortInput;
         private Label UgyldigLabel;
         private System.ComponentModel.BackgroundWorker BW_SendKvittering;
-        private Panel panel1;
-        private Label label1;
+        private Panel Panel_KortLeser;
         private Label label2;
+        private Button BTN_Åpne;
+        private Button BTN_Lukk;
+        private Label Label_ID;
+        private FontAwesome.Sharp.IconPictureBox iPB_Lock;
+        private FontAwesome.Sharp.IconPictureBox iPB_Unlock;
+        private FontAwesome.Sharp.IconPictureBox iPB_DoorLocked;
+        private FontAwesome.Sharp.IconPictureBox iPB_DoorOpen;
     }
 }

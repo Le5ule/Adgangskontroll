@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -7,12 +8,13 @@ namespace Adgangskontroll_Kortleser
     public partial class Kortleser : Form
     {
         //byte[] data = new byte[1024];     // Denne blir ikke brukt noen steder...
-        bool comMedSentral = false;
+        static bool Avbryt = false;
+        static bool kommunikasjonMedSentral = false;
         static string dataTilSentral;
         static string dataFraSentral;
         static string pin;
         static string kortID;
-        static string kortleserID = "0";
+        static string kortleserID;
         List<int> kodeinput = new List<int>();
 
         Socket klientSokkel;
@@ -23,19 +25,36 @@ namespace Adgangskontroll_Kortleser
         }
         private void Kortleser_Load(object sender, EventArgs e)
         {
+            //start simsim
+            //Process.Start("C:\\Users\\leand\\OneDrive - Høgskulen på Vestlandet\\ELE 301\\Prosjektoppgave\\Tilleggsfiler\\Tilleggsfiler\\SimSim-v2\\SimSim\\SimSim\\SimSim\\SimSim.exe");
+
             klientSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
             BTN_LesKort.Select();
 
+            iPB_Unlock.Hide();
+            iPB_DoorOpen.Hide();
+
             try
             {
                 klientSokkel.Connect(serverEP); // blokkerende metode
-                comMedSentral = true;
+                kommunikasjonMedSentral = true;
+                try
+                {
+                    dataTilSentral = "RequestID";
+                    BW_SendKvittering.RunWorkerAsync();
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
             }
             catch (SocketException)
             {
                 MessageBox.Show("Fikk ikke kontakt med sentral!");
-                comMedSentral = false;
+                kommunikasjonMedSentral = false;
             }
 
             //if (comMedSentral)//==true)
@@ -49,27 +68,34 @@ namespace Adgangskontroll_Kortleser
         public void Kode(int inn)
         {
             kodeinput.Add(inn);
-
-            if (kodeinput.Count == 4 && comMedSentral == true)
+            try
             {
-                // her kan vi også ta å laste inn kortID uten å måtte trykke på enter-tasten, kanskje mer brukervennlig, slipper å forklare "trykk enter";
-                kortID = TB_KortInput.Text;
-                TB_KortInput.Clear();
-                TB_KortInput.Visible = false;
-                //
-                //comMedSentral = true;
-                pin = kodeinput[0].ToString() + kodeinput[1].ToString() + kodeinput[2].ToString() + kodeinput[3].ToString();
-                kodeinput.Clear();
-                dataTilSentral = $" K:{kortID} P:{pin} L:{kortleserID}";
-                if (comMedSentral == true)
+                if (kodeinput.Count == 4 && kommunikasjonMedSentral == true)
                 {
-                    BW_SendKvittering.RunWorkerAsync();
-                    MessageBox.Show("Lokal info i kortleser:\n" + dataTilSentral);     //debug
+                    // her kan vi også ta å laste inn kortID uten å måtte trykke på enter-tasten, kanskje mer brukervennlig, slipper å forklare "trykk enter";
+                    kortID = TB_KortInput.Text;
+                    TB_KortInput.Clear();
+                    TB_KortInput.Visible = false;
+                    //
+                    //comMedSentral = true;
+                    pin = kodeinput[0].ToString() + kodeinput[1].ToString() + kodeinput[2].ToString() + kodeinput[3].ToString();
+                    kodeinput.Clear();
+                    dataTilSentral = $" K:{kortID} P:{pin} L:{kortleserID}";
+                    if (kommunikasjonMedSentral == true)
+                    {
+                        BW_SendKvittering.RunWorkerAsync();
+                        MessageBox.Show("Lokal info i kortleser:\n" + dataTilSentral);     //debug
+                    }
+                    BTN_LesKort.Select();
+                    kortID = "";
+                    pin = "";
                 }
-                BTN_LesKort.Select();
-                kortID = "";
-                pin = "";
             }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
         public bool godkjenning(int BrukerPin)
         {
@@ -85,8 +111,9 @@ namespace Adgangskontroll_Kortleser
                 kodeinput.Clear();
             }
             return svar;
-        }
-        // Denne funker, men bool gjennomfjørt endres ikke slik som den bler brukt i server-klient i kommentert felt under
+        }   //ikke i bruk
+
+        // Denne funker, men bool gjennomfjørt endres ikke slik som den blir brukt i server-klient i kommentert felt under
         static string MottaData(Socket s, out bool gjennomført)
         {
             string svar = "";
@@ -144,17 +171,23 @@ namespace Adgangskontroll_Kortleser
         }
         private void BW_SendKvittering_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            SendData(klientSokkel, dataTilSentral, out comMedSentral);
-            if (comMedSentral)
+            SendData(klientSokkel, dataTilSentral, out kommunikasjonMedSentral);
+            if (kommunikasjonMedSentral)
             {
-                dataFraSentral = MottaData(klientSokkel, out comMedSentral);
+                dataFraSentral = MottaData(klientSokkel, out kommunikasjonMedSentral);
+                // if eller try med at verdi er sann/usann, lik som Innlogging() i database.cs for sentral
             }
         }
         private void BW_SendKvittering_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            if (comMedSentral)
+            if (kommunikasjonMedSentral)
             {
-                TB_MottakFraSentral.Text = dataFraSentral;
+                if (dataFraSentral.Length == 4) //Dette vil alltid være kortleser sin ID
+                {
+                    Label_ID.Text = "Dør: " + dataFraSentral;
+                    kortleserID = dataFraSentral;
+                }
+                else TB_MottakFraSentral.Text = dataFraSentral;     //debug
             }
             //else //Application.Exit();
         }
@@ -202,6 +235,48 @@ namespace Adgangskontroll_Kortleser
         private void BTN0_Click(object sender, EventArgs e)
         {
             Kode(0);
+        }
+        private void BTN_Åpne_Click(object sender, EventArgs e)
+        {
+            // skal brukes i godkjenning av input
+            //iPB_Unlock.Show();
+            //iPB_Unlock.BringToFront();
+            //iPB_Lock.Hide();
+
+            iPB_DoorOpen.Show();
+            iPB_DoorOpen.BringToFront();
+            iPB_DoorLocked.Hide();
+        }
+
+        private void BTN_Lukk_Click(object sender, EventArgs e)
+        {
+            iPB_Lock.Show();
+            iPB_Lock.BringToFront();
+            iPB_Unlock.Hide();
+
+            iPB_DoorLocked.Show();
+            iPB_DoorLocked.BringToFront();
+            iPB_DoorOpen.Hide();
+        }
+
+        private void Kortleser_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!Avbryt)
+            {
+                var result = MessageBox.Show("Er du sikker på at du vil fjerne denne kortleseren?", "Fjerne kortleser " + kortleserID, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                // Hvis man trykket "nei"
+                if (result == DialogResult.No)
+                {
+                    // avbryter lukking og frakobling
+                    e.Cancel = true;
+                }
+                else if (kommunikasjonMedSentral)
+                {
+                    klientSokkel.Shutdown(SocketShutdown.Both);
+                    klientSokkel.Close();
+                }
+            }
         }
     }
 }
