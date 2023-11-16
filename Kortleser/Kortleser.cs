@@ -66,7 +66,7 @@ namespace Adgangskontroll_Kortleser
             }
 
             //Kobling til Simsim
-            sp = new SerialPort("COM6", 9600);
+            sp = new SerialPort("COM3", 9600);
 
             try
             {
