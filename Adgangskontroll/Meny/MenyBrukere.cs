@@ -53,6 +53,8 @@ namespace Sentral
             lbl_ENavn.Visible = false;
             lbl_FNavn.Visible = false;
             lbl_ID.Visible = false;
+            lbl_Seksjon.Visible = false;
+            TB_Seksjon.Visible = false;
             lbl_GyldigFra.Visible = false;
             lbl_GyldigTil.Visible = false;
             BTN_Endre.Visible = false;
@@ -71,6 +73,8 @@ namespace Sentral
             lbl_ENavn.Visible = true;
             lbl_FNavn.Visible = true;
             lbl_ID.Visible = true;
+            lbl_Seksjon.Visible = true;
+            TB_Seksjon.Visible = true;
             lbl_GyldigFra.Visible = true;
             lbl_GyldigTil.Visible = true;
             BTN_Endre.Visible = true;
@@ -86,6 +90,8 @@ namespace Sentral
             lbl_ENavn.Visible = true;
             lbl_FNavn.Visible = true;
             lbl_ID.Visible = true;
+            lbl_Seksjon.Visible = true;
+            TB_Seksjon.Visible = true;
             lbl_GyldigFra.Visible = true;
             lbl_GyldigTil.Visible = true;
             BTN_LeggTil.Visible = true;

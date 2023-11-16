@@ -261,6 +261,7 @@
             Controls.Add(BTN_LeggTil);
             Controls.Add(dataGridView);
             Name = "MenyBrukere";
+            Text = "Brukere";
             ((System.ComponentModel.ISupportInitialize)dataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
