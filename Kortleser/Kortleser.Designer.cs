@@ -58,6 +58,7 @@ namespace Adgangskontroll_Kortleser
             labelÅpen = new Label();
             labelLåst = new Label();
             bwSjekkForData = new System.ComponentModel.BackgroundWorker();
+            label1 = new Label();
             Panel_KortLeser.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)iPB_Lock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)iPB_Unlock).BeginInit();
@@ -356,11 +357,21 @@ namespace Adgangskontroll_Kortleser
             bwSjekkForData.DoWork += bwSjekkForData_DoWork_1;
             bwSjekkForData.RunWorkerCompleted += bwSjekkForData_RunWorkerCompleted_1;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(394, 37);
+            label1.Name = "label1";
+            label1.Size = new Size(38, 15);
+            label1.TabIndex = 55;
+            label1.Text = "label1";
+            // 
             // Kortleser
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(810, 289);
+            Controls.Add(label1);
             Controls.Add(labelLåst);
             Controls.Add(labelÅpen);
             Controls.Add(BTN_Lukk);
@@ -417,5 +428,6 @@ namespace Adgangskontroll_Kortleser
         private Label labelÅpen;
         private Label labelLåst;
         private System.ComponentModel.BackgroundWorker bwSjekkForData;
+        private Label label1;
     }
 }

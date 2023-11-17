@@ -15,7 +15,7 @@ namespace Adgangskontroll_Sentral
         Database db = new Database();
 
         static string kobling;
-        static List<string> Kortleser_ID = new List<string>() { "A323", "B434", "D453", "F117" };
+        static List<string> Kortleser_ID = new List<string>() { "A323"};
         static int index = 0;
 
         private Form activeForm;
