@@ -20,6 +20,7 @@ namespace Adgangskontroll_Kortleser
         static string kortID;
         string data = "";
         int råDørÅpen = 0;
+        int råDørLåst = 0;
         static string kortleserID;
         List<int> kodeinput = new List<int>();
         SerialPort sp;
@@ -184,11 +185,22 @@ namespace Adgangskontroll_Kortleser
         void VisDør(string enMelding)
         {
             int indeksStart = enMelding.IndexOf('E');
+            råDørLåst = Convert.ToInt32(enMelding.Substring(indeksStart + 6, 1));
             råDørÅpen = Convert.ToInt32(enMelding.Substring(indeksStart + 7, 1));
             if (råDørÅpen == 1)
-                label1.Text = "Åpen";
+            {
+                iPB_DoorOpen.Show();
+                iPB_DoorOpen.BringToFront();
+                iPB_DoorLocked.Hide();
+            }
             else
-                label1.Text = "Lukket";
+            {
+                iPB_DoorLocked.Show();
+                iPB_DoorLocked.BringToFront();
+                iPB_DoorOpen.Hide();
+            }
+            // Endre til picturebox.show osv...
+
         }
         public bool godkjenning(int BrukerPin)
         {
@@ -354,26 +366,16 @@ namespace Adgangskontroll_Kortleser
             //iPB_Unlock.Show();
             //iPB_Unlock.BringToFront();
             //iPB_Lock.Hide();
-            
-            if (råDørÅpen == 0)
-                SendEnMelding("$O61", sp);
-            else
-                SendEnMelding("$O60", sp);
 
-            iPB_DoorOpen.Show();
-            iPB_DoorOpen.BringToFront();
-            iPB_DoorLocked.Hide();
+            if (råDørÅpen == 0) 
+                SendEnMelding("$O61", sp);
+
         }
 
         private void BTN_Lukk_Click(object sender, EventArgs e)
         {
-            iPB_Lock.Show();
-            iPB_Lock.BringToFront();
-            iPB_Unlock.Hide();
-
-            iPB_DoorLocked.Show();
-            iPB_DoorLocked.BringToFront();
-            iPB_DoorOpen.Hide();
+            if (råDørÅpen == 1)
+                SendEnMelding("$O60", sp);
         }
 
         private void Kortleser_FormClosing(object sender, FormClosingEventArgs e)

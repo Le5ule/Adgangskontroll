@@ -48,7 +48,6 @@ namespace Adgangskontroll_Kortleser
             BW_SendKvittering = new System.ComponentModel.BackgroundWorker();
             Panel_KortLeser = new Panel();
             label2 = new Label();
-
             BTN_Åpne = new Button();
             BTN_Lukk = new Button();
             Label_ID = new Label();
@@ -56,17 +55,18 @@ namespace Adgangskontroll_Kortleser
             iPB_Unlock = new FontAwesome.Sharp.IconPictureBox();
             iPB_DoorLocked = new FontAwesome.Sharp.IconPictureBox();
             iPB_DoorOpen = new FontAwesome.Sharp.IconPictureBox();
+            labelÅpen = new Label();
+            labelLåst = new Label();
+            bwSjekkForData = new System.ComponentModel.BackgroundWorker();
             Panel_KortLeser.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)iPB_Lock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)iPB_Unlock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)iPB_DoorLocked).BeginInit();
             ((System.ComponentModel.ISupportInitialize)iPB_DoorOpen).BeginInit();
-
             SuspendLayout();
             // 
             // TB_MottakFraSentral
             // 
-
             TB_MottakFraSentral.Location = new Point(490, 205);
             TB_MottakFraSentral.Name = "TB_MottakFraSentral";
             TB_MottakFraSentral.Size = new Size(222, 23);
@@ -219,7 +219,7 @@ namespace Adgangskontroll_Kortleser
             // 
             BW_SendKvittering.DoWork += BW_SendKvittering_DoWork;
             BW_SendKvittering.RunWorkerCompleted += BW_SendKvittering_RunWorkerCompleted;
-            //
+            // 
             // Panel_KortLeser
             // 
             Panel_KortLeser.BackColor = SystemColors.WindowFrame;
@@ -275,7 +275,7 @@ namespace Adgangskontroll_Kortleser
             Label_ID.AutoSize = true;
             Label_ID.Location = new Point(300, 86);
             Label_ID.Name = "Label_ID";
-            Label_ID.Size = new Size(67, 20);
+            Label_ID.Size = new Size(52, 15);
             Label_ID.TabIndex = 48;
             Label_ID.Text = "\"Dør-ID\"";
             // 
@@ -335,11 +335,34 @@ namespace Adgangskontroll_Kortleser
             iPB_DoorOpen.TabIndex = 52;
             iPB_DoorOpen.TabStop = false;
             // 
+            // labelÅpen
+            // 
+            labelÅpen.AutoSize = true;
+            labelÅpen.Location = new Point(314, 248);
+            labelÅpen.Name = "labelÅpen";
+            labelÅpen.Size = new Size(0, 15);
+            labelÅpen.TabIndex = 53;
+            // 
+            // labelLåst
+            // 
+            labelLåst.AutoSize = true;
+            labelLåst.Location = new Point(236, 248);
+            labelLåst.Name = "labelLåst";
+            labelLåst.Size = new Size(0, 15);
+            labelLåst.TabIndex = 54;
+            // 
+            // bwSjekkForData
+            // 
+            bwSjekkForData.DoWork += bwSjekkForData_DoWork_1;
+            bwSjekkForData.RunWorkerCompleted += bwSjekkForData_RunWorkerCompleted_1;
+            // 
             // Kortleser
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(810, 289);
+            Controls.Add(labelLåst);
+            Controls.Add(labelÅpen);
             Controls.Add(BTN_Lukk);
             Controls.Add(Label_ID);
             Controls.Add(BTN_Åpne);
@@ -391,5 +414,8 @@ namespace Adgangskontroll_Kortleser
         private FontAwesome.Sharp.IconPictureBox iPB_Unlock;
         private FontAwesome.Sharp.IconPictureBox iPB_DoorLocked;
         private FontAwesome.Sharp.IconPictureBox iPB_DoorOpen;
+        private Label labelÅpen;
+        private Label labelLåst;
+        private System.ComponentModel.BackgroundWorker bwSjekkForData;
     }
 }

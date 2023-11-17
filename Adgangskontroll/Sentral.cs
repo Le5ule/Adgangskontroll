@@ -229,7 +229,8 @@ namespace Adgangskontroll_Sentral
             foreach (string kortleser in Kortleser_ID)
             {
                 //Må endre til bane for Kortleser.exe
-                Process.Start("C:\\Users\\leand\\OneDrive - Høgskulen på Vestlandet\\ELE 301\\Prosjektoppgave\\Adgangskontroll\\Kortleser\\bin\\Debug\\net7.0-windows\\Kortleser.exe");
+                //Process.Start("C:\\Users\\leand\\OneDrive - Høgskulen på Vestlandet\\ELE 301\\Prosjektoppgave\\Adgangskontroll\\Kortleser\\bin\\Debug\\net7.0-windows\\Kortleser.exe");
+                Process.Start("C:\\Users\\steff\\source\\repos\\Adgangskontroll\\Kortleser\\bin\\Debug\\net7.0-windows\\Kortleser.exe");
                 KobleTilKortleser();
             }
             BTN_Start.Enabled = false;
