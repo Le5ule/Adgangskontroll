@@ -17,7 +17,7 @@ namespace Sentral
         {
             InitializeComponent();
         }
-
+        //må gå gjennom å reformaterer alle inputs, gjør det slik at det matcher som i database.cs
         private void BTN_LeggTil_Click(object sender, EventArgs e)
         {
             string fnavn = TB_Fnavn.Text;
