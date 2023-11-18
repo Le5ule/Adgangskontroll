@@ -41,6 +41,8 @@
             lbl_ID = new Label();
             lbl_seksjon = new Label();
             BTN_endre = new Button();
+            BTN_SlettLesere = new Button();
+            BTN_Slett = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -75,7 +77,7 @@
             BTN_VisLesere.BackColor = SystemColors.GradientActiveCaption;
             BTN_VisLesere.FlatAppearance.BorderSize = 0;
             BTN_VisLesere.FlatStyle = FlatStyle.Flat;
-            BTN_VisLesere.Location = new Point(401, 35);
+            BTN_VisLesere.Location = new Point(538, 35);
             BTN_VisLesere.Name = "BTN_VisLesere";
             BTN_VisLesere.Size = new Size(125, 29);
             BTN_VisLesere.TabIndex = 3;
@@ -188,11 +190,38 @@
             BTN_endre.Visible = false;
             BTN_endre.Click += BTN_endre_Click;
             // 
+            // BTN_SlettLesere
+            // 
+            BTN_SlettLesere.BackColor = SystemColors.GradientActiveCaption;
+            BTN_SlettLesere.FlatAppearance.BorderSize = 0;
+            BTN_SlettLesere.FlatStyle = FlatStyle.Flat;
+            BTN_SlettLesere.Location = new Point(401, 35);
+            BTN_SlettLesere.Name = "BTN_SlettLesere";
+            BTN_SlettLesere.Size = new Size(116, 29);
+            BTN_SlettLesere.TabIndex = 14;
+            BTN_SlettLesere.Text = "Slett kortlesere";
+            BTN_SlettLesere.UseVisualStyleBackColor = false;
+            BTN_SlettLesere.Click += BTN_SlettLesere_Click;
+            // 
+            // BTN_Slett
+            // 
+            BTN_Slett.BackColor = SystemColors.GradientActiveCaption;
+            BTN_Slett.Location = new Point(182, 117);
+            BTN_Slett.Name = "BTN_Slett";
+            BTN_Slett.Size = new Size(92, 29);
+            BTN_Slett.TabIndex = 15;
+            BTN_Slett.Text = "Slett";
+            BTN_Slett.UseVisualStyleBackColor = false;
+            BTN_Slett.Visible = false;
+            BTN_Slett.Click += BTN_Slett_Click;
+            // 
             // MenyKortlesere
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(859, 505);
+            Controls.Add(BTN_Slett);
+            Controls.Add(BTN_SlettLesere);
             Controls.Add(BTN_endre);
             Controls.Add(lbl_seksjon);
             Controls.Add(lbl_ID);
@@ -228,5 +257,7 @@
         private Label lbl_ID;
         private Label lbl_seksjon;
         private Button BTN_endre;
+        private Button BTN_SlettLesere;
+        private Button BTN_Slett;
     }
 }
