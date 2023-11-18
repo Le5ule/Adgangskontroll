@@ -30,7 +30,7 @@ select * from bruker
 select * from log where kort_id = 'x' and (log_type = 0 or log_type = 1 or log_type = 2) and log_tid between 'start_date' and 'end_date'
 
 -- liste alle innpasseringsforsøk for en dør med ikke-godkjent adgang (uansett bruker) mellom to datoer
-select * from log where log_type = 1 and log_tid between 'start_date' and 'end_date'
+select * from log where kortleser_id = 'kortleser_id' log_type = 1 and log_tid between 'start_date' and 'end_date'
 
 --liste alle kort_id med over 10 ikke godkjente log_type = 1
 select log.log_type, log.kort_id from log
@@ -83,7 +83,7 @@ insert into kortleser values ('kortleser_id', 'seksjon_id', 'plass')
 
 --endre kortleser(kortleser_id, seksjon_id, plass)
 update kortleser
-set kortleser_id = 'kortleser_id', seksjon_id = 'seksjon_id', plass = 'plass'
+set seksjon_id = 'seksjon_id', plass = 'plass'
 where kortleser_id = 'kortleser_id'
 
 -- slett kortleser
