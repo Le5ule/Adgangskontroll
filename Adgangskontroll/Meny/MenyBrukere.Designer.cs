@@ -46,6 +46,10 @@
             BTN_Endre = new Button();
             TB_Seksjon = new TextBox();
             lbl_Seksjon = new Label();
+            BTN_SlettBrukere = new Button();
+            BTN_Slett = new Button();
+            lbl_ID_2 = new Label();
+            TB_ID_2 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -85,7 +89,7 @@
             BTN_VisBrukere.BackColor = SystemColors.GradientActiveCaption;
             BTN_VisBrukere.FlatAppearance.BorderSize = 0;
             BTN_VisBrukere.FlatStyle = FlatStyle.Flat;
-            BTN_VisBrukere.Location = new Point(407, 35);
+            BTN_VisBrukere.Location = new Point(547, 35);
             BTN_VisBrukere.Name = "BTN_VisBrukere";
             BTN_VisBrukere.Size = new Size(94, 29);
             BTN_VisBrukere.TabIndex = 14;
@@ -237,11 +241,60 @@
             lbl_Seksjon.Text = "Seksjon:";
             lbl_Seksjon.Visible = false;
             // 
+            // BTN_SlettBrukere
+            // 
+            BTN_SlettBrukere.BackColor = SystemColors.GradientActiveCaption;
+            BTN_SlettBrukere.FlatAppearance.BorderSize = 0;
+            BTN_SlettBrukere.FlatStyle = FlatStyle.Flat;
+            BTN_SlettBrukere.Location = new Point(407, 35);
+            BTN_SlettBrukere.Name = "BTN_SlettBrukere";
+            BTN_SlettBrukere.Size = new Size(113, 29);
+            BTN_SlettBrukere.TabIndex = 32;
+            BTN_SlettBrukere.Text = "Slett brukere";
+            BTN_SlettBrukere.UseVisualStyleBackColor = false;
+            BTN_SlettBrukere.Click += BTN_SlettBrukere_Click;
+            // 
+            // BTN_Slett
+            // 
+            BTN_Slett.BackColor = SystemColors.GradientActiveCaption;
+            BTN_Slett.FlatAppearance.BorderSize = 0;
+            BTN_Slett.FlatStyle = FlatStyle.Flat;
+            BTN_Slett.Location = new Point(134, 120);
+            BTN_Slett.Name = "BTN_Slett";
+            BTN_Slett.Size = new Size(66, 29);
+            BTN_Slett.TabIndex = 35;
+            BTN_Slett.Text = "Slett";
+            BTN_Slett.UseVisualStyleBackColor = false;
+            BTN_Slett.Visible = false;
+            BTN_Slett.Click += BTN_Slett_Click;
+            // 
+            // lbl_ID_2
+            // 
+            lbl_ID_2.AutoSize = true;
+            lbl_ID_2.Location = new Point(51, 95);
+            lbl_ID_2.Name = "lbl_ID_2";
+            lbl_ID_2.Size = new Size(27, 20);
+            lbl_ID_2.TabIndex = 34;
+            lbl_ID_2.Text = "ID:";
+            lbl_ID_2.Visible = false;
+            // 
+            // TB_ID_2
+            // 
+            TB_ID_2.Location = new Point(51, 122);
+            TB_ID_2.Name = "TB_ID_2";
+            TB_ID_2.Size = new Size(64, 27);
+            TB_ID_2.TabIndex = 33;
+            TB_ID_2.Visible = false;
+            // 
             // MenyBrukere
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(868, 475);
+            Controls.Add(BTN_Slett);
+            Controls.Add(lbl_ID_2);
+            Controls.Add(TB_ID_2);
+            Controls.Add(BTN_SlettBrukere);
             Controls.Add(lbl_Seksjon);
             Controls.Add(TB_Seksjon);
             Controls.Add(BTN_Endre);
@@ -287,5 +340,9 @@
         private Button BTN_Endre;
         private TextBox TB_Seksjon;
         private Label lbl_Seksjon;
+        private Button BTN_SlettBrukere;
+        private Button BTN_Slett;
+        private Label lbl_ID_2;
+        private TextBox TB_ID_2;
     }
 }

@@ -1,0 +1,10 @@
+notasjon-db-adgangskontroller
+
+log_type
+
+0 : adgang forsøk positiv (inkluderer alle forsøk som gikk ok) 
+1 : adgang forsøk negativ (inkluderer alle forsøk som ikke gikk ok, uansett grunn/hvor i valid prossesen det feilet)
+2 : dør åpnet (alle ganger en dør åpnes)
+	sjekk notat
+3 : dør åpen for lenge (etter en hvis tid etter døren er åpnet skal den være lukket, om dette ikke skjer går alarm kode 3)
+4 : dør brytt opp (om det måles at døren har blitt brutt opp går denne alarmen.

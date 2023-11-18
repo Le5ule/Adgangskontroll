@@ -14,7 +14,7 @@ namespace Adgangskontroll_Sentral
     {
         Database db = new Database();
 
-        static string kobling;      // var ment til å bestå av en stren variabler som ikke er deklarert,
+        static string kobling;      // var ment til å bestå av en streng variabler som ikke er deklarert,
                                     // for å enkelt endre kobling til database
 
         static List<string> Kortleser_ID = new List<string>() { "A323" }; //Oppdater denne listen med så mange kortleser-IDer vi trenger
@@ -167,6 +167,7 @@ namespace Adgangskontroll_Sentral
             {
                 byte[] dataSomBytes = new byte[1024];
                 int recv = s.Receive(dataSomBytes);
+                // kan man også lage en egen if-setning for tekststrengen som inneholder innloggingsdetaljene?
                 if (recv > 0)
                 {
                     svar = Encoding.ASCII.GetString(dataSomBytes, 0, recv);
