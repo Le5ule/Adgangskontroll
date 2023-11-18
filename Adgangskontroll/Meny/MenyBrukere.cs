@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,6 +14,7 @@ namespace Sentral
     public partial class MenyBrukere : Form
     {
         Database db = new Database();
+        static bool Avbryt = false;
         public MenyBrukere()
         {
             InitializeComponent();
@@ -23,9 +25,10 @@ namespace Sentral
             string fnavn = TB_Fnavn.Text;
             string enavn = TB_Enavn.Text;
             string id = TB_ID.Text;
+            string seksjon = TB_Seksjon.Text;
             DateTime gyldigfra = dtGyldigFra.Value;
             DateTime gyldigtil = dtGyldigTil.Value;
-            db.LeggTilNyBruker(fnavn, enavn, id, gyldigfra, gyldigtil);
+            db.LeggTilNyBruker(fnavn, enavn, id, seksjon, gyldigfra, gyldigtil);
             TB_Fnavn.Clear();
             TB_Enavn.Clear();
             TB_ID.Clear();
@@ -35,9 +38,10 @@ namespace Sentral
             string fnavn = TB_Fnavn.Text;
             string enavn = TB_Enavn.Text;
             string id = TB_ID.Text;
+            string seksjon = TB_Seksjon.Text;
             DateTime gyldigfra = dtGyldigFra.Value;
             DateTime gyldigtil = dtGyldigTil.Value;
-            db.EndreBruker(fnavn, enavn, id, gyldigfra, gyldigtil);
+            db.EndreBruker(fnavn, enavn, id, seksjon, gyldigfra, gyldigtil);
             TB_Fnavn.Clear();
             TB_Enavn.Clear();
             TB_ID.Clear();
@@ -97,6 +101,31 @@ namespace Sentral
             BTN_LeggTil.Visible = true;
             BTN_Endre.Visible = false;
             dataGridView.Visible = false;
+        }
+
+        private void BTN_SlettBrukere_Click(object sender, EventArgs e)
+        {
+            TB_ID_2.Visible = true;
+            lbl_ID_2.Visible = true;
+            BTN_Slett.Visible = true;
+        }
+
+        private void BTN_Slett_Click(object sender, EventArgs e)
+        {
+            if (!Avbryt)
+            {
+                var result = MessageBox.Show("Er du sikker på at du vil fjerne denne brukeren?", "Fjerne bruker " + TB_ID_2.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                // Hvis man trykket "nei"
+                if (result == DialogResult.No)
+                {
+
+                }
+                else if (result == DialogResult.Yes)
+                {
+                    db.SlettBruker(TB_ID_2.Text);
+                }
+            }
         }
     }
 }
