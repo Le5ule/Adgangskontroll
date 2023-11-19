@@ -17,7 +17,7 @@ namespace Adgangskontroll_Sentral
         static string kobling;      // var ment til å bestå av en streng variabler som ikke er deklarert,
                                     // for å enkelt endre kobling til database
 
-        static List<string> Kortleser_ID = new List<string>() { "A323" }; //Oppdater denne listen med så mange kortleser-IDer vi trenger
+        static List<string> Kortleser_ID = new List<string>() { "0001" }; //Oppdater denne listen med så mange kortleser-IDer vi trenger
         static int index = 0;
 
         private Form activeForm;
@@ -137,7 +137,43 @@ namespace Adgangskontroll_Sentral
                     //rotete kode her, men det funker foreløpig  
                     //legg også inn egen if-setning for COM-port
                     //legg også inn en der dataFraKortleser == "alarm" -> MessageBox.Show("Alarm aktivert"); eller noe sånt
-                    if (dataFraKortleser == "RequestID")
+                    if (dataFraKortleser.Length == 20)
+                    {
+                        int indeksKort = dataFraKortleser.IndexOf('K');
+                        int indeksPin = dataFraKortleser.IndexOf('P');
+                        int indeksLeser = dataFraKortleser.IndexOf('L');
+                        string Kort_ID = dataFraKortleser.Substring(indeksKort + 2, 4);
+                        string pin = dataFraKortleser.Substring(indeksPin + 2, 4);
+                        string kortleser_id = dataFraKortleser.Substring(indeksLeser + 2, 4);
+
+                        dataTilKortleser = db.Autentisering(Kort_ID, pin, kortleser_id);
+
+                        if (dataTilKortleser == "Godkjent") db.LeggTilLogg(0, kortleser_id, Kort_ID);   //Loggfører godkjent
+                        else db.LeggTilLogg(1, kortleser_id, Kort_ID);  //loggfører ikke godkjent
+                    }
+                    else if (dataFraKortleser.Length == 14)
+                    {
+                        int indeksKort = dataFraKortleser.IndexOf('K');
+                        int indeksLeser = dataFraKortleser.IndexOf('L');
+                        string Kort_ID = dataFraKortleser.Substring(indeksKort + 2, 4);
+                        string kortleser_id = dataFraKortleser.Substring(indeksLeser + 2, 4);
+
+                        db.LeggTilLogg(2, kortleser_id, Kort_ID);
+                        dataTilKortleser = "trash";
+                    }
+                    else if (dataFraKortleser.Length == 17)     // alarm
+                    {
+                        int indeksKort = dataFraKortleser.IndexOf('K');
+                        int indeksLeser = dataFraKortleser.IndexOf('L');
+                        int indeksAlarm = dataFraKortleser.IndexOf('A');
+                        string Kort_ID = dataFraKortleser.Substring(indeksKort + 2, 4);
+                        string kortleser_id = dataFraKortleser.Substring(indeksLeser + 2, 4);
+                        int alarm = Convert.ToInt32(dataFraKortleser.Substring(indeksAlarm + 2, 1));
+
+                        db.LeggTilLogg(alarm, kortleser_id, Kort_ID);
+                        dataTilKortleser = "trash";
+                    }
+                    else if (dataFraKortleser == "RequestID")
                     {
                         if (Kortleser_ID.Count != index)
                         {
@@ -224,10 +260,10 @@ namespace Adgangskontroll_Sentral
 
         //private void Start_Click(object sender, EventArgs e)
         //{
-              //***
+        //***
         //    //endre til at vi åpner ny kortleser i debug, og dermed ikke foreach, men ID sendes med listen
         //    //der index vil øke for hver gang
-              //***
+        //***
 
         //    foreach (string kortleser in Kortleser_ID)
         //    {

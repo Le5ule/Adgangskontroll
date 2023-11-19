@@ -291,7 +291,7 @@ namespace Adgangskontroll_Kortleser
             iPB_Unlock.IconColor = SystemColors.ControlText;
             iPB_Unlock.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iPB_Unlock.IconSize = 55;
-            iPB_Unlock.Location = new Point(271, 145);
+            iPB_Unlock.Location = new Point(270, 148);
             iPB_Unlock.Margin = new Padding(3, 4, 3, 4);
             iPB_Unlock.Name = "iPB_Unlock";
             iPB_Unlock.Size = new Size(55, 64);

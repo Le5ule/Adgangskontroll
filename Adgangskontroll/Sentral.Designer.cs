@@ -38,12 +38,8 @@
             BTN_LukkMenyVindu = new FontAwesome.Sharp.IconButton();
             lbl_Tittel = new Label();
             PanelForms = new Panel();
-            textBox1 = new TextBox();
-            button1 = new Button();
-            label1 = new Label();
             PanelMeny.SuspendLayout();
             panelBar.SuspendLayout();
-            PanelForms.SuspendLayout();
             SuspendLayout();
             // 
             // PanelMeny
@@ -189,42 +185,11 @@
             // 
             // PanelForms
             // 
-            PanelForms.Controls.Add(label1);
-            PanelForms.Controls.Add(textBox1);
-            PanelForms.Controls.Add(button1);
             PanelForms.Dock = DockStyle.Fill;
             PanelForms.Location = new Point(195, 100);
             PanelForms.Name = "PanelForms";
             PanelForms.Size = new Size(876, 470);
             PanelForms.TabIndex = 14;
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(90, 95);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(125, 27);
-            textBox1.TabIndex = 2;
-            // 
-            // button1
-            // 
-            button1.BackColor = SystemColors.GradientActiveCaption;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Location = new Point(90, 60);
-            button1.Name = "button1";
-            button1.Size = new Size(167, 29);
-            button1.TabIndex = 1;
-            button1.Text = "Velg COM-port";
-            button1.UseVisualStyleBackColor = false;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(154, 140);
-            label1.Name = "label1";
-            label1.Size = new Size(287, 20);
-            label1.TabIndex = 3;
-            label1.Text = "Få dette til å funke på en eller annen måte";
             // 
             // Sentral
             // 
@@ -240,8 +205,6 @@
             PanelMeny.ResumeLayout(false);
             panelBar.ResumeLayout(false);
             panelBar.PerformLayout();
-            PanelForms.ResumeLayout(false);
-            PanelForms.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -257,8 +220,5 @@
         private FontAwesome.Sharp.IconButton iBTN_Kortlesere;
         private Label lbl_Tittel;
         private FontAwesome.Sharp.IconButton BTN_LukkMenyVindu;
-        private Button button1;
-        private TextBox textBox1;
-        private Label label1;
     }
 }

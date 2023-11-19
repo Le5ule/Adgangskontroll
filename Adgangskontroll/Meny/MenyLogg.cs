@@ -82,7 +82,8 @@ namespace Sentral
 
         private void BTN_VisAlleHendelser_Click(object sender, EventArgs e)
         {
-            //dataGridView.DataSource = db.Historikk();     // altså alle entries i loggen...---
+            dataGridView1.Visible = true;
+            dataGridView1.DataSource = db.VisLogg();     // altså alle entries i loggen...---
         }
 
         private void BTN_VisBrukerAlarm_Click(object sender, EventArgs e)

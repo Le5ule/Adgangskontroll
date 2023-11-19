@@ -20,7 +20,7 @@ namespace Sentral
         private static NpgsqlCommand vCmd;
 
         // legg inn din informasjon her for kobling mot din database
-        static string kobling = "server=129.151.221.119 ; port=5432 ; user id=595672 ; password=Ha1FinDagIDag! ; database=595672 ;";
+        static string kobling = "server=129.151.221.119 ; port=5432 ; user id=596237 ; password=Ha1FinDagIDag! ; database=596237 ;";
 
 
         public static NpgsqlCommand VCmd
@@ -71,25 +71,24 @@ namespace Sentral
 
             return dt;
         }
+      
 
         //validerings prossesen, den tar in kort_id, pin og kortleser_id. sjekker om pin matcher kort_id, om kort_id er innenfor gyldighetsperioden og om kort_id har tilgang til kortleser_id
         //om prossesen feiler returnerer den blankt, om den er er ok returnerer den en rad med bruker og kortleser (den informasjonen som ble sendt inn) spleiset sammen
         public string Autentisering(string kort_id, string pin, string kortleser_id) //login er dette samme som validate for åpning av dør? + sjekk om id og pin skal være string?
         {
             string suksess;
-            string query = ($"select * from tilgangrelasjon join bruker on tilgangrelasjon.tilgang_id = bruker.tilgang_id join kortleser on tilgangrelasjon.seksjon_id = kortleser.seksjon_id where kort_id = {kort_id} and pin = {pin} and kortleser_id = {kortleser_id} and CURRENT_DATE between gyldighet_start and gyldighet_slutt");
+            string query = ($"select * from tilgangrelasjon join bruker on tilgangrelasjon.tilgang_id = bruker.tilgang_id join kortleser on tilgangrelasjon.seksjon_id = kortleser.seksjon_id where kort_id = '{kort_id}' and pin = '{pin}' and kortleser_id = '{kortleser_id}' and CURRENT_DATE between gyldighet_start and gyldighet_slutt;");
             VCmd = new NpgsqlCommand(query, VCon);
 
             using NpgsqlDataReader reader = VCmd.ExecuteReader();
             if (reader.Read())
             {
                 suksess = "Godkjent";    //dataTilKortleser
-                //loggfør hendelse
             }
             else
             {
                 suksess = "Ikke godkjent";       //dataTilKortleser
-                //loggfør hendelse
             }
             return suksess; //dataTilKortleser
         }
@@ -153,9 +152,10 @@ namespace Sentral
 
 
         //danner og legger inn en rad i log databasen
-        public DataTable LeggTilLogg(int logg_type, DateTime logg_tid, string kortleser_id, string kort_id)
+        public DataTable LeggTilLogg(int logg_type, string kortleser_id, string kort_id)
         {
-            dtgetData = getData($"insert into log values ({logg_type}, {logg_tid}, {kortleser_id}, {kort_id});");
+            
+            dtgetData = getData($"insert into logg values ({logg_type}, CURRENT_DATE, '{kortleser_id}', '{kort_id}');");
             DataTable dt = dtgetData;
 
             return dt;
@@ -164,7 +164,7 @@ namespace Sentral
         //for mer informasjon om log_type se adgangskontroller-DB-notasjon.txt
         public DataTable VisSisteLogg(int logg_type, DateTime logg_tid, string kortleser_id, int kort_id)
         {
-            dtgetData = getData($"SELECt * FROM log where kortleser_id = {kortleser_id} ORDER BY log_tid DESC limit 1");
+            dtgetData = getData($"SELECt * FROM logg where kortleser_id = {kortleser_id} ORDER BY log_tid DESC limit 1");
             DataTable dt = dtgetData;
 
             return dt;
@@ -199,7 +199,7 @@ namespace Sentral
         //liste adgangslogg (inkludert forsøk på adgang) på grunnlag av kort_id mellom to datoer
         public DataTable VisAdgangsloggForBrukerVedDato(string kort_id, DateTime start, DateTime slutt)
         {
-            dtgetData = getData($"select * from log where kort_id = {kort_id} and (log_type = 0 or log_type = 1 or log_type = 2) and log_tid between {start} and {slutt}");
+            dtgetData = getData($"select * from logg where kort_id = {kort_id} and (log_type = 0 or log_type = 1 or log_type = 2) and log_tid between {start} and {slutt}");
             DataTable dt = Database.DtgetData;
 
             return dt;
@@ -207,7 +207,7 @@ namespace Sentral
         //liste alle innpasseringsforsøk for en dør med ikke-godkjent adgang (uansett bruker) mellom to datoer
         public DataTable VisNegativAdgangsloggKortleserVedDato(string kortleser_id, DateTime start, DateTime slutt)
         {
-            dtgetData = getData($"select * from log where kortleser_id = {kortleser_id} and log_type = 1 and log_tid between {start} and {slutt}");
+            dtgetData = getData($"select * from logg where kortleser_id = {kortleser_id} and log_type = 1 and log_tid between {start} and {slutt}");
             DataTable dt = Database.DtgetData;
 
             return dt;
@@ -215,7 +215,7 @@ namespace Sentral
         //liste av alarmer
         public DataTable VisAlarm()
         {
-            dtgetData = getData($"select * from log where (log_type = 3 or log_type = 2)");
+            dtgetData = getData($"select * from logg where (log_type = 3 or log_type = 2)");
             DataTable dt = Database.DtgetData;
 
             return dt;
@@ -223,7 +223,7 @@ namespace Sentral
         //liste av alarmer ved kort_id
         public DataTable VisAlarmVedBruker(string kort_id)
         {
-            dtgetData = getData($"select * from log where (log_type = 3 or log_type = 2) and kort_id = {kort_id}");
+            dtgetData = getData($"select * from logg where (log_type = 3 or log_type = 2) and kort_id = {kort_id}");
             DataTable dt = Database.DtgetData;
 
             return dt;
@@ -231,7 +231,7 @@ namespace Sentral
         //liste av alarmer ved kortleser_id
         public DataTable VisAlarmVedKortleser(string kortleser_id)
         {
-            dtgetData = getData($"select * from log where (log_type = 3 or log_type = 2) and kortleser_id = {kortleser_id}");
+            dtgetData = getData($"select * from logg where (log_type = 3 or log_type = 2) and kortleser_id = {kortleser_id}");
             DataTable dt = Database.DtgetData;
 
             return dt;
@@ -239,15 +239,15 @@ namespace Sentral
         //liste av alarmer mellom to datoer
         public DataTable VisAlarmVedDato(DateTime start, DateTime slutt)
         {
-            dtgetData = getData($"select * from log where (log_type = 3 or log_type = 2) and log_tid between {start} and {slutt}");
+            dtgetData = getData($"select * from logg where (log_type = 3 or log_type = 2) and log_tid between {start} and {slutt}");
             DataTable dt = Database.DtgetData;
 
             return dt;
         }
         //liste alle entries log 
-        public DataTable VisLog()
+        public DataTable VisLogg()
         {
-            dtgetData = getData($"select * from log");
+            dtgetData = getData($"select * from logg");
             DataTable dt = Database.DtgetData;
 
             return dt;
@@ -255,7 +255,7 @@ namespace Sentral
         //liste alle entries log basert på kort_id
         public DataTable VisLogVedBruker(string kort_id)
         {
-            dtgetData = getData($"select * from log where kort_id = {kort_id}");
+            dtgetData = getData($"select * from logg where kort_id = {kort_id}");
             DataTable dt = Database.DtgetData;
 
             return dt;
@@ -263,7 +263,7 @@ namespace Sentral
         //liste alle entries log basert på kortleser_id
         public DataTable VisLogVedKortleser(string kortleser_id)
         {
-            dtgetData = getData($"select * from log where kortleser_id = {kortleser_id}");
+            dtgetData = getData($"select * from logg where kortleser_id = {kortleser_id}");
             DataTable dt = Database.DtgetData;
 
             return dt;
