@@ -264,7 +264,7 @@ namespace Adgangskontroll_Kortleser
             Label_ID.AutoSize = true;
             Label_ID.Location = new Point(343, 115);
             Label_ID.Name = "Label_ID";
-            Label_ID.Size = new Size(67, 20);
+            Label_ID.Size = new Size(52, 15);
             Label_ID.TabIndex = 48;
             Label_ID.Text = "\"Dør-ID\"";
             // 
@@ -333,6 +333,7 @@ namespace Adgangskontroll_Kortleser
             bwSjekkForData.DoWork += bwSjekkForData_DoWork_1;
             bwSjekkForData.RunWorkerCompleted += bwSjekkForData_RunWorkerCompleted_1;
             // 
+
             // Kortleser
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);

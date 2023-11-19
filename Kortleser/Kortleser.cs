@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.IO.Ports;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.VisualBasic;
 
 namespace Adgangskontroll_Kortleser
 {
@@ -19,8 +20,14 @@ namespace Adgangskontroll_Kortleser
         static string kortID;
         static string kortleserID;
         string data = "";
+        string COMPort = "";
         int råDørÅpen = 0;
-        
+        int råDørLåst = 0;
+        int potensiometer = 0;
+        int sekDørÅpen = 0;
+        int alarm = 0;
+        static string kortleserID;
+
         List<int> kodeinput = new List<int>();
         SerialPort sp;
 
@@ -66,7 +73,8 @@ namespace Adgangskontroll_Kortleser
             }
 
             //Kobling til Simsim
-            sp = new SerialPort("COM3", 9600);
+            COMPort = Interaction.InputBox("Skriv in COM Port nr", "COM Port");
+            sp = new SerialPort(COMPort, 9600);
 
             try
             {
@@ -79,6 +87,7 @@ namespace Adgangskontroll_Kortleser
 
             if (sp.IsOpen)
             {
+                SendEnMelding("$S001", sp);
                 bwSjekkForData.RunWorkerAsync();
             }
 
@@ -191,13 +200,55 @@ namespace Adgangskontroll_Kortleser
         void VisDør(string enMelding)
         {
             int indeksStart = enMelding.IndexOf('E');
+            råDørLåst = Convert.ToInt32(enMelding.Substring(indeksStart + 6, 1));
             råDørÅpen = Convert.ToInt32(enMelding.Substring(indeksStart + 7, 1));
-            // Endre til picturebox.show osv...
-            //if (råDørÅpen == 1)
-            //    //label1.Text = "Åpen";
-            //else
-            //    //label1.Text = "Lukket";
+            if (råDørLåst == 1)
+            {
+                iPB_Unlock.Show();
+                iPB_Unlock.BringToFront();
+                iPB_Lock.Hide();
+            }
+            else
+            {
+                iPB_Lock.Show();
+                iPB_Lock.BringToFront();
+                iPB_Unlock.Hide();
+            }
+            if (råDørÅpen == 1)
+            {
+                iPB_DoorOpen.Show();
+                iPB_DoorOpen.BringToFront();
+                iPB_DoorLocked.Hide();
+            }
+            else
+            {
+                iPB_DoorLocked.Show();
+                iPB_DoorLocked.BringToFront();
+                iPB_DoorOpen.Hide();
+            }
         }
+        //alarm funksjon
+        void Alarm(string enMelding)
+            {
+            if (sekDørÅpen > 5)
+            {
+                SendEnMelding("$O71", sp);
+                alarm = 1;
+            }
+            int indeksStart = enMelding.IndexOf('G');
+            potensiometer = Convert.ToInt32(enMelding.Substring(indeksStart + 1, 4));
+            if (potensiometer > 500)
+            {
+                SendEnMelding("$O61", sp);
+                SendEnMelding("$O71", sp);
+                alarm = 2;
+            }
+            if (potensiometer < 500 && sekDørÅpen < 5)
+            {
+                SendEnMelding("$O70", sp);
+                alarm = 0;
+            }
+            }
         public bool godkjenning(int BrukerPin)
         {
             bool svar = false;
@@ -329,39 +380,41 @@ namespace Adgangskontroll_Kortleser
             if (EnHelMeldingMotatt(data))
             {
                 string enMelding = HentUtEnMelding(ref data);
-                VisDør(enMelding);
                 //label1.Text = enMelding;      //Dette var bare for å se hele rå dataen fra simsim
-
+                VisDør(enMelding);
+                Alarm(enMelding);
+                if(råDørÅpen == 1)
+                {
+                    sekDørÅpen++;
+                }
+                else
+                {
+                    sekDørÅpen = 0;
+                }
+                //if(alarm == 1)
+                //{
+                //    En funksjon for når alarmen går
+                //}
             }
             bwSjekkForData.RunWorkerAsync();
         }
         private void BTN_Åpne_Click(object sender, EventArgs e)
         {
-            // skal brukes i godkjenning av input
-
-            //iPB_Unlock.Show();
-            //iPB_Unlock.BringToFront();
-            //iPB_Lock.Hide();
-
-            if (råDørÅpen == 0)
+            if (råDørÅpen == 0 && råDørLåst == 1)
+            {
                 SendEnMelding("$O61", sp);
-            else
-                SendEnMelding("$O60", sp);
-
-            iPB_DoorOpen.Show();
-            iPB_DoorOpen.BringToFront();
-            iPB_DoorLocked.Hide();
+            }
         }
 
         private void BTN_Lukk_Click(object sender, EventArgs e)
         {
-            iPB_Lock.Show();
-            iPB_Lock.BringToFront();
-            iPB_Unlock.Hide();
-
-            iPB_DoorLocked.Show();
-            iPB_DoorLocked.BringToFront();
-            iPB_DoorOpen.Hide();
+            if (råDørÅpen == 1)
+            {
+                sekDørÅpen = 0;
+                SendEnMelding("$O60", sp);
+                SendEnMelding("$O50", sp);
+                SendEnMelding("$O70", sp);
+            }
         }
 
         private void Kortleser_FormClosing(object sender, FormClosingEventArgs e)
