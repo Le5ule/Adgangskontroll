@@ -116,6 +116,9 @@ namespace Adgangskontroll_Kortleser
                         BW_SendKvittering.RunWorkerAsync();
                         MessageBox.Show("Lokal info i kortleser:\n" + dataTilSentral);     //debug
                     }
+
+                    //if-setning som venter på å åpne dør, "blokkerende metode"
+
                     BTN_LesKort.Select();
                     kortID = "";
                     pin = "";

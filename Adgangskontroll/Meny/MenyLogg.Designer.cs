@@ -47,6 +47,7 @@
             DTP_til = new DateTimePicker();
             lbl_fra = new Label();
             lbl_til = new Label();
+            comboBox1 = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -259,11 +260,21 @@
             lbl_til.Text = "Fra:";
             lbl_til.Visible = false;
             // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "en", "to", "trr" });
+            comboBox1.Location = new Point(513, 48);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(151, 28);
+            comboBox1.TabIndex = 19;
+            // 
             // MenyLogg
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(886, 521);
+            Controls.Add(comboBox1);
             Controls.Add(lbl_til);
             Controls.Add(lbl_fra);
             Controls.Add(DTP_til);
@@ -311,5 +322,6 @@
         private DateTimePicker DTP_til;
         private Label lbl_fra;
         private Label lbl_til;
+        private ComboBox comboBox1;
     }
 }
