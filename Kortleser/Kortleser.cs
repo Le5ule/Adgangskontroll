@@ -116,9 +116,12 @@ namespace Adgangskontroll_Kortleser
                         BW_SendKvittering.RunWorkerAsync();
                         MessageBox.Show("Lokal info i kortleser:\n" + dataTilSentral);     //debug
                     }
-                    BTN_LesKort.Select();
-                    kortID = "";
-                    pin = "";
+
+                    //if-setning som venter på å åpne dør, "blokkerende metode"
+
+                    //BTN_LesKort.Select();
+                    //kortID = "";
+                    //pin = "";
                 }
             }
             catch (Exception)
@@ -332,6 +335,12 @@ namespace Adgangskontroll_Kortleser
             }
             bwSjekkForData.RunWorkerAsync();
         }
+
+        private void c()
+        {
+            //lagre kort_id for å sende ny informasjon til sentral for å loggføre evt. åpning av dør
+        }
+
         private void BTN_Åpne_Click(object sender, EventArgs e)
         {
             // skal brukes i godkjenning av input
@@ -339,6 +348,8 @@ namespace Adgangskontroll_Kortleser
             //iPB_Unlock.Show();
             //iPB_Unlock.BringToFront();
             //iPB_Lock.Hide();
+            
+            //c();
 
             if (råDørÅpen == 0)
                 SendEnMelding("$O61", sp);

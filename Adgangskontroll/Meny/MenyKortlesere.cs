@@ -15,7 +15,9 @@ namespace Sentral
     {
         Database db = new Database();
         static bool Avbryt = false;
-
+        static string kortleser_id;
+        static string seksjon_id;
+        static string beskrivelse;
         public MenyKortlesere()
         {
             InitializeComponent();
@@ -40,13 +42,14 @@ namespace Sentral
 
         private void BTN_alle_Click(object sender, EventArgs e)
         {
-            //db.VisKortlesere(alle)    //noe slikt
+            dataGridView1.DataSource = db.VisKortleser();
         }
 
         private void BTN_seksjon_Click(object sender, EventArgs e)
         {
-            string seksjon = TB_SeksjonVis.Text;
-            //db.VisKortlesere(sekjson)     //noe slikt
+            seksjon_id = TB_SeksjonVis.Text;
+            int seksjon = int.Parse(seksjon_id);
+            dataGridView1.DataSource = db.VisKortleserVedSeksjon(seksjon);
         }
 
         private void BTN_Nyelesere_Click(object sender, EventArgs e)
@@ -81,12 +84,28 @@ namespace Sentral
 
         private void BTN_endre_Click(object sender, EventArgs e)
         {
-            //db.EndreKortleser();
+            kortleser_id = TB_LeserID.Text;
+            seksjon_id = TB_seksjon.Text;
+            beskrivelse = TB_Beskrivelse.Text;
+
+            db.EndreKortleser(kortleser_id, seksjon_id, beskrivelse);
+            
+            TB_LeserID.Clear();
+            TB_seksjon.Clear();
+            TB_Beskrivelse.Clear();
         }
 
         private void BTN_LeggTilNy_Click(object sender, EventArgs e)
         {
-            //db.LeggTilKortleser();
+            kortleser_id = TB_LeserID.Text;
+            seksjon_id = TB_seksjon.Text;
+            beskrivelse = TB_Beskrivelse.Text;
+
+            db.LeggTilNyKortleser(kortleser_id, seksjon_id, beskrivelse);
+
+            TB_LeserID.Clear();
+            TB_seksjon.Clear();
+            TB_Beskrivelse.Clear();
         }
 
         private void BTN_SlettLesere_Click(object sender, EventArgs e)
@@ -120,6 +139,7 @@ namespace Sentral
                 {
                     db.SlettKortleser(TB_LeserID.Text);
                 }
+                TB_LeserID.Clear();
             }
         }
     }

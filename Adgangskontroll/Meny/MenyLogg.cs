@@ -96,5 +96,10 @@ namespace Sentral
             string alarmtype = TB_Alarmtype.Text;
             //db...
         }
+
+        private void toolStripContainer1_TopToolStripPanel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

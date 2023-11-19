@@ -71,24 +71,29 @@ namespace Sentral
 
             return dt;
         }
-        public string Innlogging(string id, string pin) //login er dette samme som validate for åpning av dør? + sjekk om id og pin skal være string?
+
+        //validerings prossesen, den tar in kort_id, pin og kortleser_id. sjekker om pin matcher kort_id, om kort_id er innenfor gyldighetsperioden og om kort_id har tilgang til kortleser_id
+        //om prossesen feiler returnerer den blankt, om den er er ok returnerer den en rad med bruker og kortleser (den informasjonen som ble sendt inn) spleiset sammen
+        public string Autentisering(string kort_id, string pin, string kortleser_id) //login er dette samme som validate for åpning av dør? + sjekk om id og pin skal være string?
         {
             string suksess;
-            string query = ($"select * from Brukere where Kort_ID ='{id}' and Pin = '{pin}';");
+            string query = ($"select * from tilgangrelasjon join bruker on tilgangrelasjon.tilgang_id = bruker.tilgang_id join kortleser on tilgangrelasjon.seksjon_id = kortleser.seksjon_id where kort_id = {kort_id} and pin = {pin} and kortleser_id = {kortleser_id} and CURRENT_DATE between gyldighet_start and gyldighet_slutt");
             VCmd = new NpgsqlCommand(query, VCon);
 
             using NpgsqlDataReader reader = VCmd.ExecuteReader();
             if (reader.Read())
             {
-                suksess = "korrekt";
+                suksess = "Godkjent";    //dataTilKortleser
+                //loggfør hendelse
             }
             else
             {
-                suksess = "feil";
+                suksess = "Ikke godkjent";       //dataTilKortleser
+                //loggfør hendelse
             }
-            return suksess;
+            return suksess; //dataTilKortleser
         }
-        //NBNB gå over alt dette felles
+        
 
 
         //legger en ny rad inn i bruker databasen 
@@ -166,21 +171,18 @@ namespace Sentral
         }
 
 
-        //validerings prossesen, den tar in kort_id, pin og kortleser_id. sjekker om pin matcher kort_id, om kort_id er innenfor gyldighetsperioden og om kort_id har tilgang til kortleser_id
-        //om prossesen feiler returnerer den blankt, om den er er ok returnerer den en rad med bruker og kortleser (den informasjonen som ble sendt inn) spleiset sammen
-        public DataTable Validate(string kort_id, string pin, string kortleser_id)
-        {
-            dtgetData = getData($"select * from tilgangrelasjon join bruker on tilgangrelasjon.tilgang_id = bruker.tilgang_id join kortleser on tilgangrelasjon.seksjon_id = kortleser.seksjon_id where kort_id = {kort_id} and pin = {pin} and kortleser_id = {kortleser_id} and CURRENT_DATE between gyldighet_start and gyldighet_slutt");
-            DataTable dt = dtgetData;
-
-            return dt;
-        }
-
-
         //gir en tabell med alle rader i kortleser databasen
         public DataTable VisKortleser()
         {
             dtgetData = getData("select * from kortleser");
+            DataTable dt = Database.DtgetData;
+
+            return dt;
+        }
+        //gir en tabell med alle rader i kortleserdatabasen for en valgt seksjon
+        public DataTable VisKortleserVedSeksjon(int seksjon_id)
+        {
+            dtgetData = getData($"select * from kortleser where seksjon_id = {seksjon_id}");
             DataTable dt = Database.DtgetData;
 
             return dt;
@@ -193,6 +195,7 @@ namespace Sentral
 
             return dt;
         }
+
         //liste adgangslogg (inkludert forsøk på adgang) på grunnlag av kort_id mellom to datoer
         public DataTable VisAdgangsloggForBrukerVedDato(string kort_id, DateTime start, DateTime slutt)
         {
