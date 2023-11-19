@@ -37,6 +37,17 @@
             TB_Bruker = new TextBox();
             TB_Leser = new TextBox();
             BTN_VisAlleHendelser = new Button();
+            TB_Alarmtype = new TextBox();
+            lbl_Alarmtype = new Label();
+            TB_LeserAlarm = new TextBox();
+            TB_BrukerAlarm = new TextBox();
+            BTN_VisLeserAlarm = new Button();
+            BTN_VisBrukerAlarm = new Button();
+            DTP_fra = new DateTimePicker();
+            DTP_til = new DateTimePicker();
+            lbl_fra = new Label();
+            lbl_til = new Label();
+            comboBox1 = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -149,11 +160,131 @@
             BTN_VisAlleHendelser.Visible = false;
             BTN_VisAlleHendelser.Click += BTN_VisAlleHendelser_Click;
             // 
+            // TB_Alarmtype
+            // 
+            TB_Alarmtype.Location = new Point(580, 127);
+            TB_Alarmtype.Name = "TB_Alarmtype";
+            TB_Alarmtype.Size = new Size(41, 27);
+            TB_Alarmtype.TabIndex = 9;
+            TB_Alarmtype.Visible = false;
+            // 
+            // lbl_Alarmtype
+            // 
+            lbl_Alarmtype.AutoSize = true;
+            lbl_Alarmtype.Location = new Point(493, 129);
+            lbl_Alarmtype.Name = "lbl_Alarmtype";
+            lbl_Alarmtype.Size = new Size(81, 20);
+            lbl_Alarmtype.TabIndex = 10;
+            lbl_Alarmtype.Text = "Alarmtype:";
+            lbl_Alarmtype.Visible = false;
+            // 
+            // TB_LeserAlarm
+            // 
+            TB_LeserAlarm.Location = new Point(397, 128);
+            TB_LeserAlarm.Name = "TB_LeserAlarm";
+            TB_LeserAlarm.Size = new Size(83, 27);
+            TB_LeserAlarm.TabIndex = 14;
+            TB_LeserAlarm.Visible = false;
+            // 
+            // TB_BrukerAlarm
+            // 
+            TB_BrukerAlarm.Location = new Point(169, 128);
+            TB_BrukerAlarm.Name = "TB_BrukerAlarm";
+            TB_BrukerAlarm.Size = new Size(83, 27);
+            TB_BrukerAlarm.TabIndex = 13;
+            TB_BrukerAlarm.Visible = false;
+            // 
+            // BTN_VisLeserAlarm
+            // 
+            BTN_VisLeserAlarm.BackColor = SystemColors.GradientActiveCaption;
+            BTN_VisLeserAlarm.FlatAppearance.BorderSize = 0;
+            BTN_VisLeserAlarm.FlatStyle = FlatStyle.Flat;
+            BTN_VisLeserAlarm.Location = new Point(278, 127);
+            BTN_VisLeserAlarm.Name = "BTN_VisLeserAlarm";
+            BTN_VisLeserAlarm.Size = new Size(113, 29);
+            BTN_VisLeserAlarm.TabIndex = 12;
+            BTN_VisLeserAlarm.Text = "Vis for leser:";
+            BTN_VisLeserAlarm.UseVisualStyleBackColor = false;
+            BTN_VisLeserAlarm.Visible = false;
+            BTN_VisLeserAlarm.Click += BTN_VisLeserAlarm_Click;
+            // 
+            // BTN_VisBrukerAlarm
+            // 
+            BTN_VisBrukerAlarm.BackColor = SystemColors.GradientActiveCaption;
+            BTN_VisBrukerAlarm.FlatAppearance.BorderSize = 0;
+            BTN_VisBrukerAlarm.FlatStyle = FlatStyle.Flat;
+            BTN_VisBrukerAlarm.Location = new Point(50, 127);
+            BTN_VisBrukerAlarm.Name = "BTN_VisBrukerAlarm";
+            BTN_VisBrukerAlarm.Size = new Size(113, 29);
+            BTN_VisBrukerAlarm.TabIndex = 11;
+            BTN_VisBrukerAlarm.Text = "Vis for bruker:";
+            BTN_VisBrukerAlarm.UseVisualStyleBackColor = false;
+            BTN_VisBrukerAlarm.Visible = false;
+            BTN_VisBrukerAlarm.Click += BTN_VisBrukerAlarm_Click;
+            // 
+            // DTP_fra
+            // 
+            DTP_fra.Format = DateTimePickerFormat.Short;
+            DTP_fra.Location = new Point(638, 129);
+            DTP_fra.Name = "DTP_fra";
+            DTP_fra.Size = new Size(97, 27);
+            DTP_fra.TabIndex = 15;
+            DTP_fra.Visible = false;
+            // 
+            // DTP_til
+            // 
+            DTP_til.Format = DateTimePickerFormat.Short;
+            DTP_til.Location = new Point(741, 129);
+            DTP_til.Name = "DTP_til";
+            DTP_til.Size = new Size(97, 27);
+            DTP_til.TabIndex = 16;
+            DTP_til.Visible = false;
+            // 
+            // lbl_fra
+            // 
+            lbl_fra.AutoSize = true;
+            lbl_fra.Location = new Point(638, 106);
+            lbl_fra.Name = "lbl_fra";
+            lbl_fra.Size = new Size(32, 20);
+            lbl_fra.TabIndex = 17;
+            lbl_fra.Text = "Fra:";
+            lbl_fra.Visible = false;
+            // 
+            // lbl_til
+            // 
+            lbl_til.AutoSize = true;
+            lbl_til.Location = new Point(741, 106);
+            lbl_til.Name = "lbl_til";
+            lbl_til.Size = new Size(32, 20);
+            lbl_til.TabIndex = 18;
+            lbl_til.Text = "Fra:";
+            lbl_til.Visible = false;
+            // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "en", "to", "trr" });
+            comboBox1.Location = new Point(513, 48);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(151, 28);
+            comboBox1.TabIndex = 19;
+            // 
             // MenyLogg
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(886, 521);
+            Controls.Add(comboBox1);
+            Controls.Add(lbl_til);
+            Controls.Add(lbl_fra);
+            Controls.Add(DTP_til);
+            Controls.Add(DTP_fra);
+            Controls.Add(TB_LeserAlarm);
+            Controls.Add(TB_BrukerAlarm);
+            Controls.Add(BTN_VisLeserAlarm);
+            Controls.Add(BTN_VisBrukerAlarm);
+            Controls.Add(lbl_Alarmtype);
+            Controls.Add(TB_Alarmtype);
             Controls.Add(BTN_VisAlleHendelser);
             Controls.Add(TB_Leser);
             Controls.Add(TB_Bruker);
@@ -181,5 +312,16 @@
         private TextBox TB_Bruker;
         private TextBox TB_Leser;
         private Button BTN_VisAlleHendelser;
+        private TextBox TB_Alarmtype;
+        private Label lbl_Alarmtype;
+        private TextBox TB_LeserAlarm;
+        private TextBox TB_BrukerAlarm;
+        private Button BTN_VisLeserAlarm;
+        private Button BTN_VisBrukerAlarm;
+        private DateTimePicker DTP_fra;
+        private DateTimePicker DTP_til;
+        private Label lbl_fra;
+        private Label lbl_til;
+        private ComboBox comboBox1;
     }
 }

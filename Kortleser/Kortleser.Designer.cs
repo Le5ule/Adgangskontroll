@@ -55,10 +55,7 @@ namespace Adgangskontroll_Kortleser
             iPB_Unlock = new FontAwesome.Sharp.IconPictureBox();
             iPB_DoorLocked = new FontAwesome.Sharp.IconPictureBox();
             iPB_DoorOpen = new FontAwesome.Sharp.IconPictureBox();
-            labelÅpen = new Label();
-            labelLåst = new Label();
             bwSjekkForData = new System.ComponentModel.BackgroundWorker();
-            label1 = new Label();
             Panel_KortLeser.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)iPB_Lock).BeginInit();
             ((System.ComponentModel.ISupportInitialize)iPB_Unlock).BeginInit();
@@ -68,17 +65,17 @@ namespace Adgangskontroll_Kortleser
             // 
             // TB_MottakFraSentral
             // 
-            TB_MottakFraSentral.Location = new Point(490, 205);
+            TB_MottakFraSentral.Location = new Point(560, 273);
+            TB_MottakFraSentral.Margin = new Padding(3, 4, 3, 4);
             TB_MottakFraSentral.Name = "TB_MottakFraSentral";
-            TB_MottakFraSentral.Size = new Size(222, 23);
+            TB_MottakFraSentral.Size = new Size(253, 27);
             TB_MottakFraSentral.TabIndex = 37;
             // 
             // BTN0
             // 
-            BTN0.Location = new Point(53, 162);
-            BTN0.Margin = new Padding(3, 2, 3, 2);
+            BTN0.Location = new Point(61, 216);
             BTN0.Name = "BTN0";
-            BTN0.Size = new Size(20, 19);
+            BTN0.Size = new Size(23, 25);
             BTN0.TabIndex = 36;
             BTN0.Text = "0";
             BTN0.UseVisualStyleBackColor = true;
@@ -86,10 +83,9 @@ namespace Adgangskontroll_Kortleser
             // 
             // BTN9
             // 
-            BTN9.Location = new Point(77, 141);
-            BTN9.Margin = new Padding(3, 2, 3, 2);
+            BTN9.Location = new Point(88, 188);
             BTN9.Name = "BTN9";
-            BTN9.Size = new Size(20, 19);
+            BTN9.Size = new Size(23, 25);
             BTN9.TabIndex = 35;
             BTN9.Text = "9";
             BTN9.UseVisualStyleBackColor = true;
@@ -97,10 +93,9 @@ namespace Adgangskontroll_Kortleser
             // 
             // BTN8
             // 
-            BTN8.Location = new Point(53, 141);
-            BTN8.Margin = new Padding(3, 2, 3, 2);
+            BTN8.Location = new Point(61, 188);
             BTN8.Name = "BTN8";
-            BTN8.Size = new Size(20, 19);
+            BTN8.Size = new Size(23, 25);
             BTN8.TabIndex = 34;
             BTN8.Text = "8";
             BTN8.UseVisualStyleBackColor = true;
@@ -108,10 +103,9 @@ namespace Adgangskontroll_Kortleser
             // 
             // BTN7
             // 
-            BTN7.Location = new Point(30, 141);
-            BTN7.Margin = new Padding(3, 2, 3, 2);
+            BTN7.Location = new Point(34, 188);
             BTN7.Name = "BTN7";
-            BTN7.Size = new Size(20, 19);
+            BTN7.Size = new Size(23, 25);
             BTN7.TabIndex = 33;
             BTN7.Text = "7";
             BTN7.UseVisualStyleBackColor = true;
@@ -119,10 +113,9 @@ namespace Adgangskontroll_Kortleser
             // 
             // BTN6
             // 
-            BTN6.Location = new Point(77, 119);
-            BTN6.Margin = new Padding(3, 2, 3, 2);
+            BTN6.Location = new Point(88, 159);
             BTN6.Name = "BTN6";
-            BTN6.Size = new Size(20, 19);
+            BTN6.Size = new Size(23, 25);
             BTN6.TabIndex = 32;
             BTN6.Text = "6";
             BTN6.UseVisualStyleBackColor = true;
@@ -130,10 +123,9 @@ namespace Adgangskontroll_Kortleser
             // 
             // BTN5
             // 
-            BTN5.Location = new Point(53, 119);
-            BTN5.Margin = new Padding(3, 2, 3, 2);
+            BTN5.Location = new Point(61, 159);
             BTN5.Name = "BTN5";
-            BTN5.Size = new Size(20, 19);
+            BTN5.Size = new Size(23, 25);
             BTN5.TabIndex = 31;
             BTN5.Text = "5";
             BTN5.UseVisualStyleBackColor = true;
@@ -141,10 +133,9 @@ namespace Adgangskontroll_Kortleser
             // 
             // BTN4
             // 
-            BTN4.Location = new Point(30, 119);
-            BTN4.Margin = new Padding(3, 2, 3, 2);
+            BTN4.Location = new Point(34, 159);
             BTN4.Name = "BTN4";
-            BTN4.Size = new Size(20, 19);
+            BTN4.Size = new Size(23, 25);
             BTN4.TabIndex = 30;
             BTN4.Text = "4";
             BTN4.UseVisualStyleBackColor = true;
@@ -152,10 +143,9 @@ namespace Adgangskontroll_Kortleser
             // 
             // BTN3
             // 
-            BTN3.Location = new Point(77, 98);
-            BTN3.Margin = new Padding(3, 2, 3, 2);
+            BTN3.Location = new Point(88, 131);
             BTN3.Name = "BTN3";
-            BTN3.Size = new Size(20, 19);
+            BTN3.Size = new Size(23, 25);
             BTN3.TabIndex = 29;
             BTN3.Text = "3";
             BTN3.UseVisualStyleBackColor = true;
@@ -163,10 +153,9 @@ namespace Adgangskontroll_Kortleser
             // 
             // BTN2
             // 
-            BTN2.Location = new Point(53, 98);
-            BTN2.Margin = new Padding(3, 2, 3, 2);
+            BTN2.Location = new Point(61, 131);
             BTN2.Name = "BTN2";
-            BTN2.Size = new Size(20, 19);
+            BTN2.Size = new Size(23, 25);
             BTN2.TabIndex = 28;
             BTN2.Text = "2";
             BTN2.UseVisualStyleBackColor = true;
@@ -174,10 +163,9 @@ namespace Adgangskontroll_Kortleser
             // 
             // BTN1
             // 
-            BTN1.Location = new Point(30, 98);
-            BTN1.Margin = new Padding(3, 2, 3, 2);
+            BTN1.Location = new Point(34, 131);
             BTN1.Name = "BTN1";
-            BTN1.Size = new Size(20, 19);
+            BTN1.Size = new Size(23, 25);
             BTN1.TabIndex = 27;
             BTN1.Text = "1";
             BTN1.UseVisualStyleBackColor = true;
@@ -185,10 +173,9 @@ namespace Adgangskontroll_Kortleser
             // 
             // BTN_LesKort
             // 
-            BTN_LesKort.Location = new Point(30, 46);
-            BTN_LesKort.Margin = new Padding(3, 2, 3, 2);
+            BTN_LesKort.Location = new Point(34, 61);
             BTN_LesKort.Name = "BTN_LesKort";
-            BTN_LesKort.Size = new Size(67, 22);
+            BTN_LesKort.Size = new Size(77, 29);
             BTN_LesKort.TabIndex = 38;
             BTN_LesKort.Text = "Les kort";
             BTN_LesKort.UseVisualStyleBackColor = true;
@@ -196,22 +183,20 @@ namespace Adgangskontroll_Kortleser
             // 
             // TB_KortInput
             // 
-            TB_KortInput.Location = new Point(30, 73);
-            TB_KortInput.Margin = new Padding(3, 2, 3, 2);
+            TB_KortInput.Location = new Point(34, 97);
             TB_KortInput.Name = "TB_KortInput";
-            TB_KortInput.Size = new Size(68, 23);
+            TB_KortInput.Size = new Size(77, 27);
             TB_KortInput.TabIndex = 40;
             TB_KortInput.Visible = false;
-            TB_KortInput.KeyPress += TB_KortInput_KeyPress;
             // 
             // UgyldigLabel
             // 
             UgyldigLabel.AutoSize = true;
             UgyldigLabel.BackColor = Color.Transparent;
             UgyldigLabel.ForeColor = SystemColors.ActiveCaptionText;
-            UgyldigLabel.Location = new Point(20, 10);
+            UgyldigLabel.Location = new Point(23, 13);
             UgyldigLabel.Name = "UgyldigLabel";
-            UgyldigLabel.Size = new Size(82, 30);
+            UgyldigLabel.Size = new Size(102, 40);
             UgyldigLabel.TabIndex = 39;
             UgyldigLabel.Text = "Ugyldig input,\r\nprøv igjen";
             UgyldigLabel.Visible = false;
@@ -237,25 +222,27 @@ namespace Adgangskontroll_Kortleser
             Panel_KortLeser.Controls.Add(BTN3);
             Panel_KortLeser.Controls.Add(BTN2);
             Panel_KortLeser.Controls.Add(BTN1);
-            Panel_KortLeser.Location = new Point(12, 12);
+            Panel_KortLeser.Location = new Point(14, 16);
+            Panel_KortLeser.Margin = new Padding(3, 4, 3, 4);
             Panel_KortLeser.Name = "Panel_KortLeser";
-            Panel_KortLeser.Size = new Size(151, 265);
+            Panel_KortLeser.Size = new Size(173, 353);
             Panel_KortLeser.TabIndex = 41;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(490, 144);
+            label2.Location = new Point(560, 192);
             label2.Name = "label2";
-            label2.Size = new Size(223, 45);
+            label2.Size = new Size(281, 60);
             label2.TabIndex = 43;
             label2.Text = "(debug)Her hentes data fra sentralen.\r\nIllustrerer bare at informasjon kan sendes\r\nfrem og tilbake";
             // 
             // BTN_Åpne
             // 
-            BTN_Åpne.Location = new Point(246, 165);
+            BTN_Åpne.Location = new Point(281, 220);
+            BTN_Åpne.Margin = new Padding(3, 4, 3, 4);
             BTN_Åpne.Name = "BTN_Åpne";
-            BTN_Åpne.Size = new Size(94, 29);
+            BTN_Åpne.Size = new Size(107, 39);
             BTN_Åpne.TabIndex = 45;
             BTN_Åpne.Text = "Åpne";
             BTN_Åpne.UseVisualStyleBackColor = true;
@@ -263,9 +250,10 @@ namespace Adgangskontroll_Kortleser
             // 
             // BTN_Lukk
             // 
-            BTN_Lukk.Location = new Point(246, 200);
+            BTN_Lukk.Location = new Point(281, 267);
+            BTN_Lukk.Margin = new Padding(3, 4, 3, 4);
             BTN_Lukk.Name = "BTN_Lukk";
-            BTN_Lukk.Size = new Size(94, 29);
+            BTN_Lukk.Size = new Size(107, 39);
             BTN_Lukk.TabIndex = 46;
             BTN_Lukk.Text = "Lukk";
             BTN_Lukk.UseVisualStyleBackColor = true;
@@ -274,7 +262,7 @@ namespace Adgangskontroll_Kortleser
             // Label_ID
             // 
             Label_ID.AutoSize = true;
-            Label_ID.Location = new Point(300, 86);
+            Label_ID.Location = new Point(343, 115);
             Label_ID.Name = "Label_ID";
             Label_ID.Size = new Size(52, 15);
             Label_ID.TabIndex = 48;
@@ -287,10 +275,11 @@ namespace Adgangskontroll_Kortleser
             iPB_Lock.IconChar = FontAwesome.Sharp.IconChar.Lock;
             iPB_Lock.IconColor = SystemColors.ControlText;
             iPB_Lock.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iPB_Lock.IconSize = 40;
-            iPB_Lock.Location = new Point(236, 113);
+            iPB_Lock.IconSize = 46;
+            iPB_Lock.Location = new Point(270, 151);
+            iPB_Lock.Margin = new Padding(3, 4, 3, 4);
             iPB_Lock.Name = "iPB_Lock";
-            iPB_Lock.Size = new Size(40, 40);
+            iPB_Lock.Size = new Size(46, 53);
             iPB_Lock.TabIndex = 50;
             iPB_Lock.TabStop = false;
             // 
@@ -301,10 +290,11 @@ namespace Adgangskontroll_Kortleser
             iPB_Unlock.IconChar = FontAwesome.Sharp.IconChar.LockOpen;
             iPB_Unlock.IconColor = SystemColors.ControlText;
             iPB_Unlock.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iPB_Unlock.IconSize = 48;
-            iPB_Unlock.Location = new Point(237, 109);
+            iPB_Unlock.IconSize = 55;
+            iPB_Unlock.Location = new Point(271, 145);
+            iPB_Unlock.Margin = new Padding(3, 4, 3, 4);
             iPB_Unlock.Name = "iPB_Unlock";
-            iPB_Unlock.Size = new Size(48, 48);
+            iPB_Unlock.Size = new Size(55, 64);
             iPB_Unlock.TabIndex = 51;
             iPB_Unlock.TabStop = false;
             // 
@@ -315,10 +305,11 @@ namespace Adgangskontroll_Kortleser
             iPB_DoorLocked.IconChar = FontAwesome.Sharp.IconChar.DoorClosed;
             iPB_DoorLocked.IconColor = SystemColors.ControlText;
             iPB_DoorLocked.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iPB_DoorLocked.IconSize = 50;
-            iPB_DoorLocked.Location = new Point(300, 109);
+            iPB_DoorLocked.IconSize = 57;
+            iPB_DoorLocked.Location = new Point(343, 145);
+            iPB_DoorLocked.Margin = new Padding(3, 4, 3, 4);
             iPB_DoorLocked.Name = "iPB_DoorLocked";
-            iPB_DoorLocked.Size = new Size(50, 50);
+            iPB_DoorLocked.Size = new Size(57, 67);
             iPB_DoorLocked.TabIndex = 51;
             iPB_DoorLocked.TabStop = false;
             // 
@@ -329,51 +320,25 @@ namespace Adgangskontroll_Kortleser
             iPB_DoorOpen.IconChar = FontAwesome.Sharp.IconChar.DoorOpen;
             iPB_DoorOpen.IconColor = SystemColors.ControlText;
             iPB_DoorOpen.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iPB_DoorOpen.IconSize = 50;
-            iPB_DoorOpen.Location = new Point(300, 109);
+            iPB_DoorOpen.IconSize = 57;
+            iPB_DoorOpen.Location = new Point(343, 145);
+            iPB_DoorOpen.Margin = new Padding(3, 4, 3, 4);
             iPB_DoorOpen.Name = "iPB_DoorOpen";
-            iPB_DoorOpen.Size = new Size(50, 50);
+            iPB_DoorOpen.Size = new Size(57, 67);
             iPB_DoorOpen.TabIndex = 52;
             iPB_DoorOpen.TabStop = false;
-            // 
-            // labelÅpen
-            // 
-            labelÅpen.AutoSize = true;
-            labelÅpen.Location = new Point(314, 248);
-            labelÅpen.Name = "labelÅpen";
-            labelÅpen.Size = new Size(0, 15);
-            labelÅpen.TabIndex = 53;
-            // 
-            // labelLåst
-            // 
-            labelLåst.AutoSize = true;
-            labelLåst.Location = new Point(236, 248);
-            labelLåst.Name = "labelLåst";
-            labelLåst.Size = new Size(0, 15);
-            labelLåst.TabIndex = 54;
             // 
             // bwSjekkForData
             // 
             bwSjekkForData.DoWork += bwSjekkForData_DoWork_1;
             bwSjekkForData.RunWorkerCompleted += bwSjekkForData_RunWorkerCompleted_1;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(394, 37);
-            label1.Name = "label1";
-            label1.Size = new Size(38, 15);
-            label1.TabIndex = 55;
-            label1.Text = "label1";
-            // 
+
             // Kortleser
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(810, 289);
-            Controls.Add(label1);
-            Controls.Add(labelLåst);
-            Controls.Add(labelÅpen);
+            ClientSize = new Size(926, 385);
             Controls.Add(BTN_Lukk);
             Controls.Add(Label_ID);
             Controls.Add(BTN_Åpne);
@@ -385,6 +350,7 @@ namespace Adgangskontroll_Kortleser
             Controls.Add(Panel_KortLeser);
             Controls.Add(TB_MottakFraSentral);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "Kortleser";
             Text = "Kortleser";
             FormClosing += Kortleser_FormClosing;
@@ -425,9 +391,6 @@ namespace Adgangskontroll_Kortleser
         private FontAwesome.Sharp.IconPictureBox iPB_Unlock;
         private FontAwesome.Sharp.IconPictureBox iPB_DoorLocked;
         private FontAwesome.Sharp.IconPictureBox iPB_DoorOpen;
-        private Label labelÅpen;
-        private Label labelLåst;
         private System.ComponentModel.BackgroundWorker bwSjekkForData;
-        private Label label1;
     }
 }
