@@ -262,12 +262,14 @@
             // 
             // comboBox1
             // 
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "en", "to", "trr" });
-            comboBox1.Location = new Point(513, 48);
+            comboBox1.Items.AddRange(new object[] { "Alle Kortlesere", "Alle Brukere", "Alle adgangs forsøk for Bruker i periode", "Alle ikke godkjente adgangs forsøk for Kortleser i periode", "Alle Alarm hendelser", "Alle Alarm hendelser knyttet til Bruker", "Alle Alarm hendelser knyttet til Kortleser", "Alle Alarm hendelser i periode", "Alle Logg hendelser", "Alle Logg hendelser kyttet til Bruker", "Alle Logg hendelser knyttet til Kortleser" });
+            comboBox1.Location = new Point(297, 48);
             comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(151, 28);
+            comboBox1.Size = new Size(550, 28);
             comboBox1.TabIndex = 19;
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // MenyLogg
             // 
