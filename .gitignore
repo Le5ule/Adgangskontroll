@@ -361,3 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/adgangskontroller_DB/adgangskontroller-ER-needswork.drawio
