@@ -219,20 +219,30 @@ namespace Adgangskontroll_Kortleser
                 iPB_DoorLocked.BringToFront();
                 iPB_DoorOpen.Hide();
             }
-            if (sekDørÅpen > 5)
-                SendEnMelding("$O71", sp);
-             indeksStart = enMelding.IndexOf('G');
-            potensiometer = Convert.ToInt32(enMelding.Substring(indeksStart + 1, 4));
-            if (potensiometer > 500)
-            {
-                SendEnMelding("$O61", sp);
-                SendEnMelding("$O71", sp);
-            }
-            if (potensiometer < 500 && sekDørÅpen < 5)
-            {
-                SendEnMelding("$O70", sp);
-            }
+
         }
+        //alarm funksjon
+        void Alarm(string enMelding)
+            {
+            if (sekDørÅpen > 5)
+            {
+                SendEnMelding("$O71", sp);
+                alarm = 1;
+            }
+                int indeksStart = enMelding.IndexOf('G');
+                potensiometer = Convert.ToInt32(enMelding.Substring(indeksStart + 1, 4));
+                if (potensiometer > 500)
+                {
+                    SendEnMelding("$O61", sp);
+                    SendEnMelding("$O71", sp);
+                    alarm = 2;
+                }
+                if (potensiometer < 500 && sekDørÅpen < 5)
+                {
+                    SendEnMelding("$O70", sp);
+                    alarm = 0;
+                }
+            }
         public bool godkjenning(int BrukerPin)
         {
             bool svar = false;
@@ -385,8 +395,9 @@ namespace Adgangskontroll_Kortleser
             if (EnHelMeldingMotatt(data))
             {
                 string enMelding = HentUtEnMelding(ref data);
-                label1.Text = enMelding;      //Dette var bare for å se hele rå dataen fra simsim
+                //label1.Text = enMelding;      //Dette var bare for å se hele rå dataen fra simsim
                 VisDør(enMelding);
+                Alarm(enMelding);
                 if(råDørÅpen == 1)
                 {
                     sekDørÅpen++;
