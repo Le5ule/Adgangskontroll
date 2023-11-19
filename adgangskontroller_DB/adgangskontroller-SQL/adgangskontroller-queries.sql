@@ -1,7 +1,7 @@
 --todo
 
 --hekt alle queries til noe i programet sentral, slik at en hendelse trigger hver av queriene
---fyll ut UI for logg meny - se notater "elementer: log vindu"
+--fyll ut UI for logg meny - se notater "elementer: logg vindu"
 --endre oppkoblings informasjonen i sentral
 --gå over ER for å dobeltsjekke logik
 --dobelt sjekk notasjon - egen fil og kommentarer i kode - forklar valg 
@@ -9,76 +9,76 @@
 
 
 
---elementer: log vindu
---dropdown med de forskjellige loggene - se lengere ned, der er alle queriene som skal inn i logg velgern
+--elementer: loggvindu
+--dropdown med de forskjellige loggene - se lengre ned, der er alle queriene som skal inn i loggvelgeren
 
---kort_id vindu
+--kort_id-vindu
 
---kortleser_id vindu
+--kortleser_id-vindu
 
---start tid vindu
+--start_tid-vindu
 
---slutt tid vindu - disse skal bli writable når rett valg i dropdown er valgt/altid writable men noter hvilke vindu skal skrives i per dropdown valg.
+--slutt_tid-vindu - disse skal bli writable når rett valg i dropdown er valgt/alltid writable, men notér hvilke vindu skal skrives i per dropdown valg.
 
---clear knapp - fjerner allt skrevet
+--clear-knapp - fjerner alt skrevet
 
---hent knap - gjør query og displayer til display vinduet
+--hent-knapp - gjør query og displayer til display vinduet
 
---lagre knap - lagrer det som er i display som en .txt fil - finn måte for valg av lagrings plass
+--lagre-knapp - lagrer det som er i display som en .txt fil - finn måte for valg av lagrings plass
 
---display vindu - bruk data felt 
+--display-vindu - bruk datafelt 
 
 
 
 
 -- merk at alle plasser hvor et variable er i '' skal det fylles inn ny data av programet sentral.
 
---drop down kommandoer: 
+--drop-down-kommandoer: 
 --liste brukerdata på grunnlag av kort_id
 select * from bruker
 
 -- liste adgangslogg (inkludert forsøk på adgang) på grunnlag av kort_id mellom to datoer
-select * from log where kort_id = 'x' and (log_type = 0 or log_type = 1 or log_type = 2) and log_tid between 'start_date' and 'end_date'
+select * from logg where kort_id = 'x' and (logg_type = 0 or logg_type = 1 or logg_type = 2) and logg_tid between 'start_date' and 'end_date'
 
 -- liste alle innpasseringsforsøk for en dør med ikke-godkjent adgang (uansett bruker) mellom to datoer
-select * from log where kortleser_id = 'kortleser_id' and log_type = 1 and log_tid between 'start_date' and 'end_date'
+select * from logg where kortleser_id = 'kortleser_id' and logg_type = 1 and logg_tid between 'start_date' and 'end_date'
 
---liste alle kort_id med over 10 ikke godkjente log_type = 1
-select log.log_type, log.kort_id from log
-where log_type = 1 and log_tid between '1753-01-01 00:00:00.000' and '2999-01-01 00:00:00.000'
-group by log.kort_id, log.log_type
+--liste alle kort_id med over 10 ikke godkjente logg_type = 1
+select logg.logg_type, logg.kort_id from logg
+where logg_type = 1 and logg_tid between '1753-01-01 00:00:00.000' and '2999-01-01 00:00:00.000'
+group by logg.kort_id, logg.logg_type
 having count(*) >= 10
 
 --liste av alarmer mellom to datoer
-select * from log where (log_type = 3 or log_type = 2) and log_tid between 'start_date' and 'end_date'
+select * from logg where (logg_type = 3 or logg_type = 2) and logg_tid between 'start_date' and 'end_date'
 
--- liste alle entries log 
-select * from log
+-- liste alle entries logg 
+select * from logg
 
 --liste alle entries basert på kort_id
-select * from log where kort_id = 'kort_id'
+select * from logg where kort_id = 'kort_id'
 
 --liste alle entries for bestemt kortleser_id
-select * from log where kortleser_id = 'kortleser_id'
+select * from logg where kortleser_id = 'kortleser_id'
 
 --liste av alarmer
-select * from log where (log_type = 3 or log_type = 2)
+select * from logg where (logg_type = 3 or logg_type = 2)
 
 --liste av alarmer basert på kort_id
-select * from log where (log_type = 3 or log_type = 2) and kort_id = 'kort_id'
+select * from logg where (logg_type = 3 or logg_type = 2) and kort_id = 'kort_id'
 
 --liste av alarmer basert på kort_id
-select * from log where (log_type = 3 or log_type = 2) and kortleser_id = 'kortleser_id'
+select * from logg where (logg_type = 3 or logg_type = 2) and kortleser_id = 'kortleser_id'
 
 
 
 --Spørringer for brukere:
---legg til bruker(kort_id, fornavn, etternavn, email, g_start, g_slutt, pin, tilgang_id)
-insert into bruker values ('kort_id', 'fornavn', 'etternavn', 'email', 'g_start', 'g_slutt', 'pin', 'tilgang_id')
+--legg til bruker(kort_id, fornavn, etternavn, epost, g_start, g_slutt, pin, tilgang_id)
+insert into bruker values ('kort_id', 'fornavn', 'etternavn', 'epost', 'g_start', 'g_slutt', 'pin', 'tilgang_id')
 
---endre bruker(kort_id, fornavn, etternavn, email, g_start, g_slutt, pin, tilgang_id)
+--endre bruker(kort_id, fornavn, etternavn, epost, g_start, g_slutt, pin, tilgang_id)
 update bruker 
-set fornavn = 'fornavn', etternavn = 'etternavn', email = 'email', gyldighet_start = 'g_start',
+set fornavn = 'fornavn', etternavn = 'etternavn', epost = 'epost', gyldighet_start = 'g_start',
 gyldighet_slutt = 'g_slutt',pin = 'pin', tilgang_id = 'tilgang_id'
 where kort_id = 'kort_id'
 
@@ -102,9 +102,7 @@ delete from kortleser where kortleser_id = 'kortleser_id'
 
 
 
-
-
---validering prosses: den returnerer en rad med info om det er finnes en match og ikke om det ikke finnes
+--autentiseringsprosses: denne returnerer en rad med info om det er finnes en match og ikke om det ikke finnes
 
 select * from tilgangrelasjon
 join bruker on tilgangrelasjon.tilgang_id = bruker.tilgang_id
@@ -115,9 +113,9 @@ and kortleser_id = 'kortleser_id'
 and CURRENT_DATE between gyldighet_start and gyldighet_slutt
 
 
---dann log alarmer
-insert into log values ('log_type', 'log_tid', 'kortleser_id', 'kort_id')
---for situasjoner hvor log skal inkludere siste kort_id : denne returnerer siste log fra den 
-SELECt * FROM log where kortleser_id = 'kortleser_id' ORDER BY log_tid DESC limit 1
+--dann logg alarmer
+insert into logg values ('logg_type', 'logg_tid', 'kortleser_id', 'kort_id')
+--for situasjoner hvor logg skal inkludere siste kort_id : denne returnerer siste logg 
+SELECt * FROM logg where kortleser_id = 'kortleser_id' ORDER BY logg_tid DESC limit 1
 
---NB merk det må finnes plasser hvor disse queries kan sendes, altså alerede etablerte hendelser og noen kommandoer som har med log menyen må det lages hendelser og gui for. er markert hvilke elementer som trengs i toppen.
+--NB merk det må finnes plasser hvor disse queries kan sendes, altså allerede-etablerte hendelser og noen kommandoer som har med loggmenyen må det lages hendelser og gui for. Er markert hvilke elementer som trengs i toppen.
