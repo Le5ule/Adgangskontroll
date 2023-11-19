@@ -14,10 +14,10 @@ namespace Adgangskontroll_Sentral
     {
         Database db = new Database();
 
-        static string kobling;      // var ment til å bestå av en streng variabler som ikke er deklarert,
-                                    // for å enkelt endre kobling til database
+        static string kobling;      // var ment til Ã¥ bestÃ¥ av en streng variabler som ikke er deklarert,
+                                    // for Ã¥ enkelt endre kobling til database
 
-        static List<string> Kortleser_ID = new List<string>() { "0001" }; //Oppdater denne listen med så mange kortleser-IDer vi trenger
+        static List<string> Kortleser_ID = new List<string>() { "0001" }; //Oppdater denne listen med sÃ¥ mange kortleser-IDer vi trenger
         static int index = 0;
 
         private Form activeForm;
@@ -96,16 +96,16 @@ namespace Adgangskontroll_Sentral
             try
             {
                 //// Fra klient-server
-                //// Her må vi endre til threadpool eller noe, for vi skal kunne starte flere tråder med flere lesere...
-                //while (harforbindelse)    //slik løkke fungerer ikke her, uansett true eller false...
+                //// Her mÃ¥ vi endre til threadpool eller noe, for vi skal kunne starte flere trÃ¥der med flere lesere...
+                //while (harforbindelse)    //slik lÃ¸kke fungerer ikke her, uansett true eller false...
                 //{
-                //Console.WriteLine("Venter på en klient ...");
+                //Console.WriteLine("Venter pÃ¥ en klient ...");
                 Socket kommSokkel = lytteSokkel.Accept(); // blokkerende metode
 
                 //VisKommunikasjonsinfo(kommSokkel.LocalEndPoint as IPEndPoint, kommSokkel.RemoteEndPoint as IPEndPoint);
                 IPEndPoint klientEP = (IPEndPoint)kommSokkel.RemoteEndPoint;
 
-                Thread ht = new Thread(Klientkommunikasjon);        //må starte mer enn én tråd, implementer ThreadPool i Public Senral() osv.
+                Thread ht = new Thread(Klientkommunikasjon);        //mÃ¥ starte mer enn Ã©n trÃ¥d, implementer ThreadPool i Public Senral() osv.
                 ht.Start(kommSokkel);
                 //}
             }
@@ -134,9 +134,9 @@ namespace Adgangskontroll_Sentral
                 {
                     //MessageBox.Show("Mottatt fra kortleser\n" + dataFraKortleser); //debug
 
-                    //rotete kode her, men det funker foreløpig  
-                    //legg også inn egen if-setning for COM-port
-                    //legg også inn en der dataFraKortleser == "alarm" -> MessageBox.Show("Alarm aktivert"); eller noe sånt
+                    //rotete kode her, men det funker forelÃ¸pig  
+                    //legg ogsÃ¥ inn egen if-setning for COM-port
+                    //legg ogsÃ¥ inn en der dataFraKortleser == "alarm" -> MessageBox.Show("Alarm aktivert"); eller noe sÃ¥nt
                     if (dataFraKortleser.Length == 20)
                     {
                         int indeksKort = dataFraKortleser.IndexOf('K');
@@ -148,8 +148,8 @@ namespace Adgangskontroll_Sentral
 
                         dataTilKortleser = db.Autentisering(Kort_ID, pin, kortleser_id);
 
-                        if (dataTilKortleser == "Godkjent") db.LeggTilLogg(0, kortleser_id, Kort_ID);   //Loggfører godkjent
-                        else db.LeggTilLogg(1, kortleser_id, Kort_ID);  //loggfører ikke godkjent
+                        if (dataTilKortleser == "Godkjent") db.LeggTilLogg(0, kortleser_id, Kort_ID);   //LoggfÃ¸rer godkjent
+                        else db.LeggTilLogg(1, kortleser_id, Kort_ID);  //loggfÃ¸rer ikke godkjent
                     }
                     else if (dataFraKortleser.Length == 14)
                     {
@@ -196,21 +196,21 @@ namespace Adgangskontroll_Sentral
             //Console.WriteLine("Forbindelsen med {0}:{1} er brutt", r.Address, r.Port);    // endre til noe mer passende
             kommSokkel.Close();
         }
-        static string MottaData(Socket s, out bool gjennomført)
+        static string MottaData(Socket s, out bool gjennomfÃ¸rt)
         {
             string svar = "";
             try
             {
                 byte[] dataSomBytes = new byte[1024];
                 int recv = s.Receive(dataSomBytes);
-                // kan man også lage en egen if-setning for tekststrengen som inneholder innloggingsdetaljene?
+                // kan man ogsÃ¥ lage en egen if-setning for tekststrengen som inneholder innloggingsdetaljene?
                 if (recv > 0)
                 {
                     svar = Encoding.ASCII.GetString(dataSomBytes, 0, recv);
-                    gjennomført = true;
+                    gjennomfÃ¸rt = true;
                 }
                 else
-                    gjennomført = false;
+                    gjennomfÃ¸rt = false;
             }
             catch (Exception)
             {
@@ -218,17 +218,17 @@ namespace Adgangskontroll_Sentral
             }
             return svar;
         }
-        static void SendData(Socket s, string data, out bool gjennomført)
+        static void SendData(Socket s, string data, out bool gjennomfÃ¸rt)
         {
             try
             {
                 byte[] dataSomBytes = Encoding.ASCII.GetBytes(data);
                 s.Send(dataSomBytes, dataSomBytes.Length, SocketFlags.None);
-                gjennomført = true;
+                gjennomfÃ¸rt = true;
             }
             catch (Exception)
             {
-                gjennomført = false;
+                gjennomfÃ¸rt = false;
             }
         }
 
@@ -256,22 +256,23 @@ namespace Adgangskontroll_Sentral
             Reset();
         }
 
-        // Kopier noe herfra og gjenbruk til å koble til ny leser
+        // Kopier noe herfra og gjenbruk til Ã¥ koble til ny leser
 
         //private void Start_Click(object sender, EventArgs e)
         //{
         //***
-        //    //endre til at vi åpner ny kortleser i debug, og dermed ikke foreach, men ID sendes med listen
-        //    //der index vil øke for hver gang
+        //    //endre til at vi Ã¥pner ny kortleser i debug, og dermed ikke foreach, men ID sendes med listen
+        //    //der index vil Ã¸ke for hver gang
         //***
 
         //    foreach (string kortleser in Kortleser_ID)
         //    {
-        //        //Må endre til bane for Kortleser.exe
-        //        Process.Start("C:\\Users\\leand\\OneDrive - Høgskulen på Vestlandet\\ELE 301\\Prosjektoppgave\\Adgangskontroll\\Kortleser\\bin\\Debug\\net7.0-windows\\Kortleser.exe");
+        //        //MÃ¥ endre til bane for Kortleser.exe
+        //        Process.Start("C:\\Users\\leand\\OneDrive - HÃ¸gskulen pÃ¥ Vestlandet\\ELE 301\\Prosjektoppgave\\Adgangskontroll\\Kortleser\\bin\\Debug\\net7.0-windows\\Kortleser.exe");
         //        KobleTilKortleser();
         //    }
         //    BTN_Start.Enabled = false;
         //}
+
     }
 }
