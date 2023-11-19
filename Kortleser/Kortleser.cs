@@ -228,10 +228,7 @@ namespace Adgangskontroll_Kortleser
                 SendEnMelding("$O61", sp);
                 SendEnMelding("$O71", sp);
             }
-            if (potensiometer < 500 && sekDørÅpen < 5)
-            {
-                SendEnMelding("$O70", sp);
-            }
+
         }
         public bool godkjenning(int BrukerPin)
         {
