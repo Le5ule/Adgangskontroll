@@ -12,6 +12,7 @@ namespace Adgangskontroll_Sentral
 {
     public partial class Sentral : Form
     {
+        // Oppretter sammenheng mellom sentral og database-klassen
         Database db;
 
         private Form activeForm;
@@ -45,6 +46,8 @@ namespace Adgangskontroll_Sentral
         {
 
         }
+
+        // Funkjsoner for å vise og åpne de ulike menyene som er separate forms, underordnet av sentral
         private void ActivateButton(object btnSender)
         {
             if (btnSender != null)
@@ -83,6 +86,7 @@ namespace Adgangskontroll_Sentral
             childForm.Show();
             lbl_Tittel.Text = childForm.Text;
         }
+        // Returnerer til hjemskjermen
         private void Reset()
         {
             DisableButton();
@@ -90,7 +94,10 @@ namespace Adgangskontroll_Sentral
             currentButton = null;
             BTN_LukkMenyVindu.Visible = false;
         }
+        // Slutt på meny-vindu-funksjoner
 
+
+        // For å opprette tilkobling mellom sentral og kortleser som kjører, starter ny tråd for hver kortleser
         private void KobleTilKortleser()
         {
             try
@@ -106,7 +113,7 @@ namespace Adgangskontroll_Sentral
                 throw;
             }
         }
-
+        // Oppretter kobling med kortleser ved bruk av IP-addresse
         public void Klientkommunikasjon(object o)
         {
             Socket kommSokkel = o as Socket;
@@ -124,8 +131,10 @@ namespace Adgangskontroll_Sentral
 
                 if (harForbindelse)
                 {
-                    if (dataFraKortleser.Length == 20)
+                    if (dataFraKortleser.Length == 20)  // String med denne lengden vil alltid være kort-ID, pin og kortleser-ID
                     {
+                        // Deler opp tekststrengen vi mottar for å hente ut de ulike verdiene
+
                         int indeksKort = dataFraKortleser.IndexOf('K');
                         int indeksPin = dataFraKortleser.IndexOf('P');
                         int indeksLeser = dataFraKortleser.IndexOf('L');
@@ -138,18 +147,22 @@ namespace Adgangskontroll_Sentral
                         if (dataTilKortleser == "Godkjent") db.LeggTilLogg(0, kortleser_id, Kort_ID);   //Loggfører godkjent
                         else db.LeggTilLogg(1, kortleser_id, Kort_ID);  //loggfører ikke godkjent
                     }
-                    else if (dataFraKortleser.Length == 14)
+                    else if (dataFraKortleser.Length == 14)     // String med denne lengden vil alltid være kort-ID og kortleser-ID
                     {
+                        // Deler opp tekststrengen vi mottar for å hente ut de ulike verdiene
+
                         int indeksKort = dataFraKortleser.IndexOf('K');
                         int indeksLeser = dataFraKortleser.IndexOf('L');
                         string kort_ID = dataFraKortleser.Substring(indeksKort + 2, 4);
                         string kortleser_ID = dataFraKortleser.Substring(indeksLeser + 2, 4);
 
-                        db.LeggTilLogg(2, kortleser_ID, kort_ID);
-                        dataTilKortleser = "trash";
+                        db.LeggTilLogg(2, kortleser_ID, kort_ID);   // Loggfører at døren er åpent
+                        dataTilKortleser = "trash";                 // Blir ikke brukt til noe, har ikke behov for melding til bake til kortleser
                     }
                     else if (dataFraKortleser.Length == 17)     // alarm
                     {
+                        // Deler opp tekststrengen vi mottar for å hente ut de ulike verdiene
+
                         int indeksKort = dataFraKortleser.IndexOf('K');
                         int indeksLeser = dataFraKortleser.IndexOf('L');
                         int indeksAlarm = dataFraKortleser.IndexOf('A');
@@ -157,22 +170,25 @@ namespace Adgangskontroll_Sentral
                         string kortleser_ID = dataFraKortleser.Substring(indeksLeser + 2, 4);
                         int alarm = Convert.ToInt32(dataFraKortleser.Substring(indeksAlarm + 2, 1));
 
-                        db.LeggTilLogg(alarm, kortleser_ID, kort_ID);
-                        dataTilKortleser = "trash";
+                        db.LeggTilLogg(alarm, kortleser_ID, kort_ID);   // Loggfører alarm utløst
+                        dataTilKortleser = "trash";                     // Blir ikke brukt til noe, har ikke behov for melding til bake til kortleser   
 
-                        MessageBox.Show($"Alarmtype {alarm} utløst!\nDør: {kortleser_ID}, Bruker: {kort_ID}");
+                        MessageBox.Show($"Alarmtype {alarm} utløst!\nDør: {kortleser_ID}, Bruker: {kort_ID}");  // Viser melding i sentral om aktiv alarm
                     }
                     else if (dataFraKortleser == "RequestID")
                     {
                         dataTilKortleser = TB_KortleserID.Text;
                     }
-                    else dataTilKortleser = "Retur: " + dataFraKortleser;
+                    else dataTilKortleser = "Retur: " + dataFraKortleser;           // Blir ikke brukt til annet enn testing
 
-                    SendData(kommSokkel, dataTilKortleser, out harForbindelse);
+                    SendData(kommSokkel, dataTilKortleser, out harForbindelse);     // Sender aktuell data som har blitt generert ut ifra hvilken hendelse som har skjedd
                 }
             }
-            kommSokkel.Close();
+            kommSokkel.Close();     // Lukker tilkoblingen når vi stenger en kortleser
         }
+
+
+        // Metoder for å motta og sende data fra sentral og kortleser
         static string MottaData(Socket s, out bool gjennomført)
         {
             string svar = "";
@@ -208,6 +224,8 @@ namespace Adgangskontroll_Sentral
             }
         }
 
+
+        // Knapper for å åpne de ulike menyene
         private void iBTN_Brukere_Click(object sender, EventArgs e)
         {
             OpenChildForm(new MenyBrukere(), sender);
@@ -224,6 +242,7 @@ namespace Adgangskontroll_Sentral
         {
             OpenChildForm(new MenyInnstillinger(), sender);
         }
+        // Knapp for å lukke åpnet meny "X"
         private void BTN_LukkMenyVindu_Click(object sender, EventArgs e)
         {
             if (activeForm != null) activeForm.Close();
@@ -231,6 +250,8 @@ namespace Adgangskontroll_Sentral
             Reset();
         }
 
+        // For å etablere tilkobling mellom sentral og kortleser.
+        // En kortleser må kjøre før man kan trykke på knappen
         private void BTN_KobleTilKortleser_Click(object sender, EventArgs e)
         {
             KobleTilKortleser();

@@ -12,11 +12,15 @@ namespace Sentral
 {
     public partial class MenyInnstillinger : Form
     {
+        // Etablerer tilgang til database-klassen. Strengt tatt ikke nødvendig her, men ved implemetering av
+        // flere funksjoner, kan det være behov.
         Database db = new Database();
         public MenyInnstillinger()
         {
             InitializeComponent();
         }
+
+        // Viser "om programmet"
         private void BTN_Om_Click(object sender, EventArgs e)
         {
             if (lbl_info.Visible == false) lbl_info.Visible = true;
