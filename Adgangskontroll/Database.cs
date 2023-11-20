@@ -13,8 +13,7 @@ namespace Sentral
 {
     internal class Database
     {
-        private static Random r = new Random();
-        private static int random = r.Next(0, 9999);    // Brukes til å generere pin-kode for å legge inn nye brukere
+        private static Random r = new Random(); // For pin-kode ved legge til nye brukere
 
         private static DataTable dtgetData = new DataTable();
         private static NpgsqlConnection vCon;
@@ -105,19 +104,18 @@ namespace Sentral
             {
                 suksess = "Godkjent";
             }
-            else  // Dersom vi ikke får returnert en tabell fra spøøringen
+            else  // Dersom vi ikke får returnert en tabell fra spørringen
             {
                 suksess = "Ikke godkjent";
             }
             return suksess; // Blir sendt som dataTilKortleser
         }
-        
 
 
         // Legger en ny rad inn i brukertabellen 
         public DataTable LeggTilNyBruker(string fornavn, string etternavn, string kort_id, string seksjon, string start, string slutt)
         {
-            int pin = r.Next(0,9999);
+            int pin = r.Next(0,9999);   // Generere pin-kode mellom 0000 og 9999
             string epost = $"{kort_id}@bedrift.no";     //hvis ikke kan vi få duplikater
             dtgetData = getData($"insert into bruker values ('{kort_id}', '{fornavn}', '{etternavn}', '{epost}', '{start}', '{slutt}', '{pin}', {seksjon});");
             DataTable dt = dtgetData;
@@ -128,7 +126,7 @@ namespace Sentral
         // Skriver inn alle verdiene til en rad i brukertabellen på nytt, ved å identifisere raden utifra kort_id
         public DataTable EndreBruker(string fornavn, string etternavn, string kort_id, string seksjon, string start, string slutt)
         {
-            int pin = r.Next(0, 9999);
+            int pin = r.Next(0, 9999);  // Genererer pin-kode mellom 0000 og 9999
             string epost = $"{kort_id}@bedrift.no";     // hvis ikke kan vi få duplikater
             dtgetData = getData($"update bruker set fornavn = '{fornavn}', etternavn = '{etternavn}', epost = '{epost}', gyldighet_start = '{start}', gyldighet_slutt = '{slutt}',pin = '{pin}', tilgang_id = {seksjon} where kort_id = '{kort_id}'"); 
             DataTable dt = dtgetData;
@@ -182,19 +180,6 @@ namespace Sentral
 
             return dt;
         }
-
-        // ikke i bruk
-
-        // Henter ut nyligste rad fra logtabellen for en viss kortleser_id, brukes for å hente siste kort_id registrert på en kortleser (brukes ved enkelte logger)
-        // For mer informasjon om logg_type se adgangskontroller-DB-notasjon.txt
-        public DataTable VisSisteLogg(int logg_type, string logg_tid, string kortleser_id, int kort_id)
-        {
-            dtgetData = getData($"SELECt * FROM logg where kortleser_id = '{kortleser_id}' ORDER BY logg_tid DESC limit 1");
-            DataTable dt = dtgetData;
-
-            return dt;
-        }
-
 
         // Returnerer en tabell med alle rader i kortlesertabellen
         public DataTable VisKortlesere()

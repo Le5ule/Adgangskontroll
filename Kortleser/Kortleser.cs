@@ -12,25 +12,36 @@ namespace Adgangskontroll_Kortleser
 {
     public partial class Kortleser : Form
     {
+        // Brukes for sikkerhetsmekanisme fir lukking av kortleser
         static bool Avbryt = false;
+
+        // Brukes for å opprettholde forbindelsen med sentral
         static bool kommunikasjonMedSentral = false;
+
+        // Datatypene for kortleser
         static string dataTilSentral;
         static string dataFraSentral;
         static string pin;
-        static string kortID = "NaN_";
+        static string kortID = "NaN_";  //Dersom vi ikke har oppgitt noen ID fra sentral, brukes når alarm utløses, hvis ikke krasjer sentral
         static string kortleserID;
-        string data = "";
-        string COMPort = "";
-        int råDørÅpen = 0;
-        int råDørLåst = 0;
-        int potensiometer = 0;
-        int sekDørÅpen = 0;
-        int alarm = 0;
-        int dørLåstOpp = 0;
 
+        // Variabler for SimSim
+        static string data = "";
+        static string COMPort = "";
+        static int råDørÅpen = 0;
+        static int råDørLåst = 0;
+        static int potensiometer = 0;
+        static int sekDørÅpen = 0;
+        static int alarm = 0;
+        static int dørLåstOpp = 0;
+
+        // Liste for å lagre koden som tastes inn
         List<int> kodeinput = new List<int>();
+
+        // Etablerer bruk av seriellport
         SerialPort sp;
 
+        // Etablerer IP-kommunikasjon
         Socket klientSokkel;
 
         public Kortleser()
@@ -41,27 +52,29 @@ namespace Adgangskontroll_Kortleser
 
         private void Kortleser_Load(object sender, EventArgs e)
         {
-            // Kortleser åpnes selv om det ikke er kommunikasjon med sentral eller SimSim, litt rart...
+            // Oppretter tilkobling mot sentral ved bruk av TCP/IP
 
             klientSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
             BTN_LesKort.Select();
 
+            // Når kortleser startes skal døren være dynlig lukket og låst
             iPB_Unlock.Hide();
             iPB_DoorOpen.Hide();
 
+            // prøver å "få tak i" tilkoblingen fra sentral
             try
             {
-                klientSokkel.Connect(serverEP); // blokkerende metode
+                klientSokkel.Connect(serverEP);
                 kommunikasjonMedSentral = true;
                 try
                 {
+                    // Kortleser vil spørre etter sin ID fra sentralen
                     dataTilSentral = "RequestID";
                     BW_SendKvittering.RunWorkerAsync();
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
 
@@ -72,12 +85,13 @@ namespace Adgangskontroll_Kortleser
                 kommunikasjonMedSentral = false;
             }
 
-            //Kobling til Simsim
+            //Kobling til SimSim
             COMPort = "COM" + Interaction.InputBox("Skriv inn COMportnummer for kortleser: ", "COM Port");
             sp = new SerialPort(COMPort, 9600);
 
             try
             {
+                // Prøver å få kontakt med åpen seriellport
                 sp.Open();
             }
             catch (Exception u)
@@ -87,15 +101,19 @@ namespace Adgangskontroll_Kortleser
 
             if (sp.IsOpen)
             {
+                // Skal skrive til SimSim at døren skal være låst og lukket, samt ingen alarm
                 sp.Write("$O50");
                 sp.Write("$O60");
                 sp.Write("$O70");
 
+                // SimSim skal sende meldinger hvert sekund
                 SendEnMelding("$S001", sp);
                 bwSjekkForData.RunWorkerAsync();
             }
         }
 
+
+        // Metode for å lese inn kode
         public void Kode(int inn)
         {
             kodeinput.Add(inn);
@@ -106,22 +124,15 @@ namespace Adgangskontroll_Kortleser
                     kortID = TB_KortInput.Text;
                     TB_KortInput.Clear();
                     TB_KortInput.Visible = false;
-                    //comMedSentral = true;         // usikker på hvorfor denne er kommentert vekk her...
                     pin = kodeinput[0].ToString() + kodeinput[1].ToString() + kodeinput[2].ToString() + kodeinput[3].ToString();
                     kodeinput.Clear();
 
-
-                    //dette må omformateres slik at det stemmer med query til db.
-                    //lagre dette som string, inn i sentral,
-                    //variabel i query inni sentral. Makes sense?
+                    // Sender informasjon til sentral for å autentisere brukeren
                     dataTilSentral = $"K:{kortID} P:{pin} L:{kortleserID}";
-
-                    //"K:0000 P:0000 L:0000";
-
 
                     if (kommunikasjonMedSentral == true)
                     {
-                        if ( !BW_SendKvittering.IsBusy)
+                        if (!BW_SendKvittering.IsBusy)     // BackgroundWorker skal i prinsipp aldri være opptatt, men den kan, derfor må vi sjekke for dette
                         {
                             BW_SendKvittering.RunWorkerAsync();
                         }
@@ -129,27 +140,49 @@ namespace Adgangskontroll_Kortleser
                         {
                             MessageBox.Show("feil");
                         }
-                        MessageBox.Show("Lokal info i kortleser:\n" + dataTilSentral);     //debug
+                        /*MessageBox.Show("Lokal info i kortleser:\n" + dataTilSentral);*/     //debug: sjekker at informasjon lagres korrekt
                     }
 
-                    //if-setning som venter på å åpne dør, "blokkerende metode"
-
-
-                    //BTN_LesKort.Select();
-                    //kortID = "";
                     pin = "";
-
                 }
             }
             catch (Exception)
             {
                 throw;
             }
-
         }
 
+        // Knapper for å åpne og lukke døren
+        private void BTN_Åpne_Click(object sender, EventArgs e)
+        {
+
+            dataTilSentral = $"K:{kortID} L:{kortleserID}S";
+
+            if (råDørÅpen == 0 && råDørLåst == 1)
+            {
+                SendEnMelding("$O61", sp);
+                if (kommunikasjonMedSentral == true)
+                {
+                    BW_SendKvittering.RunWorkerAsync();
+                }
+            }
+
+        }
+        private void BTN_Lukk_Click(object sender, EventArgs e)
+        {
+            if (råDørÅpen == 1)
+            {
+                sekDørÅpen = 0;
+                SendEnMelding("$O60", sp);
+                SendEnMelding("$O50", sp);
+                SendEnMelding("$O70", sp);
+            }
+        }
+
+
+
         //SimSim-funksjoner
-        void SendEnMelding(string enMelding, SerialPort sp)
+        void SendEnMelding(string enMelding, SerialPort sp)     // Sender statusmelding til SimSIm
         {
             try
             {
@@ -160,6 +193,7 @@ namespace Adgangskontroll_Kortleser
                 MessageBox.Show("Feil: " + u.Message);
             }
         }
+        // Mottar meldinger fra SimSim som senere skal evalueres
         string HentUtEnMelding(ref string data)
         {
             string svar = "";
@@ -204,6 +238,7 @@ namespace Adgangskontroll_Kortleser
         }
         //Slutt på SimSim-funksjoner
 
+
         //Funksjon for å konvertere rådata fra simsim til dør-status
         void VisDør(string enMelding)
         {
@@ -212,12 +247,12 @@ namespace Adgangskontroll_Kortleser
             råDørÅpen = Convert.ToInt32(enMelding.Substring(indeksStart + 7, 1));
             if (råDørLåst == 1)
             {
-                iPB_Unlock.Show();
+                iPB_Unlock.Show();              // Døren er nå ulåst
                 iPB_Unlock.BringToFront();
                 iPB_Lock.Hide();
-                dørLåstOpp++;
+                dørLåstOpp++;                   // teller antall "sekund" døren er låst opp
 
-                if(dørLåstOpp == 15)
+                if (dørLåstOpp == 15)
                 {
                     sp.Write("$O50");   // SimSim låser døren etter 15 sekund
                     dørLåstOpp = 0;
@@ -225,23 +260,24 @@ namespace Adgangskontroll_Kortleser
             }
             else
             {
-                iPB_Lock.Show();
+                iPB_Lock.Show();            // Døren forblir låst (grafisk)
                 iPB_Lock.BringToFront();
                 iPB_Unlock.Hide();
             }
             if (råDørÅpen == 1)
             {
-                iPB_DoorOpen.Show();
+                iPB_DoorOpen.Show();        // Døren åpnes (grafisk)
                 iPB_DoorOpen.BringToFront();
                 iPB_DoorLocked.Hide();
             }
             else
             {
-                iPB_DoorLocked.Show();
+                iPB_DoorLocked.Show();      // Døren lukkes (grafisk)
                 iPB_DoorLocked.BringToFront();
                 iPB_DoorOpen.Hide();
             }
         }
+
 
         //alarmfunksjon
         void Alarm(string enMelding)
@@ -251,16 +287,18 @@ namespace Adgangskontroll_Kortleser
                 SendEnMelding("$O71", sp);
                 alarm = 3;
 
-                dataTilSentral = $"K:{kortID} L:{kortleserID} A:{alarm}";
-                  
+                dataTilSentral = $"K:{kortID} L:{kortleserID} A:{alarm}";   // Sender informasjon om bruker, kortleser og type alarm til sentral
+
                 if (kommunikasjonMedSentral == true)
                 {
                     BW_SendKvittering.RunWorkerAsync();
                 }
-                
+
             }
             int indeksStart = enMelding.IndexOf('G');
             potensiometer = Convert.ToInt32(enMelding.Substring(indeksStart + 1, 4));
+
+            // "bryter opp døren"
             if (potensiometer > 500 && alarm != 4)
             {
                 SendEnMelding("$O61", sp);
@@ -274,6 +312,7 @@ namespace Adgangskontroll_Kortleser
                     BW_SendKvittering.RunWorkerAsync();
                 }
             }
+            // Døren er ikke "brutt opp"
             if (potensiometer < 500 && sekDørÅpen < 5)
             {
                 SendEnMelding("$O70", sp);
@@ -281,7 +320,8 @@ namespace Adgangskontroll_Kortleser
             }
         }
 
-  
+
+        // Generelle funksjoner for å motta og sende data til sentral
         static string MottaData(Socket s, out bool gjennomført)
         {
             string svar = "";
@@ -303,7 +343,6 @@ namespace Adgangskontroll_Kortleser
             }
             return svar;
         }
-
         static void SendData(Socket s, string data, out bool gjennomført)
         {
             try
@@ -318,6 +357,8 @@ namespace Adgangskontroll_Kortleser
             }
         }
 
+
+        //Backgroundworker for å sende og motta data til og fra sentral
         private void BW_SendKvittering_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             SendData(klientSokkel, dataTilSentral, out kommunikasjonMedSentral);
@@ -326,7 +367,6 @@ namespace Adgangskontroll_Kortleser
                 dataFraSentral = MottaData(klientSokkel, out kommunikasjonMedSentral);
             }
         }
-
         private void BW_SendKvittering_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             if (kommunikasjonMedSentral)
@@ -339,7 +379,7 @@ namespace Adgangskontroll_Kortleser
                 else if (dataFraSentral == "Godkjent")
                 {
                     SendEnMelding("$O51", sp);
-                    
+
                 }
                 else if (dataFraSentral == "Ikke godkjent")
                 {
@@ -347,11 +387,41 @@ namespace Adgangskontroll_Kortleser
                 }
                 else
                 {
-                    TB_MottakFraSentral.Text = dataFraSentral;  //debug
+                    // Tidligere brukt til debug
                 }
             }
             //else //Application.Exit();
         }
+
+        // BackgroundWorker for SimSim
+        private void bwSjekkForData_DoWork_1(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            Thread.Sleep(500);
+
+            data = data + MottaDataSim(sp);
+        }
+
+        private void bwSjekkForData_RunWorkerCompleted_1(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            if (EnHelMeldingMotatt(data))
+            {
+                string enMelding = HentUtEnMelding(ref data);
+                VisDør(enMelding);
+                Alarm(enMelding);
+                if (råDørÅpen == 1)
+                {
+                    sekDørÅpen++;
+                }
+                else
+                {
+                    sekDørÅpen = 0;
+                }
+            }
+            bwSjekkForData.RunWorkerAsync();
+        }
+
+
+        // Knapper for å lese kort-ID og kode
         private void BTN_LesKort_Click(object sender, EventArgs e)
         {
             TB_KortInput.Visible = true;
@@ -398,60 +468,10 @@ namespace Adgangskontroll_Kortleser
             Kode(0);
         }
 
-        private void bwSjekkForData_DoWork_1(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            Thread.Sleep(500);
 
-            data = data + MottaDataSim(sp);
-        }
 
-        private void bwSjekkForData_RunWorkerCompleted_1(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
-        {
-            if (EnHelMeldingMotatt(data))
-            {
-                string enMelding = HentUtEnMelding(ref data);
-                VisDør(enMelding);
-                Alarm(enMelding);
-                if (råDørÅpen == 1)
-                {
-                    sekDørÅpen++;
-                }
-                else
-                {
-                    sekDørÅpen = 0;
-                }
-            }
-            bwSjekkForData.RunWorkerAsync();
-        }
-       
 
-        private void BTN_Åpne_Click(object sender, EventArgs e)
-        {
-
-            dataTilSentral = $"K:{kortID} L:{kortleserID}S";
-
-            if (råDørÅpen == 0 && råDørLåst == 1)
-            {
-                SendEnMelding("$O61", sp);
-                if (kommunikasjonMedSentral == true)
-                {
-                    BW_SendKvittering.RunWorkerAsync();
-                }
-            }
-
-        }
-
-        private void BTN_Lukk_Click(object sender, EventArgs e)
-        {
-            if (råDørÅpen == 1)
-            {
-                sekDørÅpen = 0;
-                SendEnMelding("$O60", sp);
-                SendEnMelding("$O50", sp);
-                SendEnMelding("$O70", sp);
-            }
-        }
-
+        // Sikkerhetsmekanisme for å lukke kortleser
         private void Kortleser_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!Avbryt)
