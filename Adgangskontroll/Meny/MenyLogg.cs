@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -101,50 +102,45 @@ namespace Sentral
             //db...
         }
 
-        private void toolStripContainer1_TopToolStripPanel_Click(object sender, EventArgs e)
+        // Gjør det slik at denne hendelsen kun endrer på writable til feltene; lag en ny switch-case
+        private void CB_Alarmtype_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)//gjør det slik at denne hendelsen kun endrer på writable til feltene ie lag en ny switch case
-        {
-            dataGridView1.Visible = true; 
-            switch (comboBox1.Text) //koble denne til trykk av hent knapp
+            dataGridView1.Visible = true;
+            switch (CB_Alarmtype.Text) //koble denne til trykk av hent-knapp
             {
-                case "Alle Kortlesere":
-                    dataGridView1.DataSource = db.VisKortleser();//ingen ekstra informasjon trengs å leses fra text box
+                case "Alle kortlesere":
+                    dataGridView1.DataSource = db.VisKortleser();//ingen ekstra informasjon trengs å leses fra textbox
                     break;
-                case "Alle Brukere":
+                case "Alle brukere":
                     dataGridView1.DataSource = db.VisBrukere();
                     break;
-                case "Alle adgangs forsøk knyttet til Bruker i periode":
+                case "Alle adgangsforsøk knyttet til bruker i periode:":
                     // dataGridView1.DataSource = db.VisAdgangsloggForBrukerVedDato(string kort_id, DateTime start, DateTime slutt); //trenger kort id, date start og slutt
                     break;
-                case "Alle ikke godkjente adgangs forsøk knyttet til Kortleser i periode":
+                case "Alle ikke-godkjente adgangsforsøk knyttet til kortleser i periode:":
                     // dataGridView1.DataSource = db.VisNegativAdgangsloggKortleserVedDato(string kortleser_id, DateTime start, DateTime slutt);
                     break;
-                case "Alle Alarm hendelser":
+                case "Alle alarmer":
                     dataGridView1.DataSource = db.VisAlarm();
                     break;
-                case "Alle Alarm hendelser knyttet til Bruker":
+                case "Alle alarmer knyttet til bruker:":
                     // dataGridView1.DataSource = db.VisAlarmVedBruker(string kort_id);
                     break;
-                case "Alle Alarm hendelser knyttet til Kortleser":
+                case "Alle alarmer knyttet til kortleser:":
                     // dataGridView1.DataSource = db.VisAlarmVedKortleser(int kortleser_id);
                     break;
-                case "Alle Alarm hendelser i periode":
+                case "Alle alarmer i periode:":
                     // dataGridView1.DataSource = db.VisAlarmVedDato(DateTime start, DateTime slutt);
-                case "Alle Logg hendelser":
-                     dataGridView1.DataSource = db.VisLogg();
+                case "Alle logger":
+                    dataGridView1.DataSource = db.VisLogg();
                     break;
-                case "Alle Logg hendelser kyttet til Bruker":
+                case "Alle logger kyttet til bruker:":
                     //dataGridView1.DataSource = db.VisLoggVedBruker(string kort_id);
                     break;
-                case "Alle Logg hendelser knyttet til Kortleser":
+                case "Alle logger knyttet til kortleser:":
                     //dataGridView1.DataSource = db.VisLoggVedKortleser(string kortleser_id);
                     break;
             }
-
         }
     }
 }

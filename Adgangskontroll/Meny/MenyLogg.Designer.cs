@@ -47,7 +47,7 @@
             DTP_til = new DateTimePicker();
             lbl_fra = new Label();
             lbl_til = new Label();
-            comboBox1 = new ComboBox();
+            CB_Alarmtype = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -260,23 +260,23 @@
             lbl_til.Text = "Fra:";
             lbl_til.Visible = false;
             // 
-            // comboBox1
+            // CB_Alarmtype
             // 
-            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Alle Kortlesere", "Alle Brukere", "Alle adgangs forsøk for Bruker i periode", "Alle ikke godkjente adgangs forsøk for Kortleser i periode", "Alle Alarm hendelser", "Alle Alarm hendelser knyttet til Bruker", "Alle Alarm hendelser knyttet til Kortleser", "Alle Alarm hendelser i periode", "Alle Logg hendelser", "Alle Logg hendelser kyttet til Bruker", "Alle Logg hendelser knyttet til Kortleser" });
-            comboBox1.Location = new Point(297, 48);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(550, 28);
-            comboBox1.TabIndex = 19;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            CB_Alarmtype.DropDownStyle = ComboBoxStyle.DropDownList;
+            CB_Alarmtype.FormattingEnabled = true;
+            CB_Alarmtype.Items.AddRange(new object[] { "Alle kortlesere", "Alle brukere", "Alle adgangsforsøk for bruker i periode:", "Alle ikke-godkjente adgangsforsøk for kortleser i periode:", "Alle alarmer", "Alle alarmer knyttet til bruker:", "Alle alarmer knyttet til kortleser:", "Alle alarmer i periode:", "Alle logger", "Alle logger kyttet til bruker:", "Alle logger knyttet til kortleser:" });
+            CB_Alarmtype.Location = new Point(297, 48);
+            CB_Alarmtype.Name = "CB_Alarmtype";
+            CB_Alarmtype.Size = new Size(550, 28);
+            CB_Alarmtype.TabIndex = 19;
+            CB_Alarmtype.SelectedIndexChanged += CB_Alarmtype_SelectedIndexChanged;
             // 
             // MenyLogg
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(886, 521);
-            Controls.Add(comboBox1);
+            Controls.Add(CB_Alarmtype);
             Controls.Add(lbl_til);
             Controls.Add(lbl_fra);
             Controls.Add(DTP_til);
@@ -324,6 +324,6 @@
         private DateTimePicker DTP_til;
         private Label lbl_fra;
         private Label lbl_til;
-        private ComboBox comboBox1;
+        private ComboBox CB_Alarmtype;
     }
 }

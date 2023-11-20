@@ -286,7 +286,7 @@ namespace Sentral
         }
 
         // Returnerer alle entries fra loggtabellen basert på kort_id
-        public DataTable VisLogVedBruker(string kort_id)
+        public DataTable VisLoggVedBruker(string kort_id)
         {
             dtgetData = getData($"select * from logg where kort_id = {kort_id}");
             DataTable dt = Database.DtgetData;
@@ -295,7 +295,7 @@ namespace Sentral
         }
 
         // Returnerer alle entries fra loggtabellen basert på kortleser_id
-        public DataTable VisLogVedKortleser(string kortleser_id)
+        public DataTable VisLoggVedKortleser(string kortleser_id)
         {
             dtgetData = getData($"select * from logg where kortleser_id = {kortleser_id}");
             DataTable dt = Database.DtgetData;
