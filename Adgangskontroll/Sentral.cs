@@ -35,11 +35,11 @@ namespace Adgangskontroll_Sentral
 
             // Endre disse parameterne for å koble til din/annen database
             string
-                server = "129.151.221.119",
-                port = "5432",
-                user_id = "596237",
-                password = "Ha1FinDagIDag!",
-                database = "596237";
+                server = "",
+                port = "",
+                user_id = "",
+                password = "",
+                database = "";
             db = new Database(server, port, user_id, password, database);
         }
         private void Sentral_Load(object sender, EventArgs e)
