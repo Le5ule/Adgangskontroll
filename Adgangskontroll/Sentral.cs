@@ -12,10 +12,7 @@ namespace Adgangskontroll_Sentral
 {
     public partial class Sentral : Form
     {
-        Database db = new Database();
-
-        static string kobling;      // var ment til å bestå av en streng variabler som ikke er deklarert,
-                                    // for å enkelt endre kobling til database
+        Database db;// = new Database();
 
         static List<string> Kortleser_ID = new List<string>() { "0001" }; //Oppdater denne listen med så mange kortleser-IDer vi trenger
         static int index = 0;
@@ -26,7 +23,7 @@ namespace Adgangskontroll_Sentral
         // VelgerTCP/IP og adresser + portnummer
         Socket lytteSokkel = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-        // Oppgir server sin IP adresse og portnummer
+        // Oppgir server sin IP-adresse og portnummer
         IPEndPoint serverEP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
 
         bool harforbindelse = true;
@@ -34,12 +31,20 @@ namespace Adgangskontroll_Sentral
         public Sentral()
         {
             InitializeComponent();
-            db.Connection();    //skal endre dette til enten her eller i Database.cs at man setter inn egendefinerte parametre for tilkobling
 
             lytteSokkel.Bind(serverEP);
             lytteSokkel.Listen(10);
 
             KobleTilKortleser();
+            
+            // Endre disse parameterne for å koble til din/annen database
+            string
+                server = "129.151.221.119",
+                port = "5432",
+                user_id = "596237",
+                password = "Ha1FinDagIDag!",
+                database = "596237";
+            db = new Database(server, port, user_id, password, database);
         }
         private void Sentral_Load(object sender, EventArgs e)
         {

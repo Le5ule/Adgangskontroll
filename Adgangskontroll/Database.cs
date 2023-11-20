@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FontAwesome.Sharp;
 using Npgsql;
 
 namespace Sentral
@@ -18,10 +19,6 @@ namespace Sentral
         private static DataTable dtgetData = new DataTable();
         private static NpgsqlConnection vCon;
         private static NpgsqlCommand vCmd;
-
-        // legg inn din informasjon her for kobling mot din database
-        static string kobling = "server=129.151.221.119 ; port=5432 ; user id=596237 ; password=Ha1FinDagIDag! ; database=596237 ;";
-
 
         public static NpgsqlCommand VCmd
         {
@@ -38,13 +35,29 @@ namespace Sentral
             get { return dtgetData; }
             set { dtgetData = value; }
         }
+
+        // Konstruktør for generel tilkobling fra andre klasser/forms til database-metodene
         public Database()
         {
-            //
+
+        }
+
+        // Konstruktør for opprette tilkobling til database via sentral
+        public Database(string server, string port, string user_id, string password, string database)
+        {
+            //establish connection
+            vCon = new NpgsqlConnection($"server={server} ; port={port} ; user id={user_id} ; password={password} ; database={database} ;");
+
+            //establish queryobject
+            vCmd = new NpgsqlCommand(); //it seems to understand that "con" is the connection object
+
+            // Kobler til databasen
+            Connection();
+            //Task.Run(() => { Connect(); }); //if needed to be run async
         }
         public NpgsqlConnection Connection()
         {
-            vCon = new NpgsqlConnection(kobling);
+            //vCon = new NpgsqlConnection(kobling);
             try
             {
                 if (vCon.State == ConnectionState.Closed)
