@@ -35,8 +35,8 @@ namespace Adgangskontroll_Sentral
             lytteSokkel.Bind(serverEP);
             lytteSokkel.Listen(10);
 
-            KobleTilKortleser();
-            
+            ThreadPool.QueueUserWorkItem(KobleTilKortleser);
+
             // Endre disse parameterne for å koble til din/annen database
             string
                 server = "129.151.221.119",
@@ -96,7 +96,7 @@ namespace Adgangskontroll_Sentral
             BTN_LukkMenyVindu.Visible = false;
         }
 
-        private void KobleTilKortleser()
+        private void KobleTilKortleser(object o)
         {
             try
             {
@@ -160,10 +160,10 @@ namespace Adgangskontroll_Sentral
                     {
                         int indeksKort = dataFraKortleser.IndexOf('K');
                         int indeksLeser = dataFraKortleser.IndexOf('L');
-                        string Kort_ID = dataFraKortleser.Substring(indeksKort + 2, 4);
-                        string kortleser_id = dataFraKortleser.Substring(indeksLeser + 2, 4);
+                        string kort_ID = dataFraKortleser.Substring(indeksKort + 2, 4);
+                        string kortleser_ID = dataFraKortleser.Substring(indeksLeser + 2, 4);
 
-                        db.LeggTilLogg(2, kortleser_id, Kort_ID);
+                        db.LeggTilLogg(2, kortleser_ID, kort_ID);
                         dataTilKortleser = "trash";
                     }
                     else if (dataFraKortleser.Length == 17)     // alarm
@@ -171,12 +171,14 @@ namespace Adgangskontroll_Sentral
                         int indeksKort = dataFraKortleser.IndexOf('K');
                         int indeksLeser = dataFraKortleser.IndexOf('L');
                         int indeksAlarm = dataFraKortleser.IndexOf('A');
-                        string Kort_ID = dataFraKortleser.Substring(indeksKort + 2, 4);
-                        string kortleser_id = dataFraKortleser.Substring(indeksLeser + 2, 4);
+                        string kort_ID = dataFraKortleser.Substring(indeksKort + 2, 4);
+                        string kortleser_ID = dataFraKortleser.Substring(indeksLeser + 2, 4);
                         int alarm = Convert.ToInt32(dataFraKortleser.Substring(indeksAlarm + 2, 1));
 
-                        db.LeggTilLogg(alarm, kortleser_id, Kort_ID);
+                        db.LeggTilLogg(alarm, kortleser_ID, kort_ID);
                         dataTilKortleser = "trash";
+
+                        MessageBox.Show($"Alarmtype {alarm} utløst!\nDør: {kortleser_ID}, Bruker: {kort_ID}");
                     }
                     else if (dataFraKortleser == "RequestID")
                     {

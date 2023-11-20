@@ -16,97 +16,30 @@ namespace Sentral
     {
         Database db = new Database();
 
+        static string kort_ID;
+        static string kortleser_ID;
+        static string startTid;
+        static string sluttTid;
 
         public MenyLogg()
         {
             InitializeComponent();
         }
 
-        private void BTN_UtvalgteBrukere_Click(object sender, EventArgs e)
-        {
-            string bruker = TB_Bruker.Text;
-            //dataGridView.DataSource = db.Alarm(bruker);
-            TB_Bruker.Clear();
-        }
-
-        private void BTN_VisLeser_Click(object sender, EventArgs e)
-        {
-            string leser = TB_Leser.Text;
-            //dataGridView.DataSource = db.Alarm(leser);
-            TB_Leser.Clear();
-        }
-
-        private void BTN_VisAlleAlarmer_Click(object sender, EventArgs e)
-        {
-            //dataGridView.DataSource = db.Alarm(alle);
-        }
-
-        private void BTN_Historikk_Click(object sender, EventArgs e)
-        {
-            BTN_VisBruker.Visible = true;
-            BTN_VisLeser.Visible = true;
-            BTN_VisAlleHendelser.Visible = true;
-            BTN_VisAlleAlarmer.Visible = false;
-            TB_Bruker.Visible = true;
-            TB_Leser.Visible = true;
-            BTN_VisBrukerAlarm.Visible = false;
-            BTN_VisAlleAlarmer.Visible = false;
-            TB_BrukerAlarm.Visible = false;
-            TB_LeserAlarm.Visible = false;
-            TB_Alarmtype.Visible = false;
-            lbl_Alarmtype.Visible = false;
-
-            lbl_fra.Visible = false;
-            lbl_til.Visible = false;
-            DTP_fra.Visible = false;
-            DTP_til.Visible = false;
-
-        }
-
-        private void BTN_Alarmer_Click(object sender, EventArgs e)
-        {
-            BTN_VisBrukerAlarm.Visible = true;
-            BTN_VisAlleAlarmer.Visible = true;
-            BTN_VisLeserAlarm.Visible = true;
-            BTN_VisAlleHendelser.Visible = false;
-            TB_BrukerAlarm.Visible = true;
-            TB_LeserAlarm.Visible = true;
-            BTN_VisBruker.Visible = false;
-            BTN_VisLeser.Visible = false;
-            TB_Bruker.Visible = false;
-            TB_Leser.Visible = false;
-            TB_Alarmtype.Visible = true;
-            lbl_Alarmtype.Visible = true;
-
-            lbl_fra.Visible = true;
-            lbl_til.Visible = true;
-            DTP_fra.Visible = true;
-            DTP_til.Visible = true;
-        }
-
-        private void BTN_VisAlleHendelser_Click(object sender, EventArgs e)
-        {
-            dataGridView1.Visible = true; //noen grunn til å ikke ha denne visable hele tiden?
-            dataGridView1.DataSource = db.VisLogg();     // altså alle entries i loggen...---
-        }
-
-        private void BTN_VisBrukerAlarm_Click(object sender, EventArgs e)
-        {
-            string alarmtype = TB_Alarmtype.Text;
-            //db...
-        }
-
-        private void BTN_VisLeserAlarm_Click(object sender, EventArgs e)
-        {
-            string alarmtype = TB_Alarmtype.Text;
-            //db...
-        }
-
         // Gjør det slik at denne hendelsen kun endrer på writable til feltene; lag en ny switch-case
         private void CB_Alarmtype_SelectedIndexChanged(object sender, EventArgs e)
         {
-            dataGridView1.Visible = true;
-            switch (CB_Alarmtype.Text) //koble denne til trykk av hent-knapp
+            dataGridView1.ClearSelection();
+            TB_FraDato.Clear();
+            TB_TilDato.Clear();
+            TB_KortID.Clear();
+            TB_KortleserID.Clear();
+        }
+
+        // Noe
+        private void BTN_HentData_Click(object sender, EventArgs e)
+        {
+            switch (CB_Alarmtype.Text)
             {
                 case "Alle kortlesere":
                     dataGridView1.DataSource = db.VisKortleser();//ingen ekstra informasjon trengs å leses fra textbox
@@ -115,30 +48,43 @@ namespace Sentral
                     dataGridView1.DataSource = db.VisBrukere();
                     break;
                 case "Alle adgangsforsøk knyttet til bruker i periode:":
-                    // dataGridView1.DataSource = db.VisAdgangsloggForBrukerVedDato(string kort_id, DateTime start, DateTime slutt); //trenger kort id, date start og slutt
+                    kort_ID = TB_KortID.Text;
+                    startTid = TB_FraDato.Text + " 00:00:00";
+                    sluttTid = TB_TilDato.Text + " 00:00:00";
+                    dataGridView1.DataSource = db.VisAdgangsloggForBrukerVedDato(kort_ID, startTid, sluttTid); //trenger kort id, date start og slutt
                     break;
                 case "Alle ikke-godkjente adgangsforsøk knyttet til kortleser i periode:":
-                    // dataGridView1.DataSource = db.VisNegativAdgangsloggKortleserVedDato(string kortleser_id, DateTime start, DateTime slutt);
+                    kortleser_ID = TB_KortleserID.Text;
+                    startTid = TB_FraDato.Text + " 00:00:00";
+                    sluttTid = TB_TilDato.Text + " 00:00:00";
+                    dataGridView1.DataSource = db.VisNegativAdgangsloggKortleserVedDato(kortleser_ID, startTid, sluttTid);
                     break;
                 case "Alle alarmer":
                     dataGridView1.DataSource = db.VisAlarm();
                     break;
                 case "Alle alarmer knyttet til bruker:":
-                    // dataGridView1.DataSource = db.VisAlarmVedBruker(string kort_id);
+                    kort_ID = TB_KortID.Text;
+                    dataGridView1.DataSource = db.VisAlarmVedBruker(kort_ID);
                     break;
                 case "Alle alarmer knyttet til kortleser:":
-                    // dataGridView1.DataSource = db.VisAlarmVedKortleser(int kortleser_id);
+                    kortleser_ID = TB_KortleserID.Text;
+                    dataGridView1.DataSource = db.VisAlarmVedKortleser(kortleser_ID);
                     break;
                 case "Alle alarmer i periode:":
-                    // dataGridView1.DataSource = db.VisAlarmVedDato(DateTime start, DateTime slutt);
+                    startTid = TB_FraDato.Text + " 00:00:00";
+                    sluttTid = TB_TilDato.Text + " 00:00:00";
+                    dataGridView1.DataSource = db.VisAlarmVedDato(startTid, sluttTid);
+                    break;
                 case "Alle logger":
                     dataGridView1.DataSource = db.VisLogg();
                     break;
                 case "Alle logger kyttet til bruker:":
-                    //dataGridView1.DataSource = db.VisLoggVedBruker(string kort_id);
+                    kort_ID = TB_KortID.Text;
+                    dataGridView1.DataSource = db.VisLoggVedBruker(kort_ID);
                     break;
                 case "Alle logger knyttet til kortleser:":
-                    //dataGridView1.DataSource = db.VisLoggVedKortleser(string kortleser_id);
+                    kortleser_ID = TB_KortleserID.Text;
+                    dataGridView1.DataSource = db.VisLoggVedKortleser(kortleser_ID);
                     break;
             }
         }

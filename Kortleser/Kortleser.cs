@@ -17,7 +17,7 @@ namespace Adgangskontroll_Kortleser
         static string dataTilSentral;
         static string dataFraSentral;
         static string pin;
-        static string kortID;
+        static string kortID = "NaN_";
         static string kortleserID;
         string data = "";
         string COMPort = "";
@@ -121,7 +121,14 @@ namespace Adgangskontroll_Kortleser
 
                     if (kommunikasjonMedSentral == true)
                     {
-                        BW_SendKvittering.RunWorkerAsync();
+                        if ( !BW_SendKvittering.IsBusy)
+                        {
+                            BW_SendKvittering.RunWorkerAsync();
+                        }
+                        else
+                        {
+                            MessageBox.Show("feil");
+                        }
                         MessageBox.Show("Lokal info i kortleser:\n" + dataTilSentral);     //debug
                     }
 
