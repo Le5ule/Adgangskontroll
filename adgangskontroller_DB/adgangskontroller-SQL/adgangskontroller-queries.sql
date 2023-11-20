@@ -1,38 +1,3 @@
---todo
-
---hekt alle queries til noe i programet sentral, slik at en hendelse trigger hver av queriene
---fyll ut UI for logg meny - se notater "elementer: logg vindu"
---endre oppkoblings informasjonen i sentral
---gå over ER for å dobeltsjekke logik
---dobelt sjekk notasjon - egen fil og kommentarer i kode - forklar valg 
---skal jeg lage views på alle queriene? kommer ann på hvordan kommunikasjon fungerer
-
-
-
---elementer: loggvindu
---dropdown med de forskjellige loggene - se lengre ned, der er alle queriene som skal inn i loggvelgeren
-
---kort_id-vindu
-
---kortleser_id-vindu
-
---start_tid-vindu
-
---slutt_tid-vindu - disse skal bli writable når rett valg i dropdown er valgt/alltid writable, men notér hvilke vindu skal skrives i per dropdown valg.
-
---clear-knapp - fjerner alt skrevet
-
---hent-knapp - gjør query og displayer til display vinduet
-
---lagre-knapp - lagrer det som er i display som en .txt fil - finn måte for valg av lagrings plass
-
---display-vindu - bruk datafelt 
-
-
-
-
--- merk at alle plasser hvor et variable er i '' skal det fylles inn ny data av programet sentral.
-
 --drop-down-kommandoer: 
 --liste brukerdata på grunnlag av kort_id
 select * from bruker
@@ -50,7 +15,7 @@ group by logg.kort_id, logg.logg_type
 having count(*) >= 10
 
 --liste av alarmer mellom to datoer
-select * from logg where (logg_type = 3 or logg_type = 2) and logg_tid between 'start_date' and 'end_date'
+select * from logg where (logg_type = 3 or logg_type = 4) and logg_tid between 'start_date' and 'end_date'
 
 -- liste alle entries logg 
 select * from logg
@@ -62,17 +27,18 @@ select * from logg where kort_id = 'kort_id'
 select * from logg where kortleser_id = 'kortleser_id'
 
 --liste av alarmer
-select * from logg where (logg_type = 3 or logg_type = 2)
+select * from logg where (logg_type = 3 or logg_type = 4)
 
 --liste av alarmer basert på kort_id
-select * from logg where (logg_type = 3 or logg_type = 2) and kort_id = 'kort_id'
+select * from logg where (logg_type = 3 or logg_type = 4) and kort_id = 'kort_id'
 
 --liste av alarmer basert på kort_id
-select * from logg where (logg_type = 3 or logg_type = 2) and kortleser_id = 'kortleser_id'
+select * from logg where (logg_type = 3 or logg_type = 4) and kortleser_id = 'kortleser_id'
 
 
 
 --Spørringer for brukere:
+
 --legg til bruker(kort_id, fornavn, etternavn, epost, g_start, g_slutt, pin, tilgang_id)
 insert into bruker values ('kort_id', 'fornavn', 'etternavn', 'epost', 'g_start', 'g_slutt', 'pin', 'tilgang_id')
 
@@ -87,14 +53,14 @@ delete from bruker where kort_id = 'kort_id'
 
 
 
-
 --Spørringer for kortlesere:
---legg til kortleser(kortleser_id, seksjon_id, plass)
-insert into kortleser values ('kortleser_id', 'seksjon_id', 'plass')
 
---endre kortleser(kortleser_id, seksjon_id, plass)
+--legg til kortleser(kortleser_id, seksjon_id, beskrivelse)
+insert into kortleser values ('kortleser_id', 'seksjon_id', 'beskrivelse')
+
+--endre kortleser(kortleser_id, seksjon_id, beskrivelse)
 update kortleser
-set seksjon_id = 'seksjon_id', plass = 'plass'
+set seksjon_id = 'seksjon_id', beskrivelse = 'beskrivelse'
 where kortleser_id = 'kortleser_id'
 
 -- slett kortleser
