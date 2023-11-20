@@ -1,0 +1,1 @@
+Det er mulig at Visual Studio ikke klarer å finne SimSim, anbefaler da å kjøre SimSim uavhengig fra adgangskontroll-solution dersom dette problemet oppstår.
