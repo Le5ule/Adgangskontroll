@@ -10,9 +10,12 @@ using System.Windows.Forms;
 
 namespace Sentral
 {
+
     public partial class MenyLogg : Form
     {
         Database db = new Database();
+
+
         public MenyLogg()
         {
             InitializeComponent();
@@ -82,7 +85,7 @@ namespace Sentral
 
         private void BTN_VisAlleHendelser_Click(object sender, EventArgs e)
         {
-            dataGridView1.Visible = true;
+            dataGridView1.Visible = true; //noen grunn til å ikke ha denne visable hele tiden?
             dataGridView1.DataSource = db.VisLogg();     // altså alle entries i loggen...---
         }
 
@@ -100,6 +103,47 @@ namespace Sentral
 
         private void toolStripContainer1_TopToolStripPanel_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)//gjør det slik at denne hendelsen kun endrer på writable til feltene ie lag en ny switch case
+        {
+            dataGridView1.Visible = true; 
+            switch (comboBox1.Text) //koble denne til trykk av hent knapp
+            {
+                case "Alle Kortlesere":
+                    dataGridView1.DataSource = db.VisKortleser();//ingen ekstra informasjon trengs å leses fra text box
+                    break;
+                case "Alle Brukere":
+                    dataGridView1.DataSource = db.VisBrukere();
+                    break;
+                case "Alle adgangs forsøk knyttet til Bruker i periode":
+                    // dataGridView1.DataSource = db.VisAdgangsloggForBrukerVedDato(string kort_id, DateTime start, DateTime slutt); //trenger kort id, date start og slutt
+                    break;
+                case "Alle ikke godkjente adgangs forsøk knyttet til Kortleser i periode":
+                    // dataGridView1.DataSource = db.VisNegativAdgangsloggKortleserVedDato(string kortleser_id, DateTime start, DateTime slutt);
+                    break;
+                case "Alle Alarm hendelser":
+                    dataGridView1.DataSource = db.VisAlarm();
+                    break;
+                case "Alle Alarm hendelser knyttet til Bruker":
+                    // dataGridView1.DataSource = db.VisAlarmVedBruker(string kort_id);
+                    break;
+                case "Alle Alarm hendelser knyttet til Kortleser":
+                    // dataGridView1.DataSource = db.VisAlarmVedKortleser(int kortleser_id);
+                    break;
+                case "Alle Alarm hendelser i periode":
+                    // dataGridView1.DataSource = db.VisAlarmVedDato(DateTime start, DateTime slutt);
+                case "Alle Logg hendelser":
+                     dataGridView1.DataSource = db.VisLogg();
+                    break;
+                case "Alle Logg hendelser kyttet til Bruker":
+                    //dataGridView1.DataSource = db.VisLoggVedBruker(string kort_id);
+                    break;
+                case "Alle Logg hendelser knyttet til Kortleser":
+                    //dataGridView1.DataSource = db.VisLoggVedKortleser(string kortleser_id);
+                    break;
+            }
 
         }
     }
