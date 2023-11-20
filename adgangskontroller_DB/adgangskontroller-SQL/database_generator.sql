@@ -35,15 +35,15 @@ CREATE TABLE logg (
 --test data for kortleser, bruker- og seksjonstabellene
 INSERT INTO kortleser (kortleser_ID, seksjon_ID, beskrivelse)
 VALUES
-('0001', 1, 'Inngang'),
-('0002', 2, 'Datalab'),
-('0003', 2, 'Kommunikasjonslab'),
-('0004', 3, 'Kjemilab'),
-('0005', 4, 'Lagerrom'),
-('0006', 4, 'Bossrom'),
-('0007', 1, 'Seminarrom'),
-('0008', 1, 'Seminarrom'),
-('0009', 1, 'Lesesal');
+('I001', 1, 'Inngang'),
+('E402', 2, 'Datalab'),
+('D452', 2, 'Kommunikasjonslab'),
+('E306', 3, 'Kjemilab'),
+('L005', 4, 'Lagerrom'),
+('L006', 4, 'Bossrom'),
+('E107', 1, 'Seminarrom'),
+('B313', 1, 'Seminarrom'),
+('M208', 1, 'Lesesal');
 
 INSERT INTO bruker (kort_ID, fornavn, etternavn, epost, gyldighet_start, gyldighet_slutt, pin, tilgang_ID)
 VALUES 
@@ -64,19 +64,18 @@ VALUES
 --testdata for logg
 insert into logg
 values 
-(1, CURRENT_DATE, '0003', '1111'),
-(1, CURRENT_DATE, '0003', '1111'),
-(0, CURRENT_DATE, '0003', '1111'),
-(2, CURRENT_DATE, '0002', '2222'),
-(1, CURRENT_DATE, '0003', '1111'),
-(1, CURRENT_DATE, '0003', '1111'),
-(1, CURRENT_DATE, '0003', '1111'),
-(0, CURRENT_DATE, '0003', '1111'),
-(1, CURRENT_DATE, '0003', '1111'),
-(1, CURRENT_DATE, '0003', '1111'),
-(1, CURRENT_DATE, '0003', '1111'),
-(1, CURRENT_DATE, '0003', '1111'),
-(1, CURRENT_DATE, '0003', '1111'),
-(1, CURRENT_DATE, '0003', '1111'),
-(4, CURRENT_DATE, '0003', '1111'),
-(2, CURRENT_DATE, '0003', '1111');
+(1, CURRENT_DATE, 'I001', '1111'),
+(1, CURRENT_DATE, 'E402', '1111'),
+(0, CURRENT_DATE, 'D452', '1111'),
+(1, CURRENT_DATE, 'M208', '1111'),
+(1, CURRENT_DATE, 'M208', '1111'),
+(1, CURRENT_DATE, 'M208', '1111'),
+(0, CURRENT_DATE, 'M208', '1111'),
+(1, CURRENT_DATE, 'B313', '1111'),
+(1, CURRENT_DATE, 'B312', '1111'),
+(1, CURRENT_DATE, 'B313', '1111'),
+(1, CURRENT_DATE, 'B313', '1111'),
+(1, CURRENT_DATE, 'B313', '1111'),
+(1, CURRENT_DATE, 'E402', '1111'),
+(4, CURRENT_DATE, 'E402', '1111'),
+(2, CURRENT_DATE, 'E402', '1111');
