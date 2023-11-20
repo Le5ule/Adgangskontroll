@@ -73,7 +73,7 @@ namespace Adgangskontroll_Kortleser
             }
 
             //Kobling til Simsim
-            COMPort = Interaction.InputBox("Skriv in COM Port nr", "COM Port");
+            COMPort = "COM" + Interaction.InputBox("Skriv inn COMportnummer for kortleser: ", "COM Port");
             sp = new SerialPort(COMPort, 9600);
 
             try
@@ -94,15 +94,8 @@ namespace Adgangskontroll_Kortleser
                 SendEnMelding("$S001", sp);
                 bwSjekkForData.RunWorkerAsync();
             }
-
-            //if (comMedSentral)//==true)
-            //{
-            //    dataFraSentral = MottaData(klientSokkel, out comMedSentral);
-            //    //MessageBox.Show(dataFraSentral);
-            //    //TB_Mottak.Text = dataFraSentral;
-            //}
-            //noe som gir false                         eller??? idk hva dette engang var
         }
+
         public void Kode(int inn)
         {
             kodeinput.Add(inn);
@@ -242,7 +235,8 @@ namespace Adgangskontroll_Kortleser
                 iPB_DoorOpen.Hide();
             }
         }
-        //alarm funksjon
+
+        //alarmfunksjon
         void Alarm(string enMelding)
         {
             if (sekDørÅpen > 5 && alarm != 3 && alarm != 4)
@@ -280,8 +274,7 @@ namespace Adgangskontroll_Kortleser
             }
         }
 
-
-        // Denne funker, men bool gjennomfjørt endres ikke slik som den blir brukt i server-klient i kommentert felt under, tror jeg...
+  
         static string MottaData(Socket s, out bool gjennomført)
         {
             string svar = "";
@@ -303,6 +296,7 @@ namespace Adgangskontroll_Kortleser
             }
             return svar;
         }
+
         static void SendData(Socket s, string data, out bool gjennomført)
         {
             try
@@ -316,6 +310,7 @@ namespace Adgangskontroll_Kortleser
                 gjennomført = false;
             }
         }
+
         private void BW_SendKvittering_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             SendData(klientSokkel, dataTilSentral, out kommunikasjonMedSentral);
@@ -325,6 +320,7 @@ namespace Adgangskontroll_Kortleser
                 // if eller try med at verdi er sann/usann, lik som Innlogging() i database.cs for sentral
             }
         }
+
         private void BW_SendKvittering_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
             if (kommunikasjonMedSentral)
@@ -431,17 +427,6 @@ namespace Adgangskontroll_Kortleser
                 //}
             }
             bwSjekkForData.RunWorkerAsync();
-        }
-        private void LåsOppDør(string dataFraSentral)
-        {
-            if (dataFraSentral == "Godkjent")
-            {
-                SendEnMelding("$O51", sp);
-            }
-            if (dataFraSentral == "Ikke godkjent")
-            {
-                SendEnMelding("$O50", sp);
-            }
         }
        
 
