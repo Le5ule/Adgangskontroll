@@ -45,19 +45,18 @@ namespace Sentral
         // Konstruktør for opprette tilkobling til database via sentral
         public Database(string server, string port, string user_id, string password, string database)
         {
-            //establish connection
+            // Etablerer tilkobling
             vCon = new NpgsqlConnection($"server={server} ; port={port} ; user id={user_id} ; password={password} ; database={database} ;");
 
-            //establish queryobject
-            vCmd = new NpgsqlCommand(); //it seems to understand that "con" is the connection object
+            // Etablerer queryobjekt
+            vCmd = new NpgsqlCommand();
 
             // Kobler til databasen
             Connection();
-            //Task.Run(() => { Connect(); }); //if needed to be run async
         }
         public NpgsqlConnection Connection()
         {
-            //vCon = new NpgsqlConnection(kobling);
+            //vCon = new NpgsqlConnection(kobling);     // trenger ikke denne lengre
             try
             {
                 if (vCon.State == ConnectionState.Closed)
