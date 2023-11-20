@@ -14,12 +14,14 @@ namespace Sentral
     internal class Database
     {
         private static Random r = new Random();
-        private static int random = r.Next(0, 9999);
+        private static int random = r.Next(0, 9999);    // Brukes til å generere pin-kode for å legge inn nye brukere
 
         private static DataTable dtgetData = new DataTable();
         private static NpgsqlConnection vCon;
         private static NpgsqlCommand vCmd;
 
+
+        // Datamedlemmer for å oppdatere disse variablene fra programmet ved sending av ulike spørringer
         public static NpgsqlCommand VCmd
         {
             get { return vCmd; }
@@ -54,6 +56,8 @@ namespace Sentral
             // Kobler til databasen
             Connection();
         }
+
+        // Metode for å opprette tilkobling mot database
         public NpgsqlConnection Connection()
         {
             //vCon = new NpgsqlConnection(kobling);     // trenger ikke denne lengre
@@ -66,11 +70,12 @@ namespace Sentral
             }
             catch (Exception)
             {
-
                 throw;
             }
             return vCon;
         }
+
+        // Metode for å sende og motta informasjon mellom sentral og database
         public DataTable getData(string sql)
         {
             DataTable dt = new DataTable();
@@ -85,29 +90,32 @@ namespace Sentral
         }
       
 
-        //validerings prossesen, den tar in kort_id, pin og kortleser_id. sjekker om pin matcher kort_id, om kort_id er innenfor gyldighetsperioden og om kort_id har tilgang til kortleser_id
-        //om prossesen feiler returnerer den blankt, om den er er ok returnerer den en rad med bruker og kortleser (den informasjonen som ble sendt inn) spleiset sammen
-        public string Autentisering(string kort_id, string pin, string kortleser_id) //login er dette samme som validate for åpning av dør? + sjekk om id og pin skal være string?
+        // Autentisering tar inn kort_id, pin og kortleser_id.
+        // Sjekker om pin matcher kort_id, om kort_id er innenfor gyldighetsperioden
+        // og om kort_id har tilgang til kortleser_id.
+        // Hvis prossesen feiler returnerer den blankt, om den er er ok returnerer den
+        // en rad med bruker og kortleser (den informasjonen som ble sendt inn) spleiset sammen.
+        public string Autentisering(string kort_id, string pin, string kortleser_id)
         {
             string suksess;
             string query = ($"select * from tilgangrelasjon join bruker on tilgangrelasjon.tilgang_id = bruker.tilgang_id join kortleser on tilgangrelasjon.seksjon_id = kortleser.seksjon_id where kort_id = '{kort_id}' and pin = '{pin}' and kortleser_id = '{kortleser_id}' and CURRENT_DATE between gyldighet_start and gyldighet_slutt;");
             VCmd = new NpgsqlCommand(query, VCon);
 
             using NpgsqlDataReader reader = VCmd.ExecuteReader();
-            if (reader.Read())
+            if (reader.Read())  // Kommando for å "lese" om vi får returnert en tabell fra spørringen vi sender
             {
-                suksess = "Godkjent";    //dataTilKortleser
+                suksess = "Godkjent";
             }
-            else
+            else  // Dersom vi ikke får returnert en tabell fra spøøringen
             {
-                suksess = "Ikke godkjent";       //dataTilKortleser
+                suksess = "Ikke godkjent";
             }
-            return suksess; //dataTilKortleser
+            return suksess; // Blir sendt som dataTilKortleser
         }
         
 
 
-        //legger en ny rad inn i bruker databasen 
+        // Legger en ny rad inn i brukertabellen 
         public DataTable LeggTilNyBruker(string fornavn, string etternavn, string kort_id, string seksjon, DateTime start, DateTime slutt)
         {
             int pin = r.Next();
@@ -117,7 +125,8 @@ namespace Sentral
 
             return dt;
         }
-        //skriv inn alle verdiene til en rad i bruker databasen pånytt, ved å identifisere raden med kort_id
+
+        // Skriver inn alle verdiene til en rad i brukertabellen på nytt, ved å identifisere raden utifra kort_id
         public DataTable EndreBruker(string fornavn, string etternavn, string kort_id, string seksjon, DateTime start, DateTime slutt)
         {
             int pin = r.Next();
@@ -127,7 +136,8 @@ namespace Sentral
 
             return dt;
         }
-        //slett en rad fra bruker databasen, ved å identifisere raden med kort_id
+
+        // Sletter en rad fra brukertabellen ved å identifisere raden utifra kort_id
         public DataTable SlettBruker(string kort_id)
         {
             dtgetData = getData($"delete from bruker where kort_id = {kort_id}");
@@ -137,7 +147,7 @@ namespace Sentral
         }
 
 
-        //legger en ny rad inn i kortleser databasen 
+        // Legger inn en ny rad i kortlesertabellen 
         public DataTable LeggTilNyKortleser(string kortleser_id, string seksjon_id, string beskrivelse)
         {
             dtgetData = getData($"insert into kortleser values ({kortleser_id}, {seksjon_id}, {beskrivelse});");
@@ -145,7 +155,8 @@ namespace Sentral
 
             return dt;
         }
-        //skriv inn alle verdiene til en rad i kortleser databasen på nytt, ved å identifisere raden med kort_id
+
+        // Skriver inn alle verdiene til en rad i kortlesertabellen på nytt, ved å identifisere raden utifra kort_id
         public DataTable EndreKortleser(string kortleser_id, string seksjon_id, string beskrivelse)
         {
             dtgetData = getData($"update kortleser set seksjon_id = {seksjon_id}, beskrivelse = {beskrivelse} where kortleser_id = {kortleser_id}");
@@ -153,7 +164,8 @@ namespace Sentral
 
             return dt;
         }
-        //slett en rad fra kortleser databasen, ved å identifisere raden med kort_id
+
+        // Sletter en rad fra kortlesertabellen, ved å identifisere raden utofra kort_id
         public DataTable SlettKortleser(string kortleser_id)
         {
             dtgetData = getData($"delete from kortleser where kortleser_id = {kortleser_id}");
@@ -162,8 +174,7 @@ namespace Sentral
             return dt;
         }
 
-
-        //danner og legger inn en rad i log databasen
+        // Loggfører og legger inn en rad i loggtabellen
         public DataTable LeggTilLogg(int logg_type, string kortleser_id, string kort_id)
         {
             
@@ -172,8 +183,9 @@ namespace Sentral
 
             return dt;
         }
-        //henter ut nyligste rad fra log databasen for en viss kortleser_id, brukes for å hente sist kort_id registrert på en kortleser (brukes ved enkelte loger)
-        //for mer informasjon om log_type se adgangskontroller-DB-notasjon.txt
+
+        // Henter ut nyligste rad fra logtabellen for en viss kortleser_id, brukes for å hente siste kort_id registrert på en kortleser (brukes ved enkelte logger)
+        // For mer informasjon om logg_type se adgangskontroller-DB-notasjon.txt
         public DataTable VisSisteLogg(int logg_type, DateTime logg_tid, string kortleser_id, int kort_id)
         {
             dtgetData = getData($"SELECt * FROM logg where kortleser_id = {kortleser_id} ORDER BY log_tid DESC limit 1");
@@ -183,7 +195,7 @@ namespace Sentral
         }
 
 
-        //gir en tabell med alle rader i kortleser databasen
+        // Returnerer en tabell med alle rader i kortlesertabellen
         public DataTable VisKortleser()
         {
             dtgetData = getData("select * from kortleser");
@@ -191,7 +203,8 @@ namespace Sentral
 
             return dt;
         }
-        //gir en tabell med alle rader i kortleserdatabasen for en valgt seksjon
+
+        // Returnerer en tabell med alle rader i kortlesertabellen for en valgt seksjon
         public DataTable VisKortleserVedSeksjon(int seksjon_id)
         {
             dtgetData = getData($"select * from kortleser where seksjon_id = {seksjon_id}");
@@ -199,7 +212,8 @@ namespace Sentral
 
             return dt;
         }
-        //gir en tabell med alle rader i bruker databasen
+
+        // Returener en tabell med alle rader i brukertabellen
         public DataTable VisBrukere()
         {
             dtgetData = getData("select * from bruker");
@@ -208,7 +222,7 @@ namespace Sentral
             return dt;
         }
 
-        //liste adgangslogg (inkludert forsøk på adgang) på grunnlag av kort_id mellom to datoer
+        // Lister adgangslogg (inkludert forsøk på adgang) utifra kort_id mellom to datoer
         public DataTable VisAdgangsloggForBrukerVedDato(string kort_id, DateTime start, DateTime slutt)
         {
             dtgetData = getData($"select * from logg where kort_id = {kort_id} and (log_type = 0 or log_type = 1 or log_type = 2) and log_tid between {start} and {slutt}");
@@ -216,7 +230,8 @@ namespace Sentral
 
             return dt;
         }
-        //liste alle innpasseringsforsøk for en dør med ikke-godkjent adgang (uansett bruker) mellom to datoer
+
+        // Returnerer alle innpasseringsforsøk for en dør med ikke-godkjent adgang (uansett bruker) mellom to datoer
         public DataTable VisNegativAdgangsloggKortleserVedDato(string kortleser_id, DateTime start, DateTime slutt)
         {
             dtgetData = getData($"select * from logg where kortleser_id = {kortleser_id} and log_type = 1 and log_tid between {start} and {slutt}");
@@ -224,7 +239,8 @@ namespace Sentral
 
             return dt;
         }
-        //liste av alarmer
+
+        // Returnerer alarmer
         public DataTable VisAlarm()
         {
             dtgetData = getData($"select * from logg where (log_type = 3 or log_type = 2)");
@@ -232,7 +248,8 @@ namespace Sentral
 
             return dt;
         }
-        //liste av alarmer ved kort_id
+
+        // Returnerer alarmer ved kort_id
         public DataTable VisAlarmVedBruker(string kort_id)
         {
             dtgetData = getData($"select * from logg where (log_type = 3 or log_type = 2) and kort_id = {kort_id}");
@@ -240,7 +257,8 @@ namespace Sentral
 
             return dt;
         }
-        //liste av alarmer ved kortleser_id
+
+        // Returnerer alarmer ved kortleser_id
         public DataTable VisAlarmVedKortleser(string kortleser_id)
         {
             dtgetData = getData($"select * from logg where (log_type = 3 or log_type = 2) and kortleser_id = {kortleser_id}");
@@ -248,7 +266,8 @@ namespace Sentral
 
             return dt;
         }
-        //liste av alarmer mellom to datoer
+
+        // Returnerer alarmer mellom to datoer
         public DataTable VisAlarmVedDato(DateTime start, DateTime slutt)
         {
             dtgetData = getData($"select * from logg where (log_type = 3 or log_type = 2) and log_tid between {start} and {slutt}");
@@ -256,7 +275,8 @@ namespace Sentral
 
             return dt;
         }
-        //liste alle entries log 
+
+        // returnerer alle entries i loggtabellen
         public DataTable VisLogg()
         {
             dtgetData = getData($"select * from logg");
@@ -264,7 +284,8 @@ namespace Sentral
 
             return dt;
         }
-        //liste alle entries log basert på kort_id
+
+        // Returnerer alle entries fra loggtabellen basert på kort_id
         public DataTable VisLogVedBruker(string kort_id)
         {
             dtgetData = getData($"select * from logg where kort_id = {kort_id}");
@@ -272,7 +293,8 @@ namespace Sentral
 
             return dt;
         }
-        //liste alle entries log basert på kortleser_id
+
+        // Returnerer alle entries fra loggtabellen basert på kortleser_id
         public DataTable VisLogVedKortleser(string kortleser_id)
         {
             dtgetData = getData($"select * from logg where kortleser_id = {kortleser_id}");
@@ -280,6 +302,8 @@ namespace Sentral
 
             return dt;
         }
+
+
         //string log1 = "Alle Kortlesere";
         //string log2 = "Alle Brukere";
         //string log3 = "Alle adgangs hendelser for Bruker i en periode";
