@@ -34,6 +34,76 @@ namespace Sentral
             TB_TilDato.Clear();
             TB_KortID.Clear();
             TB_KortleserID.Clear();
+
+            switch (CB_Alarmtype.Text)
+            {
+                case "Alle kortlesere":
+                    TB_KortID.Enabled = false;
+                    TB_FraDato.Enabled = false;
+                    TB_TilDato.Enabled = false;
+                    TB_KortleserID.Enabled = false;
+                    break;
+                case "Alle brukere":
+                    TB_KortID.Enabled = false;
+                    TB_FraDato.Enabled = false;
+                    TB_TilDato.Enabled = false;
+                    TB_KortleserID.Enabled = false;
+                    break;
+                case "Alle adgangsforsøk for bruker i periode:":
+                    TB_KortID.Enabled = true;
+                    TB_FraDato.Enabled = true;
+                    TB_TilDato.Enabled = true;
+                    TB_KortleserID.Enabled = false;
+                    break;
+                case "Alle ikke-godkjente adgangsforsøk for kortleser i periode:":
+                    TB_KortID.Enabled = false;
+                    TB_FraDato.Enabled = true;
+                    TB_TilDato.Enabled = true;
+                    TB_KortleserID.Enabled = true;
+                    break;
+                case "Alle alarmer":
+                    TB_KortID.Enabled = false;
+                    TB_FraDato.Enabled = false;
+                    TB_TilDato.Enabled = false;
+                    TB_KortleserID.Enabled = false;
+                    break;
+                case "Alle alarmer knyttet til bruker:":
+                    TB_KortID.Enabled = true;
+                    TB_FraDato.Enabled = false;
+                    TB_TilDato.Enabled = false;
+                    TB_KortleserID.Enabled = false;
+                    break;
+                case "Alle alarmer knyttet til kortleser:":
+                    TB_KortID.Enabled = false;
+                    TB_FraDato.Enabled = false;
+                    TB_TilDato.Enabled = false;
+                    TB_KortleserID.Enabled = true;
+                    break;
+                case "Alle alarmer i periode:":
+                    TB_KortID.Enabled = false;
+                    TB_FraDato.Enabled = true;
+                    TB_TilDato.Enabled = true;
+                    TB_KortleserID.Enabled = false;
+                    break;
+                case "Alle logger":
+                    TB_KortID.Enabled = false;
+                    TB_FraDato.Enabled = false;
+                    TB_TilDato.Enabled = false;
+                    TB_KortleserID.Enabled = false;
+                    break;
+                case "Alle logger kyttet til bruker:":
+                    TB_KortID.Enabled = true;
+                    TB_FraDato.Enabled = false;
+                    TB_TilDato.Enabled = false;
+                    TB_KortleserID.Enabled = false;
+                    break;
+                case "Alle logger knyttet til kortleser:":
+                    TB_KortID.Enabled = false;
+                    TB_FraDato.Enabled = false;
+                    TB_TilDato.Enabled = false;
+                    TB_KortleserID.Enabled = true;
+                    break;
+            }
         }
 
         // Noe
@@ -42,18 +112,19 @@ namespace Sentral
             switch (CB_Alarmtype.Text)
             {
                 case "Alle kortlesere":
-                    dataGridView1.DataSource = db.VisKortleser();//ingen ekstra informasjon trengs å leses fra textbox
+                    dataGridView1.DataSource = db.VisKortlesere();//ingen ekstra informasjon trengs å leses fra textbox
                     break;
                 case "Alle brukere":
                     dataGridView1.DataSource = db.VisBrukere();
+                    TB_KortleserID.Enabled = false;
                     break;
-                case "Alle adgangsforsøk knyttet til bruker i periode:":
+                case "Alle adgangsforsøk for bruker i periode:":
                     kort_ID = TB_KortID.Text;
                     startTid = TB_FraDato.Text + " 00:00:00";
                     sluttTid = TB_TilDato.Text + " 00:00:00";
                     dataGridView1.DataSource = db.VisAdgangsloggForBrukerVedDato(kort_ID, startTid, sluttTid); //trenger kort id, date start og slutt
                     break;
-                case "Alle ikke-godkjente adgangsforsøk knyttet til kortleser i periode:":
+                case "Alle ikke-godkjente adgangsforsøk for kortleser i periode:":
                     kortleser_ID = TB_KortleserID.Text;
                     startTid = TB_FraDato.Text + " 00:00:00";
                     sluttTid = TB_TilDato.Text + " 00:00:00";

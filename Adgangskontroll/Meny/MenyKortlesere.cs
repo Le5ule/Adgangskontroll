@@ -37,12 +37,14 @@ namespace Sentral
             BTN_LeggTilNy.Visible = false;
             BTN_endre.Visible = false;
             BTN_Slett.Visible = false;
+            TB_Beskrivelse.Visible = false;
+            lbl_Beskrivelse.Visible = false;
 
         }
 
         private void BTN_alle_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = db.VisKortleser();
+            dataGridView1.DataSource = db.VisKortlesere();
         }
 
         private void BTN_seksjon_Click(object sender, EventArgs e)
@@ -65,6 +67,8 @@ namespace Sentral
             BTN_LeggTilNy.Visible = true;
             BTN_endre.Visible = false;
             BTN_Slett.Visible = false;
+            TB_Beskrivelse.Visible = true;
+            lbl_Beskrivelse.Visible = true;
         }
 
         private void BTN_EndreLesere_Click(object sender, EventArgs e)
@@ -80,6 +84,8 @@ namespace Sentral
             BTN_LeggTilNy.Visible = false;
             BTN_endre.Visible = true;
             BTN_Slett.Visible = false;
+            TB_Beskrivelse.Visible = true;
+            lbl_Beskrivelse.Visible = true;
         }
 
         private void BTN_endre_Click(object sender, EventArgs e)
@@ -89,7 +95,8 @@ namespace Sentral
             beskrivelse = TB_Beskrivelse.Text;
 
             db.EndreKortleser(kortleser_id, seksjon_id, beskrivelse);
-            
+            MessageBox.Show($"Kortleser {kortleser_id} er endret");
+
             TB_LeserID.Clear();
             TB_seksjon.Clear();
             TB_Beskrivelse.Clear();
@@ -102,6 +109,7 @@ namespace Sentral
             beskrivelse = TB_Beskrivelse.Text;
 
             db.LeggTilNyKortleser(kortleser_id, seksjon_id, beskrivelse);
+            MessageBox.Show($"Kortleser {kortleser_id} er lagt til");
 
             TB_LeserID.Clear();
             TB_seksjon.Clear();
@@ -118,6 +126,8 @@ namespace Sentral
             lbl_seksjon.Visible = false;
             BTN_LeggTilNy.Visible = false;
             BTN_endre.Visible = false;
+            TB_Beskrivelse.Visible = false;
+            lbl_Beskrivelse.Visible = false;
 
             TB_LeserID.Visible = true;
             BTN_Slett.Visible = true;

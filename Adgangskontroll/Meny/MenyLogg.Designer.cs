@@ -55,6 +55,7 @@
             // 
             // TB_KortleserID
             // 
+            TB_KortleserID.Enabled = false;
             TB_KortleserID.Location = new Point(105, 125);
             TB_KortleserID.Name = "TB_KortleserID";
             TB_KortleserID.Size = new Size(83, 27);
@@ -62,6 +63,7 @@
             // 
             // TB_KortID
             // 
+            TB_KortID.Enabled = false;
             TB_KortID.Location = new Point(105, 86);
             TB_KortID.Name = "TB_KortID";
             TB_KortID.Size = new Size(83, 27);
@@ -111,6 +113,7 @@
             // 
             // TB_FraDato
             // 
+            TB_FraDato.Enabled = false;
             TB_FraDato.Location = new Point(292, 86);
             TB_FraDato.Name = "TB_FraDato";
             TB_FraDato.Size = new Size(113, 27);
@@ -118,6 +121,7 @@
             // 
             // TB_TilDato
             // 
+            TB_TilDato.Enabled = false;
             TB_TilDato.Location = new Point(292, 125);
             TB_TilDato.Name = "TB_TilDato";
             TB_TilDato.Size = new Size(113, 27);

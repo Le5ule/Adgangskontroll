@@ -115,9 +115,9 @@ namespace Sentral
 
 
         // Legger en ny rad inn i brukertabellen 
-        public DataTable LeggTilNyBruker(string fornavn, string etternavn, string kort_id, string seksjon, DateTime start, DateTime slutt)
+        public DataTable LeggTilNyBruker(string fornavn, string etternavn, string kort_id, string seksjon, string start, string slutt)
         {
-            int pin = r.Next();
+            int pin = r.Next(0,9999);
             string epost = $"{kort_id}@bedrift.no";     //hvis ikke kan vi få duplikater
             dtgetData = getData($"insert into bruker values ('{kort_id}', '{fornavn}', '{etternavn}', '{epost}', '{start}', '{slutt}', '{pin}', {seksjon});");
             DataTable dt = dtgetData;
@@ -126,9 +126,9 @@ namespace Sentral
         }
 
         // Skriver inn alle verdiene til en rad i brukertabellen på nytt, ved å identifisere raden utifra kort_id
-        public DataTable EndreBruker(string fornavn, string etternavn, string kort_id, string seksjon, DateTime start, DateTime slutt)
+        public DataTable EndreBruker(string fornavn, string etternavn, string kort_id, string seksjon, string start, string slutt)
         {
-            int pin = r.Next();
+            int pin = r.Next(0, 9999);
             string epost = $"{kort_id}@bedrift.no";     // hvis ikke kan vi få duplikater
             dtgetData = getData($"update bruker set fornavn = '{fornavn}', etternavn = '{etternavn}', epost = '{epost}', gyldighet_start = '{start}', gyldighet_slutt = '{slutt}',pin = '{pin}', tilgang_id = {seksjon} where kort_id = '{kort_id}'"); 
             DataTable dt = dtgetData;
@@ -139,7 +139,7 @@ namespace Sentral
         // Sletter en rad fra brukertabellen ved å identifisere raden utifra kort_id
         public DataTable SlettBruker(string kort_id)
         {
-            dtgetData = getData($"delete from bruker where kort_id = {kort_id}");
+            dtgetData = getData($"delete from bruker where kort_id = '{kort_id}'");
             DataTable dt = dtgetData;
 
             return dt;
@@ -177,7 +177,7 @@ namespace Sentral
         public DataTable LeggTilLogg(int logg_type, string kortleser_id, string kort_id)
         {
             
-            dtgetData = getData($"insert into logg values ({logg_type}, CURRENT_DATE, '{kortleser_id}', '{kort_id}');");
+            dtgetData = getData($"insert into logg values ({logg_type}, CURRENT_TIMESTAMP, '{kortleser_id}', '{kort_id}');");
             DataTable dt = dtgetData;
 
             return dt;
@@ -197,7 +197,7 @@ namespace Sentral
 
 
         // Returnerer en tabell med alle rader i kortlesertabellen
-        public DataTable VisKortleser()
+        public DataTable VisKortlesere()
         {
             dtgetData = getData("select * from kortleser");
             DataTable dt = Database.DtgetData;

@@ -37,10 +37,6 @@
             BTN_LeggTil = new Button();
             BTN_Ny = new Button();
             BTN_EndreBru = new Button();
-            lbl_GyldigFra = new Label();
-            lbl_GyldigTil = new Label();
-            dtGyldigFra = new DateTimePicker();
-            dtGyldigTil = new DateTimePicker();
             lbl_ID = new Label();
             TB_ID = new TextBox();
             BTN_Endre = new Button();
@@ -50,6 +46,11 @@
             BTN_Slett = new Button();
             lbl_ID_2 = new Label();
             TB_ID_2 = new TextBox();
+            lbl_datoformat = new Label();
+            lbl_til = new Label();
+            lbl_fra = new Label();
+            TB_TilDato = new TextBox();
+            TB_FraDato = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -153,44 +154,6 @@
             BTN_EndreBru.UseVisualStyleBackColor = false;
             BTN_EndreBru.Click += BTN_EndreBrukere_Click;
             // 
-            // lbl_GyldigFra
-            // 
-            lbl_GyldigFra.AutoSize = true;
-            lbl_GyldigFra.Location = new Point(468, 95);
-            lbl_GyldigFra.Name = "lbl_GyldigFra";
-            lbl_GyldigFra.Size = new Size(77, 20);
-            lbl_GyldigFra.TabIndex = 23;
-            lbl_GyldigFra.Text = "Gyldig fra:";
-            lbl_GyldigFra.Visible = false;
-            // 
-            // lbl_GyldigTil
-            // 
-            lbl_GyldigTil.AutoSize = true;
-            lbl_GyldigTil.Location = new Point(595, 95);
-            lbl_GyldigTil.Name = "lbl_GyldigTil";
-            lbl_GyldigTil.Size = new Size(72, 20);
-            lbl_GyldigTil.TabIndex = 24;
-            lbl_GyldigTil.Text = "Gyldig til:";
-            lbl_GyldigTil.Visible = false;
-            // 
-            // dtGyldigFra
-            // 
-            dtGyldigFra.Format = DateTimePickerFormat.Short;
-            dtGyldigFra.Location = new Point(468, 122);
-            dtGyldigFra.Name = "dtGyldigFra";
-            dtGyldigFra.Size = new Size(120, 27);
-            dtGyldigFra.TabIndex = 25;
-            dtGyldigFra.Visible = false;
-            // 
-            // dtGyldigTil
-            // 
-            dtGyldigTil.Format = DateTimePickerFormat.Short;
-            dtGyldigTil.Location = new Point(601, 122);
-            dtGyldigTil.Name = "dtGyldigTil";
-            dtGyldigTil.Size = new Size(120, 27);
-            dtGyldigTil.TabIndex = 26;
-            dtGyldigTil.Visible = false;
-            // 
             // lbl_ID
             // 
             lbl_ID.AutoSize = true;
@@ -214,7 +177,7 @@
             BTN_Endre.BackColor = SystemColors.GradientActiveCaption;
             BTN_Endre.FlatAppearance.BorderSize = 0;
             BTN_Endre.FlatStyle = FlatStyle.Flat;
-            BTN_Endre.Location = new Point(742, 122);
+            BTN_Endre.Location = new Point(742, 123);
             BTN_Endre.Name = "BTN_Endre";
             BTN_Endre.Size = new Size(94, 29);
             BTN_Endre.TabIndex = 29;
@@ -286,11 +249,62 @@
             TB_ID_2.TabIndex = 33;
             TB_ID_2.Visible = false;
             // 
+            // lbl_datoformat
+            // 
+            lbl_datoformat.AutoSize = true;
+            lbl_datoformat.Location = new Point(468, 67);
+            lbl_datoformat.Name = "lbl_datoformat";
+            lbl_datoformat.Size = new Size(194, 20);
+            lbl_datoformat.TabIndex = 40;
+            lbl_datoformat.Text = "Datoformat: ÅÅÅÅ-MM-DD";
+            lbl_datoformat.Visible = false;
+            // 
+            // lbl_til
+            // 
+            lbl_til.AutoSize = true;
+            lbl_til.Location = new Point(587, 95);
+            lbl_til.Name = "lbl_til";
+            lbl_til.Size = new Size(72, 20);
+            lbl_til.TabIndex = 39;
+            lbl_til.Text = "Gyldig til:";
+            lbl_til.Visible = false;
+            // 
+            // lbl_fra
+            // 
+            lbl_fra.AutoSize = true;
+            lbl_fra.Location = new Point(468, 95);
+            lbl_fra.Name = "lbl_fra";
+            lbl_fra.Size = new Size(77, 20);
+            lbl_fra.TabIndex = 38;
+            lbl_fra.Text = "Gyldig fra:";
+            lbl_fra.Visible = false;
+            // 
+            // TB_TilDato
+            // 
+            TB_TilDato.Location = new Point(587, 122);
+            TB_TilDato.Name = "TB_TilDato";
+            TB_TilDato.Size = new Size(113, 27);
+            TB_TilDato.TabIndex = 37;
+            TB_TilDato.Visible = false;
+            // 
+            // TB_FraDato
+            // 
+            TB_FraDato.Location = new Point(468, 122);
+            TB_FraDato.Name = "TB_FraDato";
+            TB_FraDato.Size = new Size(113, 27);
+            TB_FraDato.TabIndex = 36;
+            TB_FraDato.Visible = false;
+            // 
             // MenyBrukere
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(868, 475);
+            Controls.Add(lbl_datoformat);
+            Controls.Add(lbl_til);
+            Controls.Add(lbl_fra);
+            Controls.Add(TB_TilDato);
+            Controls.Add(TB_FraDato);
             Controls.Add(BTN_Slett);
             Controls.Add(lbl_ID_2);
             Controls.Add(TB_ID_2);
@@ -300,10 +314,6 @@
             Controls.Add(BTN_Endre);
             Controls.Add(lbl_ID);
             Controls.Add(TB_ID);
-            Controls.Add(dtGyldigTil);
-            Controls.Add(dtGyldigFra);
-            Controls.Add(lbl_GyldigTil);
-            Controls.Add(lbl_GyldigFra);
             Controls.Add(BTN_EndreBru);
             Controls.Add(BTN_Ny);
             Controls.Add(lbl_ENavn);
@@ -331,10 +341,6 @@
         private Button BTN_LeggTil;
         private Button BTN_Ny;
         private Button BTN_EndreBru;
-        private Label lbl_GyldigFra;
-        private Label lbl_GyldigTil;
-        private DateTimePicker dtGyldigFra;
-        private DateTimePicker dtGyldigTil;
         private Label lbl_ID;
         private TextBox TB_ID;
         private Button BTN_Endre;
@@ -344,5 +350,10 @@
         private Button BTN_Slett;
         private Label lbl_ID_2;
         private TextBox TB_ID_2;
+        private Label lbl_datoformat;
+        private Label lbl_til;
+        private Label lbl_fra;
+        private TextBox TB_TilDato;
+        private TextBox TB_FraDato;
     }
 }

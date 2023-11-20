@@ -324,7 +324,6 @@ namespace Adgangskontroll_Kortleser
             if (kommunikasjonMedSentral)
             {
                 dataFraSentral = MottaData(klientSokkel, out kommunikasjonMedSentral);
-                // if eller try med at verdi er sann/usann, lik som Innlogging() i database.cs for sentral
             }
         }
 
@@ -346,14 +345,8 @@ namespace Adgangskontroll_Kortleser
                 {
                     SendEnMelding("$O50", sp);
                 }
-                //if (dataFraSentral.Length == 4) //Dette vil alltid være kortleser sin ID
-                //{
-                //    Label_ID.Text = "Dør: " + dataFraSentral;
-                //    kortleserID = dataFraSentral;
-                //}
                 else
                 {
-                    //metode for lås opp dør (datafrasentral) som her er enten "godkjent" eller "ikke godkjent"
                     TB_MottakFraSentral.Text = dataFraSentral;  //debug
                 }
             }
@@ -417,7 +410,6 @@ namespace Adgangskontroll_Kortleser
             if (EnHelMeldingMotatt(data))
             {
                 string enMelding = HentUtEnMelding(ref data);
-                //label1.Text = enMelding;      //Dette var bare for å se hele rå dataen fra simsim
                 VisDør(enMelding);
                 Alarm(enMelding);
                 if (råDørÅpen == 1)
@@ -428,10 +420,6 @@ namespace Adgangskontroll_Kortleser
                 {
                     sekDørÅpen = 0;
                 }
-                //if(alarm == 1)
-                //{
-                //    En funksjon for når alarmen går
-                //}
             }
             bwSjekkForData.RunWorkerAsync();
         }

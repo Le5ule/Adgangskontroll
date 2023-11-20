@@ -38,8 +38,12 @@
             BTN_LukkMenyVindu = new FontAwesome.Sharp.IconButton();
             lbl_Tittel = new Label();
             PanelForms = new Panel();
+            lbl_KortleserID = new Label();
+            TB_KortleserID = new TextBox();
+            BTN_KobleTilKortleser = new Button();
             PanelMeny.SuspendLayout();
             panelBar.SuspendLayout();
+            PanelForms.SuspendLayout();
             SuspendLayout();
             // 
             // PanelMeny
@@ -185,11 +189,43 @@
             // 
             // PanelForms
             // 
+            PanelForms.Controls.Add(lbl_KortleserID);
+            PanelForms.Controls.Add(TB_KortleserID);
+            PanelForms.Controls.Add(BTN_KobleTilKortleser);
             PanelForms.Dock = DockStyle.Fill;
             PanelForms.Location = new Point(195, 100);
             PanelForms.Name = "PanelForms";
             PanelForms.Size = new Size(876, 610);
             PanelForms.TabIndex = 14;
+            // 
+            // lbl_KortleserID
+            // 
+            lbl_KortleserID.AutoSize = true;
+            lbl_KortleserID.Location = new Point(95, 100);
+            lbl_KortleserID.Name = "lbl_KortleserID";
+            lbl_KortleserID.Size = new Size(92, 20);
+            lbl_KortleserID.TabIndex = 23;
+            lbl_KortleserID.Text = "Kortleser-ID:";
+            // 
+            // TB_KortleserID
+            // 
+            TB_KortleserID.Location = new Point(95, 120);
+            TB_KortleserID.Name = "TB_KortleserID";
+            TB_KortleserID.Size = new Size(125, 27);
+            TB_KortleserID.TabIndex = 22;
+            // 
+            // BTN_KobleTilKortleser
+            // 
+            BTN_KobleTilKortleser.BackColor = SystemColors.GradientActiveCaption;
+            BTN_KobleTilKortleser.FlatAppearance.BorderSize = 0;
+            BTN_KobleTilKortleser.FlatStyle = FlatStyle.Flat;
+            BTN_KobleTilKortleser.Location = new Point(95, 60);
+            BTN_KobleTilKortleser.Name = "BTN_KobleTilKortleser";
+            BTN_KobleTilKortleser.Size = new Size(155, 29);
+            BTN_KobleTilKortleser.TabIndex = 21;
+            BTN_KobleTilKortleser.Text = "Koble til kortleser";
+            BTN_KobleTilKortleser.UseVisualStyleBackColor = false;
+            BTN_KobleTilKortleser.Click += BTN_KobleTilKortleser_Click;
             // 
             // Sentral
             // 
@@ -205,6 +241,8 @@
             PanelMeny.ResumeLayout(false);
             panelBar.ResumeLayout(false);
             panelBar.PerformLayout();
+            PanelForms.ResumeLayout(false);
+            PanelForms.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -220,5 +258,8 @@
         private FontAwesome.Sharp.IconButton iBTN_Kortlesere;
         private Label lbl_Tittel;
         private FontAwesome.Sharp.IconButton BTN_LukkMenyVindu;
+        private Label lbl_KortleserID;
+        private TextBox TB_KortleserID;
+        private Button BTN_KobleTilKortleser;
     }
 }

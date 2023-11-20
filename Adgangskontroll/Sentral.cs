@@ -12,10 +12,7 @@ namespace Adgangskontroll_Sentral
 {
     public partial class Sentral : Form
     {
-        Database db;// = new Database();
-
-        static List<string> Kortleser_ID = new List<string>() { "0001" }; //Oppdater denne listen med så mange kortleser-IDer vi trenger
-        static int index = 0;
+        Database db;
 
         private Form activeForm;
         private Button currentButton;
@@ -34,8 +31,6 @@ namespace Adgangskontroll_Sentral
 
             lytteSokkel.Bind(serverEP);
             lytteSokkel.Listen(10);
-
-            ThreadPool.QueueUserWorkItem(KobleTilKortleser);
 
             // Endre disse parameterne for å koble til din/annen database
             string
@@ -96,23 +91,15 @@ namespace Adgangskontroll_Sentral
             BTN_LukkMenyVindu.Visible = false;
         }
 
-        private void KobleTilKortleser(object o)
+        private void KobleTilKortleser()
         {
             try
             {
-                //// Fra klient-server
-                //// Her må vi endre til threadpool eller noe, for vi skal kunne starte flere tråder med flere lesere...
-                //while (harforbindelse)    //slik løkke fungerer ikke her, uansett true eller false...
-                //{
-                //Console.WriteLine("Venter på en klient ...");
                 Socket kommSokkel = lytteSokkel.Accept(); // blokkerende metode
-
-                //VisKommunikasjonsinfo(kommSokkel.LocalEndPoint as IPEndPoint, kommSokkel.RemoteEndPoint as IPEndPoint);
                 IPEndPoint klientEP = (IPEndPoint)kommSokkel.RemoteEndPoint;
 
-                Thread ht = new Thread(Klientkommunikasjon);        //må starte mer enn én tråd, implementer ThreadPool i Public Senral() osv.
+                Thread ht = new Thread(Klientkommunikasjon);
                 ht.Start(kommSokkel);
-                //}
             }
             catch (Exception)
             {
@@ -137,11 +124,6 @@ namespace Adgangskontroll_Sentral
 
                 if (harForbindelse)
                 {
-                    //MessageBox.Show("Mottatt fra kortleser\n" + dataFraKortleser); //debug
-
-                    //rotete kode her, men det funker foreløpig  
-                    //legg også inn egen if-setning for COM-port
-                    //legg også inn en der dataFraKortleser == "alarm" -> MessageBox.Show("Alarm aktivert"); eller noe sånt
                     if (dataFraKortleser.Length == 20)
                     {
                         int indeksKort = dataFraKortleser.IndexOf('K');
@@ -182,25 +164,13 @@ namespace Adgangskontroll_Sentral
                     }
                     else if (dataFraKortleser == "RequestID")
                     {
-                        if (Kortleser_ID.Count != index)
-                        {
-                            dataTilKortleser = Kortleser_ID[index];
-                            index++;
-                        }
-                        else
-                        {
-                            index = 0;
-                            dataTilKortleser = Kortleser_ID[index];
-                            index++;
-                        }
+                        dataTilKortleser = TB_KortleserID.Text;
                     }
                     else dataTilKortleser = "Retur: " + dataFraKortleser;
 
                     SendData(kommSokkel, dataTilKortleser, out harForbindelse);
                 }
             }
-            //IPEndPoint r = kommSokkel.RemoteEndPoint as IPEndPoint;
-            //Console.WriteLine("Forbindelsen med {0}:{1} er brutt", r.Address, r.Port);    // endre til noe mer passende
             kommSokkel.Close();
         }
         static string MottaData(Socket s, out bool gjennomført)
@@ -210,7 +180,6 @@ namespace Adgangskontroll_Sentral
             {
                 byte[] dataSomBytes = new byte[1024];
                 int recv = s.Receive(dataSomBytes);
-                // kan man også lage en egen if-setning for tekststrengen som inneholder innloggingsdetaljene?
                 if (recv > 0)
                 {
                     svar = Encoding.ASCII.GetString(dataSomBytes, 0, recv);
@@ -242,7 +211,6 @@ namespace Adgangskontroll_Sentral
         private void iBTN_Brukere_Click(object sender, EventArgs e)
         {
             OpenChildForm(new MenyBrukere(), sender);
-            //currentButton.BackColor = SystemColors.GradientActiveCaption;
         }
         private void iBTN_Kortlesere_Click(object sender, EventArgs e)
         {
@@ -263,23 +231,10 @@ namespace Adgangskontroll_Sentral
             Reset();
         }
 
-        // Kopier noe herfra og gjenbruk til å koble til ny leser
-
-        //private void Start_Click(object sender, EventArgs e)
-        //{
-        //***
-        //    //endre til at vi åpner ny kortleser i debug, og dermed ikke foreach, men ID sendes med listen
-        //    //der index vil øke for hver gang
-        //***
-
-        //    foreach (string kortleser in Kortleser_ID)
-        //    {
-        //        //Må endre til bane for Kortleser.exe
-        //        Process.Start("C:\\Users\\leand\\OneDrive - Høgskulen på Vestlandet\\ELE 301\\Prosjektoppgave\\Adgangskontroll\\Kortleser\\bin\\Debug\\net7.0-windows\\Kortleser.exe");
-        //        KobleTilKortleser();
-        //    }
-        //    BTN_Start.Enabled = false;
-        //}
+        private void BTN_KobleTilKortleser_Click(object sender, EventArgs e)
+        {
+            KobleTilKortleser();
+        }
 
     }
 }
